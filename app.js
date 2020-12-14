@@ -48,6 +48,8 @@ ajaxGet("http://localhost/javascript-web-srv/data/langages.txt", function (repon
     console.log(reponse);
 });
 */
+var ip2loc = require("ip2location-nodejs");
+ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
 
 
 const fetch = require('node-fetch');
@@ -55,19 +57,41 @@ const fetch = require('node-fetch');
 async function fetchAsync (url) {
   let response = await fetch(url);
   let data = await response.json();
+  console.log("fetch termine");
   return data;
 }
 
-console.log("Usernames of the 51 forging delegates :")
-fetchAsync('https://api.ark.io/api/delegates?page=1&limit=51')
-.then(res => res.data)
-.then((delegates) => { 
-  for (let i = 0; i < delegates.length; i++) {
-    console.log(delegates[i].username);
-  }
-})
+function getNomsDelegue(){
+  console.log("Usernames of the 51 forging delegates :")
+  fetchAsync('https://api.ark.io/api/delegates?page=1&limit=51')
+  .then(res => res.data)
+  .then((delegates) => { 
+    for (let i = 0; i < delegates.length; i++) {
+      console.log(delegates[i].username);
+    }
+  })
+}
 
+function getCountry(){
+  fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
+  .then(res => res.data)
+    .then((delegates) => { 
+      for (let i = 0; i < delegates.length; i++) {
+        console.log(delegates[i].ip);
+        // appel du service sur l'IP
+        console.log(ip2loc.IP2Location_get_country_long(delegates[i].ip));
+        console.log(ip2loc.IP2Location_get_city(delegates[i].ip));
 
+      }
+      ip2loc.IP2Location_close();
+          },
+    )
+
+}
+getCountry();
+
+// voila le probleme depuis le début : je fermais la connexion au service avant l'appel asynchrone, forcement ca marchait pas
+// ip2loc.IP2Location_close();
 
 
 
