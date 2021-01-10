@@ -70,7 +70,6 @@ function getNomsDelegue(){
     }
   })
 }
-
 function getCountry(){
   fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
   .then(res => res.data)
@@ -88,6 +87,8 @@ function getCountry(){
 }
 // getCountry();
 
+// Ne retourne pas le bon resultat : pour l'instant ca semble être un statut "global", sur tout le réseau
+// Même chose pour les fees.
 
 function getStatusPeers(){
   console.log("Statuts de 10 pairs")
@@ -124,7 +125,7 @@ function getStaticFeesPeers(){
 }
 
 // getStatusPeers();
-getStaticFeesPeers();
+// getStaticFeesPeers();
 
 // voila le probleme depuis le début : je fermais la connexion au service avant l'appel asynchrone, forcement ca marchait pas
 // ip2loc.IP2Location_close();
