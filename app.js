@@ -129,6 +129,48 @@ getStaticFeesPeers();
 // voila le probleme depuis le début : je fermais la connexion au service avant l'appel asynchrone, forcement ca marchait pas
 // ip2loc.IP2Location_close();
 
+/** %%%%%%%%%%%%%%%%%% Ajout de l'indicateur de filtrage de transaction par rapport a une durée %%%%%%%%%%%%%%%*/
 
+fetchAsync('https://api.ark.io/api/transactions?page=1&limit=100&type=0')
+.then(res => {
+
+  /** on transforme toute les timestamps.human de notre data en DATE */
+  res.data.forEach(element => {
+    element.timestamp.human = new Date (element.timestamp.human)
+  });
+
+  /** test sur le jour */
+  console.log(res.data[0].timestamp.human.getDate());
+  /** test sur l'année'*/
+  console.log(res.data[0].timestamp.human.getFullYear());
+
+  /** le jour d'aujourd'hui */
+  let now = new Date(Date.now())
+  console.log("le jour aujourd'hui est :")
+  console.log(now.getDate());
+
+
+  /** l'heure actuelle */
+  console.log("l'heure actuelle est :")
+  console.log(now.getUTCHours()) // ca marche
+
+
+  /** la minute actuelle */
+  console.log("la minute actuelle est :")
+  console.log(now.getUTCMinutes()) // ca marche
+
+  const result = res.data.filter(transaction => transaction.timestamp.human.getDate() == now.getDate() 
+                                                && transaction.timestamp.human.getUTCHours() >= now.getUTCHours()-1)
+
+  /** on obtient la liste des transactions qui s'est effectué sur la dernière dixaines de minutes */
+  console.log("le nombre de transaction est :")
+  console.log(result.length)
+  console.log(result)  
+
+  return res.data
+
+})
+
+//%%%%%%%%%%%%%%%%%%% FIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
