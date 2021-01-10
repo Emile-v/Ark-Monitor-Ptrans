@@ -57,7 +57,6 @@ const fetch = require('node-fetch');
 async function fetchAsync (url) {
   let response = await fetch(url);
   let data = await response.json();
-  console.log("fetch termine");
   return data;
 }
 
@@ -86,9 +85,46 @@ function getCountry(){
       ip2loc.IP2Location_close();
           },
     )
-
 }
-getCountry();
+// getCountry();
+
+
+function getStatusPeers(){
+  console.log("Statuts de 10 pairs")
+  fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
+  .then(res => res.data)
+  .then((delegates) => { 
+    for (let i = 0; i < delegates.length; i++) {
+      fetchAsync('https://api.ark.io/api/node/status?ip='+delegates[i].ip)
+      .then(res=> res.data)
+      .then((pair) =>{
+        console.log(delegates[i].ip + " " +pair.synced);
+      })
+    }
+  })
+}
+
+
+function getStaticFeesPeers(){
+  console.log("Statuts de 10 pairs")
+  fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
+  .then(res => res.data)
+  .then((delegates) => { 
+    for (let i = 0; i < delegates.length; i++) {
+      fetchAsync('https://api.ark.io/api/transactions/fees?ip='+delegates[i].ip)
+      .then(res=> res.data)
+      .then((pair) =>{
+        console.log(delegates[i].ip );
+        console.log(pair[Object.keys(pair)[0]]);
+      })
+
+      
+    }
+  })
+}
+
+// getStatusPeers();
+getStaticFeesPeers();
 
 // voila le probleme depuis le début : je fermais la connexion au service avant l'appel asynchrone, forcement ca marchait pas
 // ip2loc.IP2Location_close();
