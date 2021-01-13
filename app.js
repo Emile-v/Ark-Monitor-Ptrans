@@ -87,8 +87,6 @@ function getCountry(){
 }
 // getCountry();
 
-// Ne retourne pas le bon resultat : pour l'instant ca semble être un statut "global", sur tout le réseau
-// Même chose pour les fees.
 
 function getStatusPeers(){
   console.log("Statuts de 10 pairs")
@@ -96,32 +94,41 @@ function getStatusPeers(){
   .then(res => res.data)
   .then((delegates) => { 
     for (let i = 0; i < delegates.length; i++) {
-      fetchAsync('https://api.ark.io/api/node/status?ip='+delegates[i].ip)
+      // si le port est -1, l'api n'est pas disponible.
+      if(delegates[i].ports['@arkecosystem/core-api']!='-1'){
+        let add='http://'+delegates[i].ip+":"+delegates[i].ports['@arkecosystem/core-api']+'/api/node/status'      
+      fetchAsync(add)
       .then(res=> res.data)
       .then((pair) =>{
-        console.log(delegates[i].ip + " " +pair.synced);
+        console.log(delegates[i].ip  + " " +pair.synced);
       })
+    }
+    else console.log(delegates[i].ip + " Api indisponible.");
     }
   })
 }
 
 
 function getStaticFeesPeers(){
-  console.log("Statuts de 10 pairs")
+console.log("Fees de 10 pairs.")
   fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
   .then(res => res.data)
   .then((delegates) => { 
     for (let i = 0; i < delegates.length; i++) {
-      fetchAsync('https://api.ark.io/api/transactions/fees?ip='+delegates[i].ip)
+      // si le port est -1, l'api n'est pas disponible.
+      if(delegates[i].ports['@arkecosystem/core-api']!='-1'){
+        let add='http://'+delegates[i].ip+":"+delegates[i].ports['@arkecosystem/core-api']+'/api/node/fees'      
+      fetchAsync(add)
       .then(res=> res.data)
       .then((pair) =>{
-        console.log(delegates[i].ip );
-        console.log(pair[Object.keys(pair)[0]]);
+        console.log(delegates[i].ip);
+        console.log("Moyenne transfer: "+pair["1"]["transfer"]["avg"]);
       })
-
-      
+    }
+    else console.log(delegates[i].ip + " Api indisponible.");
     }
   })
+
 }
 
 // getStatusPeers();
@@ -132,45 +139,45 @@ function getStaticFeesPeers(){
 
 /** %%%%%%%%%%%%%%%%%% Ajout de l'indicateur de filtrage de transaction par rapport a une durée %%%%%%%%%%%%%%%*/
 
-fetchAsync('https://api.ark.io/api/transactions?page=1&limit=100&type=0')
-.then(res => {
+// fetchAsync('https://api.ark.io/api/transactions?page=1&limit=100&type=0')
+// .then(res => {
 
-  /** on transforme toute les timestamps.human de notre data en DATE */
-  res.data.forEach(element => {
-    element.timestamp.human = new Date (element.timestamp.human)
-  });
+//   /** on transforme toute les timestamps.human de notre data en DATE */
+//   res.data.forEach(element => {
+//     element.timestamp.human = new Date (element.timestamp.human)
+//   });
 
-  /** test sur le jour */
-  console.log(res.data[0].timestamp.human.getDate());
-  /** test sur l'année'*/
-  console.log(res.data[0].timestamp.human.getFullYear());
+//   /** test sur le jour */
+//   console.log(res.data[0].timestamp.human.getDate());
+//   /** test sur l'année'*/
+//   console.log(res.data[0].timestamp.human.getFullYear());
 
-  /** le jour d'aujourd'hui */
-  let now = new Date(Date.now())
-  console.log("le jour aujourd'hui est :")
-  console.log(now.getDate());
-
-
-  /** l'heure actuelle */
-  console.log("l'heure actuelle est :")
-  console.log(now.getUTCHours()) // ca marche
+//   /** le jour d'aujourd'hui */
+//   let now = new Date(Date.now())
+//   console.log("le jour aujourd'hui est :")
+//   console.log(now.getDate());
 
 
-  /** la minute actuelle */
-  console.log("la minute actuelle est :")
-  console.log(now.getUTCMinutes()) // ca marche
+//   /** l'heure actuelle */
+//   console.log("l'heure actuelle est :")
+//   console.log(now.getUTCHours()) // ca marche
 
-  const result = res.data.filter(transaction => transaction.timestamp.human.getDate() == now.getDate() 
-                                                && transaction.timestamp.human.getUTCHours() >= now.getUTCHours()-1)
 
-  /** on obtient la liste des transactions qui s'est effectué sur la dernière dixaines de minutes */
-  console.log("le nombre de transaction est :")
-  console.log(result.length)
-  console.log(result)  
+//   /** la minute actuelle */
+//   console.log("la minute actuelle est :")
+//   console.log(now.getUTCMinutes()) // ca marche
 
-  return res.data
+//   const result = res.data.filter(transaction => transaction.timestamp.human.getDate() == now.getDate() 
+//                                                 && transaction.timestamp.human.getUTCHours() >= now.getUTCHours()-1)
 
-})
+//   /** on obtient la liste des transactions qui s'est effectué sur la dernière dixaines de minutes */
+//   console.log("le nombre de transaction est :")
+//   console.log(result.length)
+//   console.log(result)  
+
+//   return res.data
+
+// })
 
 //%%%%%%%%%%%%%%%%%%% FIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
