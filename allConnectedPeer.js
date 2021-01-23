@@ -13,7 +13,7 @@ async function fetchAsync (url) {
 /**  cette fonction ajoute dans la listOfAllPeer les peers dont le @arkcoresystem = 4003
  *  Le paramètre numPage définit le numéro de page sur laquelle on récupère les peers sur l'api
  * */
-async function AllPeerPort4003(listOfAllPeer, numPage){
+async function callMainNodeApiPeers(All4003NodeIPs, AllNodeIPs, numPage){
     let stop = false;
     let res = fetchAsync(`https://api.ark.io/api/peers?page=${numPage}&limit=100`);
     let res2 = await res.then(res => {
@@ -23,37 +23,109 @@ async function AllPeerPort4003(listOfAllPeer, numPage){
         }
         else{
             res.data.forEach(element=>{
-                for (const [key, value] of Object.entries(element.ports)) {
-                    if(`${key}` == '@arkecosystem/core-api' && `${value}` == 4003){
-                        listOfAllPeer.push(element.ip);         
-                        // listOfAllPeer.push(element)
-                    }
-                } 
+                AllNodeIPs.push(element.ip);
+                if (element.ports['@arkecosystem/core-api'] == 4003){
+                    All4003NodeIPs.push(element.ip);   
+                }
             });
             return 0;
-        }
-        
+        } 
     });
     return stop
 }
 
-/** cette fonction définit l'arret du fetch lorsque le data est vide
- * c'est a dire lorsqu'il n'y a plus de donnée à récupérer sur la page de l'api
- */
-async function ListAllPeel(){
-    let listOfAllPeer = [];
+async function getIPsFromApiMainNode(All4003NodeIPs, AllNodeIPs){
+    
     let numPage = 1;
     let stop = false;
 
     while(stop == false){
-        stop = await AllPeerPort4003(listOfAllPeer, numPage);
+        stop = await callMainNodeApiPeers(All4003NodeIPs, AllNodeIPs, numPage);
         numPage++;
     }
 
-    // console.log(listOfAllPeer);
-    // console.log("Le nombre total de peer avec un port 4003 activé est : " + listOfAllPeer.length);
-    return listOfAllPeer;
+
 }
+
+async function callPeersApi(listOfAllPeers, numPage, nodeIP){
+    let stop = false;
+    try{
+        let res = await fetchAsync(`http://${nodeIP}:4003/api/peers?page=${numPage}&limit=100`);
+        listOfAllPeers.push(...res.data);
+        if(res.data.length == 0){
+            stop = true;
+        }
+    }catch(e){
+        stop = true;
+    }
+    return stop
+}
+
+async function getPeers(nodeIP){
+    
+    let numPage = 1;
+    let stop = false;
+    let listOfAllPeers = [];
+
+    while(stop == false){
+        stop = await callPeersApi(listOfAllPeers, numPage, nodeIP);
+        numPage++;
+    }
+
+    return listOfAllPeers;
+}
+
+async function fillUpWithPeers(All4003NodeIPs, AllNodeIPs){
+    
+    for (let i=0; i<All4003NodeIPs.length; i++) {   
+        let resPeers = await getPeers(All4003NodeIPs[i]);        
+        resPeers.forEach(element =>{
+            let peerIp = element.ip;
+            if (!AllNodeIPs.includes(peerIp)){
+                console.log("here");
+                AllNodeIPs.push(peerIp);
+                if (element.ports['@arkecosystem/core-api'] == 4003){
+                    All4003NodeIPs.push(peerIp)
+                }
+            }
+        })          
+    }
+}
+
+/* async function fillUp(All4003NodeIPs, AllNodeIPs){
+    
+    await getIPsFromApiMainNode(All4003NodeIPs, AllNodeIPs);
+
+    await fillUpWithPeers(All4003NodeIPs, AllNodeIPs);
+    
+    //All4003NodeIPs.push('178.62.211.47');
+    //All4003NodeIPs.push('54.38.120.34');
+    //await fillUpWithPeers(All4003NodeIPs, AllNodeIPs);
+  
+    
+    let NodeIPs = [All4003NodeIPs, AllNodeIPs];
+
+    return NodeIPs;
+} */
+
+async function getAllNodeIPs(){
+
+    let All4003NodeIPs = [];
+    let AllNodeIPs = [];
+
+    await getIPsFromApiMainNode(All4003NodeIPs, AllNodeIPs);
+
+    await fillUpWithPeers(All4003NodeIPs, AllNodeIPs);  
+    
+    let NodeIPs = [All4003NodeIPs, AllNodeIPs];
+
+    console.log(NodeIPs[0].length);
+    console.log(NodeIPs[1].length);
+
+    return NodeIPs;
+}
+
+getAllNodeIPs();
 
 /** cette fonction affiche (ou peut retrouner) la liste des peers avec leur état (synced = true/false) 
  * l'excecution de cette fonction peut prendre une vaingtaine de sec
@@ -81,7 +153,9 @@ async function verifStatusV2(){
     //return tabSyncPeer;
 }
 
+//verifStatusV2()
 
-
-verifStatusV2()
-
+/* let L1 = [];
+let L2 = [{1:2},{7:3}];
+L1.push(...L2);
+console.log(L1); */
