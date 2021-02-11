@@ -156,7 +156,7 @@ async function verifStatusV2(){
     //return tabSyncPeer;
 }
 
-//verifStatusV2()
+verifStatusV2()
 
 /* let L1 = [];
 let L2 = [{1:2},{7:3}];
@@ -167,7 +167,7 @@ console.log(L1); */
 
 
 
-async function allVersion (nodeList){
+async function numberOfNodesByVersion (nodeList){
 
     let result = {};
     //let res = fetchAsync(`https://api.ark.io/api/peers?page=1&limit=100`);
@@ -187,7 +187,7 @@ async function allVersion (nodeList){
 
 async function testVersion(){
     let nodeList = await getAllNodeIPs();
-    let result = await allVersion(nodeList);
+    let result = await numberOfNodesByVersion(nodeList);
     console.log(result);
 }
 
@@ -244,7 +244,7 @@ async function testBlockId(){
     console.log(Object.keys(result));
 }
 
-testBlockId();
+//testBlockId();
 
 
 
