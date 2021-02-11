@@ -50,60 +50,6 @@ getCountry();
 // ip2loc.IP2Location_close();
 
 
-
-
-// Indicateur de filtrage du nombre transaction par rapport a une durée
-// On pourra récupérer d'autre informations que le nombre par la suite
-function getNumberTransaction(){
-  fetchAsync('https://api.ark.io/api/transactions?page=1&limit=1000&type=0')
-  .then(res => {
-
-    // on transforme toute les timestamps.human de notre data en DATE
-    res.data.forEach(element => {
-      element.timestamp.human = new Date (element.timestamp.human)
-    });
-
-    let now = new Date(Date.now())
-
-    /*
-    // test sur le jour
-    console.log(res.data[0].timestamp.human.getDate());
-    // test sur l'année
-    console.log(res.data[0].timestamp.human.getFullYear());
-
-    // le jour d'aujourd'hui
-    let now = new Date(Date.now())
-    console.log("le jour aujourd'hui est :")
-    console.log(now.getDate());
-
-
-    // l'heure actuelle
-    console.log("l'heure actuelle est :")
-    console.log(now.getUTCHours()) // ca marche
-
-
-    // la minute actuelle
-    console.log("la minute actuelle est :")
-    console.log(now.getUTCMinutes()) // ca marche
-    */
-
-    const result = res.data.filter(transaction => transaction.timestamp.human.getDate() == now.getDate()
-                                                  && transaction.timestamp.human.getUTCHours() >= now.getUTCHours()-1)
-
-    /** on obtient la liste des transactions qui s'est effectué sur la dernière heure */
-    console.log("\n le nombre de transactions effectuées sur la dernière heure est :")
-    console.log(result.length)
-    //console.log(result)
-
-    return res.data;
-
-  })
-}
-getNumberTransaction();
-
-
-
-
 function getStatusPeers(){
   console.log("Statuts de 10 pairs")
   fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
