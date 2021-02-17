@@ -1,6 +1,9 @@
 
+ let data = require('./numberOfNodesByHeight')
+let fetchAsync = require('./../../utils/fetch')
+
 async function numberOfNodesByBlockId(nodeList){
-    let byHeight = await numberOfNodesByHeight(nodeList);
+    let byHeight = await data.numberOfNodesByHeight(nodeList);
     let result = {};
     for (const [key, value] of Object.entries(byHeight)){
         let res = await fetchAsync(`https://api.ark.io/api/blocks/${key}`);
@@ -18,3 +21,11 @@ async function numberOfNodesByBlockId(nodeList){
     console.log(Object.keys(result));
 } */
 
+//  let nodes = require('../../ListNode')
+
+
+/**
+ const nodes = require('../../ListNode')
+ nodes.getAllNodeIPs().then(res=> {console.log(res.length)})*/
+
+ module.exports.numberOfNodesByBlockId = numberOfNodesByBlockId;

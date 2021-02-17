@@ -71,7 +71,7 @@ async function fillUpWithPeers(All4003NodeIPs, AllNodeIPs, AllNodesInfos){
             let peerIp = element.ip;
             if (!AllNodeIPs.includes(peerIp)){
                 //console.log("here");
-                console.log(All4003NodeIPs[i]);
+                // console.log(All4003NodeIPs[i]);
                 AllNodeIPs.push(peerIp);
                 AllNodesInfos.push(element);
                 if (element.ports['@arkecosystem/core-api'] == 4003){
@@ -96,12 +96,11 @@ async function getAllNodeIPs(){
     
     let NodeIPs = [All4003NodeIPs, AllNodeIPs];
 
-    console.log(NodeIPs[0].length);
-    console.log(NodeIPs[1].length);
+    // console.log(NodeIPs[0].length);
+    // console.log(NodeIPs[1].length);
     //console.log(AllNodesInfos);
 
     return AllNodesInfos;
 }
 
-module.exports = getAllNodeIPs;
-
+module.exports.getAllNodeIPs = getAllNodeIPs;
