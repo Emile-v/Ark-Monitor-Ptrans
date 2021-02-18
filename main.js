@@ -39,7 +39,23 @@ async function main(){
     console.log(`Le nombre de transaction sur la/les ${numberOfHour} dernière(s) heure(s)  : `)
     console.log(nbTransation)
 
+    console.log("-----------------------")
+
+    /** require location of peers */
+    data = require('./Indicators/Node/country')
+    let location = await data.getCountry(nodes)
+    console.log("La localisation de tous les noeuds")
+    console.log(location)
     
+    console.log("-----------------------")
+
+    /** require status of peers */
+    data = require('./Indicators/Node/status')
+    let status = await data.getStatusPeers(nodes)
+    console.log("Le statut de tous les noeuds")
+    console.log(status)
+    
+
 
 }
 

@@ -52,15 +52,6 @@ let main = async (duree, numPage) => {
       res += res1
     } 
   
-    if(duree == 1 ){
-      console.log("Le nombre de transaction sur la dernière heure est : ")
-      console.log(res);
-    }
-    else{
-      console.log(`Le nombre de transaction sur les ${duree} dernières heures est : `)
-      console.log(res);
-    
-    }
 
     return res
     

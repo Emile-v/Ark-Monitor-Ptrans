@@ -1,7 +1,9 @@
 
-function getStatusPeers(){
+let fetchAsync = require('../../utils/fetch')
+
+function getStatusPeers1(){
     console.log("Statuts de 10 pairs")
-    fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
+    fetchAsync('https://api.ark.io/api/peers?page=1&limit=100')
     .then(res => res.data)
     .then((delegates) => {
       for (let i = 0; i < delegates.length; i++) {
@@ -18,3 +20,52 @@ function getStatusPeers(){
       }
     })
   }
+
+  // getStatusPeers()
+
+
+  // {
+  //   desactivatedAPI : []
+  //   activatedAPI : {
+  //                     synced : [...]
+  //                     notSynced : [...]
+  //                   }
+
+  // }
+
+  async function getStatusPeers(delegates){
+      let result = {
+        desactivatedAPI : [],
+        activatedAPI : {
+          synced : [],
+          notSynced : []
+        }
+      }
+      for (let i = 0; i < delegates.length; i++) {
+        try{
+           // si le port est -1, l'api n'est pas disponible.
+          if(delegates[i].ports['@arkecosystem/core-api']!='-1'){
+            if(delegates[i].ports['@arkecosystem/core-api']){
+              let add='http://'+delegates[i].ip+":"+delegates[i].ports['@arkecosystem/core-api']+'/api/node/status'
+              let pair = await fetchAsync(add)
+
+                if(pair.data.synced == true){
+                  result.activatedAPI.synced.push(delegates[i].ip)
+                }
+                else{
+                  result.activatedAPI.notSynced.push(delegates[i].ip)
+                }
+            }
+          }
+          else result.desactivatedAPI.push(delegates[i].ip)
+        }
+        catch(e){
+          
+        }
+       
+      }
+      return result
+  }
+  // getStatusPeers()
+
+  module.exports.getStatusPeers = getStatusPeers;
