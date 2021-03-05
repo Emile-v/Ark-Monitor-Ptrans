@@ -1,5 +1,5 @@
 
-async function main(){
+module.exports = async function main(){
 
     /** require de tous les noeuds */
     let data = require('./ListNode')
@@ -59,6 +59,6 @@ async function main(){
 
 }
 
-main()
+//main()
 // const node = require('./Indicators/Global/numberOfNodesByBlockId')
 // node.numberOfNodesByBlockId().then(res=> {console.log(res)})

@@ -1,7 +1,17 @@
 {
+  "name": "ark-monitor",
+  "version": "1.0.0",
   "lockfileVersion": 1,
+  "preferGlobal": true,
+  "bin": {
+    "monitor": "./bin/index.js"
+  },
   "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^7.1.0",
+    "inquirer": "^8.0.0",
     "ip2location-nodejs": "^8.4.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "pad": "^3.2.0"
   }
 }
