@@ -21,6 +21,8 @@ async function numberOfNodesByHeight(nodeList){
     let nodeList = await getAllNodeIPs();
     let result = await numberOfNodesByHeight(nodeList);
     console.log(result);
-} */
+} 
+*/
+
 
 module.exports.numberOfNodesByHeight = numberOfNodesByHeight;
