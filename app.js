@@ -1,4 +1,6 @@
 'use strict';
+const os = require('os');
+const psList = require('ps-list');
 
 var ip2loc = require("ip2location-nodejs");
 ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
@@ -41,7 +43,7 @@ function getCountry(){
           },
     )
 }
-getCountry();
+// getCountry();
 
 
 
@@ -90,3 +92,23 @@ function getStaticFeesPeers(){
     }
   })
 }
+
+
+function getGeneralMachineInfos(){
+  console.log(os.type()+ " " + os.platform() + "  " + os.arch());
+  console.log(os.cpus()); 
+  console.log(os.networkInterfaces()); 
+  console.log(os.freemem() +" / "+ os.totalmem());
+   
+  (async () => {
+    let psl =await psList();
+    //=> [{pid: 3213, name: 'node', cmd: 'node test.js', ppid: 1, uid: 501, cpu: 0.1, memory: 1.5}, …]
+    console.log(psl);
+  })();
+  
+  if (process.pid) {
+    console.log('This process is your pid ' + process.pid + " " + process.nam);
+  }
+}
+
+getGeneralMachineInfos();
