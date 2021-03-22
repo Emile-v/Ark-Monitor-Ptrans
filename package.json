@@ -2,6 +2,7 @@
   "lockfileVersion": 1,
   "dependencies": {
     "ip2location-nodejs": "^8.4.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "ps-list": "^7.2.0"
   }
 }

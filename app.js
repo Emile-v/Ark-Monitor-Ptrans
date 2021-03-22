@@ -99,16 +99,44 @@ function getGeneralMachineInfos(){
   console.log(os.cpus()); 
   console.log(os.networkInterfaces()); 
   console.log(os.freemem() +" / "+ os.totalmem());
-   
-  (async () => {
-    let psl =await psList();
-    //=> [{pid: 3213, name: 'node', cmd: 'node test.js', ppid: 1, uid: 501, cpu: 0.1, memory: 1.5}, …]
-    console.log(psl);
-  })();
   
-  if (process.pid) {
-    console.log('This process is your pid ' + process.pid + " " + process.nam);
-  }
 }
 
-getGeneralMachineInfos();
+//getGeneralMachineInfos();
+// NECESSITE LE NODE INSTALLE
+
+function getNodeEnvList(){
+  const{exec} = require("child_process");
+
+  exec("ark env:list",( error, stdout, stderr) => {
+    if(error) {
+      console.log('error');
+    }
+
+    if(stderr) {
+      console.log('stderr');
+    }
+    console.log(stdout);
+  
+
+});
+}
+// NECESSITE LE NODE QUI TOURNE EN ARRIERE PLAN
+
+function getNodeProcessStatus(){
+  const{exec} = require("child_process");
+
+  exec("ps -p 4652 -o pid,comm,lstart,etime,%mem ",( error, stdout, stderr) => {
+    if(error) {
+      console.log('error');
+    }
+
+    if(stderr) {
+      console.log('stderr');
+    }
+    console.log(stdout);
+  
+
+});
+}
+getNodeEnvList();
