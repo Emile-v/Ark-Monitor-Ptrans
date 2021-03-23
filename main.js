@@ -1,6 +1,7 @@
 const fs = require('fs')
+const yaml = require('js-yaml');
 
-function exportData(data, nameFile){
+async function exportDataJSON(data, nameFile){
     let donnee = JSON.stringify(data)
     fs.writeFileSync(nameFile, donnee, function(erreur){
         if(erreur){
@@ -10,12 +11,11 @@ function exportData(data, nameFile){
 }
 
 async function refreshData(){
-    let NOM_PROJET = "./ProjetGit/Ark-Monitor-Ptrans/"
 
     let data = require('./ListNode')
     let nodes = await data.getAllNodeIPs()
 
-    let NAME_FILE = NOM_PROJET + "data.json"
+    let NAME_FILE = "./data.json"
 
     let datas = JSON.stringify(nodes)
     fs.writeFileSync(NAME_FILE, datas, function(erreur){
@@ -27,13 +27,25 @@ async function refreshData(){
 }
 
 
+async function exportDataYAML(data, nameFile){
+    let yamlStr = yaml.dump(data);
+    console.log(yamlStr)
+    fs.writeFileSync(nameFile, yamlStr, 'utf8', function(erreur){
+        if(erreur){
+            console.log(erreur)
+        }
+    })
+}
+
 
 
 async function main(){
 
     /** require de tous les noeuds */
-    // let data = require('./ListNode')
+    let nodes = require('./data.json')
     // let nodes = await data.getAllNodeIPs()
+
+    // console.log(nodes)
     // console.log("Le nombre de noeud : " + nodes.length) 
 
     // console.log("-----------------------") 
@@ -49,10 +61,10 @@ async function main(){
     // console.log("-----------------------") 
 
     // /** require numberOfNodesByHeight  */
-    // data = require('./Indicators/Global/numberOfNodesByHeight')
-    // let nbNodesBH = await data.numberOfNodesByHeight(nodes)
-    // console.log("Le nombre de noeud par hauteur du dernier block : ")
-    // console.log(nbNodesBH)
+    data = require('./Indicators/Global/numberOfNodesByHeight')
+    let nbNodesBH = await data.numberOfNodesByHeight(nodes)
+    console.log("Le nombre de noeud par hauteur du dernier block : ")
+    console.log(nbNodesBH)
 
     // console.log("-----------------------")
 
@@ -106,8 +118,7 @@ async function main(){
     
 
 
-    // let nameFile = NOM_PROJET + "exemple.js"
-    // exportData(location, nameFile)
+    
 
     // let nodes = require('./data.json')
     // data = require('./Indicators/Node/status')
@@ -115,7 +126,18 @@ async function main(){
 
     // console.log(status)
 
-    refreshData()
+    /** ************export sous JSON**** */
+    // let repertoire = "./exemple555.json"
+    // exportDataJSON(nbNodesBV, repertoire )
+
+    /** **************refresh******** */
+    // refreshData()
+
+    /** ********** export YAML ************** */
+    // let repertoire1 = "./exemple6.yaml"
+    // exportDataYAML(nodes, repertoire1 )
+
+
 
 
 }
@@ -123,3 +145,25 @@ async function main(){
 main()
 // const node = require('./Indicators/Global/numberOfNodesByBlockId')
 // node.numberOfNodesByBlockId().then(res=> {console.log(res)})
+
+
+
+
+
+// { 
+//     nom : "nbdb"
+//     resultat : 
+//     {
+//         '15388470': 1,
+//         '15623455': 1,
+//         '15623476': 1,
+//         '15623491': 1,
+//         '15623497': 7,
+//         '15623498': 2,
+//         '15623501': 7,
+//         '15623502': 45,
+//         '15623503': 74 
+//     }
+
+// }
+
