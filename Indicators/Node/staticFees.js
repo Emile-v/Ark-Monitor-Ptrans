@@ -1,3 +1,4 @@
+let fetchAsync = require('../../utils/fetch')
 
 function getStaticFeesPeers(){
     console.log("Fees de 10 pairs.")
@@ -18,3 +19,8 @@ function getStaticFeesPeers(){
       }
     })
   }
+
+  //getStaticFeesPeers()
+
+
+  module.exports.getStaticFeesPeers = getStaticFeesPeers;

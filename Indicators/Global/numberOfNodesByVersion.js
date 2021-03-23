@@ -1,5 +1,5 @@
 
-sasync function numberOfNodesByVersion (nodeList){
+async function numberOfNodesByVersion (nodeList){
 
     let result = {};
     //let res = fetchAsync(`https://api.ark.io/api/peers?page=1&limit=100`);
@@ -22,3 +22,4 @@ sasync function numberOfNodesByVersion (nodeList){
     let result = await numberOfNodesByVersion(nodeList);
     console.log(result);
 } */
+module.exports.numberOfNodesByVersion = numberOfNodesByVersion

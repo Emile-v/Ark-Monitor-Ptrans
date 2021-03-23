@@ -1,4 +1,6 @@
 
+let fetchAsync = require('../../utils/fetch')
+
 let main = async (duree, numPage) => {
 
     let res = fetchAsync(`https://api.ark.io/api/transactions?page=${numPage}&limit=100&type=0`);
@@ -17,10 +19,6 @@ let main = async (duree, numPage) => {
                                                  
       return result;
     })
-  
-  
-    console.log(`le résultat sur la ${numPage}eme page est : `)
-      console.log(res2.length)
       return res2.length
   
   }
@@ -54,16 +52,9 @@ let main = async (duree, numPage) => {
       res += res1
     } 
   
-    if(duree == 1 ){
-      console.log("Le nombre de transaction sur la dernière heure est : ")
-      console.log(res);
-    }
-    else{
-      console.log(`Le nombre de transaction sur les ${duree} dernières heures est : `)
-      console.log(res);
-    
-    }
+
+    return res
     
   }
   
-  RetrieveTransaction(7)
+module.exports.RetrieveTransaction = RetrieveTransaction;
