@@ -25,6 +25,8 @@ const allIndicators = require('../main');
 
 function exportData(jsObject, directory){
     console.log('exporting');
+    exportData = require('../utils/export.js')
+    let exportJSON = await exportData.exportDataJSON(jsObject, directory)
 }
 
 /*******************************************/

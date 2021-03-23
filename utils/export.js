@@ -21,3 +21,7 @@ async function exportDataYAML(data, nameFile){
         }
     })
 }
+
+
+module.exports.exportDataJSON = exportDataJSON;
+module.exports.exportDataYAML = exportDataYAML;
