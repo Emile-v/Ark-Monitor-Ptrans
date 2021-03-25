@@ -23,7 +23,7 @@ const allIndicators = require('../main');
 /*******************************************/
 //bouchons temporaires
 
-function exportData(jsObject, directory){
+async function exportData(jsObject, directory){
     console.log('exporting');
     exportData = require('../utils/export.js')
     let exportJSON = await exportData.exportDataJSON(jsObject, directory)

@@ -11,6 +11,7 @@
     "commander": "^7.1.0",
     "inquirer": "^8.0.0",
     "ip2location-nodejs": "^8.4.0",
+    "js-yaml": "^4.0.0",
     "node-fetch": "^2.6.1",
     "pad": "^3.2.0"
   }

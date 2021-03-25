@@ -55,10 +55,12 @@ module.exports = async function main(){
     console.log("Le statut de tous les noeuds")
     console.log(status)
     
-
+    /**pour refresh listOfNode */
+    // data = require('./utils/refresh')
+    // data.refreshData()
 
 }
 
-//main()
+// main()
 // const node = require('./Indicators/Global/numberOfNodesByBlockId')
 // node.numberOfNodesByBlockId().then(res=> {console.log(res)})
