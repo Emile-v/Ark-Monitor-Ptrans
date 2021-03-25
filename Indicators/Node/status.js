@@ -34,7 +34,12 @@ function getStatusPeers1(){
   // }
 
   async function getStatusPeers(delegates){
-      let result = {
+    let result_final = {
+      name : "Status Peers",
+      result : null
+    };  
+    
+    let result = {
         desactivatedAPI : [],
         activatedAPI : {
           synced : [],
@@ -61,10 +66,10 @@ function getStatusPeers1(){
         }
         catch(e){
           
-        }
-       
+        }       
       }
-      return result
+      result_final.result = result
+      return result_final
   }
   // getStatusPeers()
 

@@ -1,6 +1,11 @@
 
 async function numberOfNodesByHeight(nodeList){
 
+    let result_final = {
+        name : "number Of Nodes By Height",
+        result : null
+    };
+
     let result = {};
     //let res = fetchAsync(`https://api.ark.io/api/peers?page=1&limit=100`);
 
@@ -14,7 +19,8 @@ async function numberOfNodesByHeight(nodeList){
         }
     });
 
-    return result;
+    result_final.result = result
+    return result_final;
 }
 
 /* async function testHeight(){

@@ -8,6 +8,10 @@ ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
 
   async function getCountry(delegates){
 
+        let result_final = {
+          name : "Country",
+          result : null
+        };
         let result = {}
         let city = ""
         let country = ""
@@ -40,7 +44,8 @@ ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
           }
         }
         ip2loc.IP2Location_close();
-        return result
+        result_final.result = result
+        return result_final
   }
   
   module.exports.getCountry = getCountry;

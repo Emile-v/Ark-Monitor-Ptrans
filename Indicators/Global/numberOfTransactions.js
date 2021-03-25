@@ -31,6 +31,12 @@ let main = async (duree, numPage) => {
   
   
   async function RetrieveTransaction(duree){
+
+    let result_final = {
+      name : "Retrieve Transaction",
+      result : null
+    };
+    
     let numPage = 1;
     // let res1 = await main(numPage)
     // res = res1;
@@ -53,7 +59,8 @@ let main = async (duree, numPage) => {
     } 
   
 
-    return res
+    result_final.result = res
+    return result_final
     
   }
   
