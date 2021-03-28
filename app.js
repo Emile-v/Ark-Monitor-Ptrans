@@ -121,22 +121,68 @@ function getNodeEnvList(){
 
 });
 }
-// NECESSITE LE NODE QUI TOURNE EN ARRIERE PLAN
 
+// getNodeEnvList();
+// NECESSITE LE NODE QUI TOURNE EN ARRIERE PLAN
+// Retourne des informations processus via bash : 
+// Id Processus, nom de commande, heure de début, temps d'execution et utilisation memoire
 function getNodeProcessStatus(){
   const{exec} = require("child_process");
 
-  exec("ps -p 4652 -o pid,comm,lstart,etime,%mem ",( error, stdout, stderr) => {
+      exec("ps -C node -o pid,comm,lstart,etime,%mem ",( error, stdout, stderr) => {
+        if(error) {
+          console.log('error');
+        }
+    
+        if(stderr) {
+          console.log('stderr');
+        }
+        console.log(stdout);    
+    });
+
+}
+// getNodeProcessStatus();
+
+// Returns the status report of the ark process
+function getNodeStatus(){
+  const{exec} = require("child_process");
+      exec("sudo ark relay:status ",( error, stdout, stderr) => {
+        if(error) {
+          console.log('error');
+        }
+    
+        if(stderr) {
+          console.log('stderr');
+        }
+        console.log(stdout);    
+    });
+
+}
+//  getNodeStatus();
+
+function getPublicIP(){
+  const{exec} = require("child_process");
+
+  exec("curl icanhazip.com",( error, stdout, stderr) => {
     if(error) {
-      console.log('error');
+      // Erreur, tentative avec curl'
+      exec("wget -q0- icanhazip.com",( error, stdout, stderr) => {
+        console.log(stdout)
+      })
     }
 
     if(stderr) {
-      console.log('stderr');
+      // Erreur, tentative avec curl
+      exec("wget -q0- icanhazip.com",( error, stdout, stderr)=>{
+        console.log(stdout)
+
+      })
+
     }
-    console.log(stdout);
+    console.log("Public IP : "+ stdout + " Port : 4001");
   
 
 });
 }
-getNodeEnvList();
+
+getPublicIP()
