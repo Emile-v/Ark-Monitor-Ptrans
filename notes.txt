@@ -1,0 +1,3 @@
+retrouver le pid des 2 processus principaux
+pidof postgres
+pidof node
