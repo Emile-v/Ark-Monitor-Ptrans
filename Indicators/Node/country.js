@@ -1,7 +1,7 @@
 
 let fetchAsync = require('../../utils/fetch')
 let ip2loc = require("ip2location-nodejs");
-ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
+ip2loc.IP2Location_init("../../ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
 
 //Indicateur de localisation des noeuds
 // Ici on retourne seulement les localisations des 10 premiers pairs du noeud de l'api
