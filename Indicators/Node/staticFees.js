@@ -20,7 +20,7 @@ function getStaticFeesPeers(){
     })
   }
 
-  //getStaticFeesPeers()
+  // getStaticFeesPeers()
 
 
   module.exports.getStaticFeesPeers = getStaticFeesPeers;

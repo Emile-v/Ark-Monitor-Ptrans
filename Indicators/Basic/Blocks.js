@@ -5,17 +5,43 @@ function getBlocks(page=1, limit=100){
     fetchAsync('https://api.ark.io/api/blocks?page='+page+'&limit='+limit)
     .then(res => res.data)
     .then((resultat) => {
-      console.log(resultat);
+      return(resultat);
     })
   }
 
 
   function getBlockbyID(idblock){
-    console.log("Liste des blocks: ")
+    console.log("Block by ID ")
     fetchAsync('https://api.ark.io/api/blocks/'+idblock)
     .then(res => res.data)
     .then((resultat) => {
-      console.log(resultat);
+      return(resultat);
     })
   }
-  // getBlockbyID("3e3126993a27bdb36daa810360e5d2f167afbdf4dc117ea59571da46be7ad126");
+  function getBlockbyHeight(heightblock){
+    console.log("Block by Height ")
+    fetchAsync('https://api.ark.io/api/blocks/'+heightblock)
+    .then(res => res.data)
+    .then((resultat) => {
+      return(resultat);
+    })
+  }
+
+  
+  function getTransactionsbyID(idblock,page=1,limit=100){
+    console.log("Transactions by Block ID ")
+    fetchAsync('https://api.ark.io/api/blocks/'+idblock+'/transactions?page='+page+'&limit='+limit)
+    .then(res => res.data)
+    .then((resultat) => {
+      return(resultat);
+    })
+  }
+  
+  function getTransactionsbyHeight(heightblock,page=1,limit=100){
+    console.log("Block by ID ")
+    fetchAsync('https://api.ark.io/api/blocks/'+heightblock+'/transactions?page='+page+'&limit='+limit)
+    .then(res => res.data)
+    .then((resultat) => {
+      return(resultat);
+    })
+  }
