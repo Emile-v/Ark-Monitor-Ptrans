@@ -7,7 +7,7 @@ const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesBy
 const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactions');
 
 
-async function DemoGroup(nodeList){
+async function demoGroup(nodeList){
     let obj=[];
     obj.numberOfNodesByBlockId= await numberOfNodesByBlockId(nodeList);
     obj.numberOfNodesByHeight= await numberOfNodesByHeight(nodeList);
@@ -23,4 +23,4 @@ async function test(){
     console.log(res)
 }
 
-test();
+module.exports.demoGroup = demoGroup;

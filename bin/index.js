@@ -10,6 +10,34 @@ const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactio
 const { getCountry } = require('../Indicators/Node/country')
 const { getStatusPeers } = require('../Indicators/Node/status')
 const { getStaticFeesPeers } = require('../Indicators/Node/staticFees')
+const { refreshData } = require('../utils/refresh');
+const { demoGroup } = require('./DemoGroup');
+// $ monitor exGroup
+program
+    .command('exGroup')
+    .alias('exg')
+    .description('An example of')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options) => {
+        if (options.export) {
+            exportResult(demoGroup, listOfNodes , options.export);
+        }
+        else{
+            showResult(demoGroup, listOfNodes)
+        }
+    })
+
+
+
+// $ monitor r
+program
+    .command('refreshListOfNodes')
+    .alias('r')
+    .description('Refresh the stored list of known nodes')
+    .action((options) => {
+        refreshData();
+    })
+
 
 // import function to list coffeee menu
 const list = require('../lib/list');
