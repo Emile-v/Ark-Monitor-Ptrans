@@ -1,6 +1,6 @@
 let fetchAsync = require('./../../utils/fetch')
 
-async function retrieve_a_Peer(ip){
+async function retrieveAPeer(ip){
         let res = await fetchAsync(`https://api.ark.io/api/peers/${ip}`);
         
         if(Object.keys(res).includes('data')){
@@ -14,7 +14,9 @@ async function retrieve_a_Peer(ip){
 }
 
 async function printR(){
-    let res = await retrieve_a_Peer("5.13.97")
+    let res = await retrieveAPeer("213.32.9.96")
     console.log(res)
 }
 printR()
+
+module.exports.retrieveAPeer = retrieveAPeer;

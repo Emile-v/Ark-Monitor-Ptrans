@@ -10,3 +10,6 @@ function getBlockchain(){
   }
 
 getBlockchain();
+
+
+module.exports.getBlockchain = getBlockchain;

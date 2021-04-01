@@ -7,9 +7,14 @@ const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByH
 const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesByVersion');
 const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactions');
 
-const { getCountry } = require('../Indicators/Node/country')
-const { getStatusPeers } = require('../Indicators/Node/status')
-const { getStaticFeesPeers } = require('../Indicators/Node/staticFees')
+const { getCountry } = require('../Indicators/Node/country');
+const { getStatusPeers } = require('../Indicators/Node/status');
+const { getStaticFeesPeers } = require('../Indicators/Node/staticFees');
+
+const { getBlockchain } = require('../Indicators/Basic/Blockchain');
+const { retrieveAPeer } = require('../Indicators/Ark/Peers');
+
+const { refreshData } = require('../utils/refresh');
 
 // import function to list coffeee menu
 const list = require('../lib/list');
@@ -21,7 +26,6 @@ const order = require('../lib/order');
 const allIndicators = require('../main');
 
 /*******************************************/
-//bouchons temporaires
 
 async function exportData(jsObject, directory){
     console.log('exporting');
@@ -42,6 +46,9 @@ async function showResult(indicatorFunction, parameter){
     const indicatorResult = await indicatorFunction(parameter);
     console.log(indicatorResult);
 }
+
+
+/*
 
 // Print coffee drinks menu
 // $ coffee-shop list
@@ -80,18 +87,18 @@ program
     .action(function () {
         allIndicators();
     });
+*/
 
-
-async function exampleTest(){
-    //console.log('exporting')
-    return 'exp';
-}
-
-async function runn(f){
-    let tr = await f();
-    console.log(tr);
-    return tr;
-}
+/*
+// $ monitor r
+program
+    .command('refreshListOfNodes')
+    .alias('r')
+    .description('Refresh the stored list of known nodes')
+    .action((options) => {
+        refreshData();
+    })
+*/
 
 // $ monitor nonbbi
 program
@@ -202,6 +209,36 @@ program
         }
     })
 
+
+//monitor retrieveAPeer <ip>
+program
+    .command('retrieveAPeer <ip>')
+    .alias('rap')
+    .description('Get a peer by its ip')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options, ip) => {
+        if (options.export) {
+            exportResult(retrieveAPeer, ip , options.export);
+        }
+        else{
+            showResult(retrieveAPeer, ip)
+        }
+    })
+
+//monitor gb
+program
+    .command('getBlockchain')
+    .alias('gb')
+    .description('Get the latest block and supply of the blockchain.')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options, ip) => {
+        if (options.export) {
+            exportResult(getBlockchain, null, options.export);
+        }
+        else{
+            showResult(getBlockchain, null)
+        }
+    })
 
 // allow commander to parse `process.argv`
 program.parse(process.argv);
