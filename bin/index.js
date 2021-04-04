@@ -10,35 +10,20 @@ const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactio
 const { getCountry } = require('../Indicators/Node/country')
 const { getStatusPeers } = require('../Indicators/Node/status')
 const { getStaticFeesPeers } = require('../Indicators/Node/staticFees')
+
+const { getBlockchain } = require('../Indicators/Basic/Blockchain');
+const { retrieveAPeer } = require('../Indicators/Basic/Peers');
+
 const { refreshData } = require('../utils/refresh');
 const { demoGroup } = require('./DemoGroup');
-// $ monitor exGroup
-program
-    .command('exGroup')
-    .alias('exg')
-    .description('An example of')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(demoGroup, listOfNodes , options.export);
-        }
-        else{
-            showResult(demoGroup, listOfNodes)
-        }
-    })
 
 
 
-// $ monitor r
-program
-    .command('refreshListOfNodes')
-    .alias('r')
-    .description('Refresh the stored list of known nodes')
-    .action((options) => {
-        refreshData();
-    })
 
 
+
+
+/*
 // import function to list coffeee menu
 const list = require('../lib/list');
 
@@ -47,19 +32,20 @@ const order = require('../lib/order');
 
 // import main function for all indicators
 const allIndicators = require('../main');
+*/
 
 /*******************************************/
-//bouchons temporaires
 
+const listOfNodes = require('../listOfNodes.json');
+
+const {showResult, exportResult} = require('../utils/manageResult');
+const getBlockInfos = require('../Indicators/Basic/Blocks');
+/*
 async function exportData(jsObject, directory){
     console.log('exporting');
     exportData = require('../utils/export.js')
     let exportJSON = await exportData.exportDataJSON(jsObject, directory)
 }
-
-/*******************************************/
-
-const listOfNodes = require('../listOfNodes.json');
 
 async function exportResult(indicatorFunction, parameter, directory){
     const indicatorResult = await indicatorFunction(parameter);
@@ -70,7 +56,9 @@ async function showResult(indicatorFunction, parameter){
     const indicatorResult = await indicatorFunction(parameter);
     console.log(indicatorResult);
 }
+*/
 
+/*
 // Print coffee drinks menu
 // $ coffee-shop list
 // $ coffee-shop ls
@@ -108,18 +96,17 @@ program
     .action(function () {
         allIndicators();
     });
+*/
 
 
-async function exampleTest(){
-    //console.log('exporting')
-    return 'exp';
-}
-
-async function runn(f){
-    let tr = await f();
-    console.log(tr);
-    return tr;
-}
+// $ monitor r
+program
+    .command('refreshListOfNodes')
+    .alias('r')
+    .description('Refresh the stored list of known nodes')
+    .action((options) => {
+        refreshData();
+    })
 
 // $ monitor nonbbi
 program
@@ -229,6 +216,59 @@ program
             showResult(getStatusPeers, listOfNodes)
         }
     })
+
+// $ monitor exGroup
+program
+    .command('exGroup')
+    .alias('exg')
+    .description('An example of a group of indicators')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options) => {
+        if (options.export) {
+            exportResult(demoGroup, listOfNodes , options.export);
+        }
+        else{
+            showResult(demoGroup, listOfNodes)
+        }
+    })
+
+//monitor gb
+program
+    .command('getBlockchain')
+    .alias('gb')
+    .description('Get the latest block and supply of the blockchain.')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options) => {
+        if (options.export) {
+            exportResult(getBlockchain, null, options.export);
+        }
+        else{
+            showResult(getBlockchain, null)
+        }
+    })
+
+//monitor retrieveAPeer <ip>
+program
+    .command('retrieveAPeer <ip>')
+    .alias('rap')
+    .description('Get a peer by its ip')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .action((options, ip) => {
+        if (options.export) {
+            exportResult(retrieveAPeer, ip , options.export);
+        }
+        else{
+            showResult(retrieveAPeer, ip)
+        }
+    })
+
+
+program
+    .command('blocks ')
+    .description('Several indicators to retrieve information on blocks')
+    .action(function () {
+        getBlockInfos();
+    });
 
 
 // allow commander to parse `process.argv`
