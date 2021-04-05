@@ -12,7 +12,11 @@ const { getStatusPeers } = require('../Indicators/Node/status')
 const { getStaticFeesPeers } = require('../Indicators/Node/staticFees')
 
 const { getBlockchain } = require('../Indicators/Basic/Blockchain');
+const getBlockInfos = require('../Indicators/Basic/Blocks');
 const { retrieveAPeer } = require('../Indicators/Basic/Peers');
+const { getDelegates, getDelegateByID } = require('../Indicators/Basic/Delegates');
+const { getMainNodeConfiguration } = require('../Indicators/Basic/Node');
+
 
 const { refreshData } = require('../utils/refresh');
 const { demoGroup } = require('./DemoGroup');
@@ -39,7 +43,7 @@ const allIndicators = require('../main');
 const listOfNodes = require('../listOfNodes.json');
 
 const {showResult, exportResult} = require('../utils/manageResult');
-const getBlockInfos = require('../Indicators/Basic/Blocks');
+
 /*
 async function exportData(jsObject, directory){
     console.log('exporting');
@@ -232,7 +236,7 @@ program
         }
     })
 
-//monitor gb
+// $ monitor gb
 program
     .command('getBlockchain')
     .alias('gb')
@@ -247,7 +251,7 @@ program
         }
     })
 
-//monitor retrieveAPeer <ip>
+// $ monitor retrieveAPeer <ip>
 program
     .command('retrieveAPeer <ip>')
     .alias('rap')
@@ -263,13 +267,49 @@ program
     })
 
 
+// $ monitor blocks
 program
-    .command('blocks ')
+    .command('blocks')
     .description('Several indicators to retrieve information on blocks')
     .action(function () {
         getBlockInfos();
     });
 
+//monitor delegate
+program
+    .command('delegate')
+    .alias('dg')
+    .description('Get a list of delegates or a specifific delegate if a id is specified')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .option('-sd, --specificDelegate <username_or_Adress_or_PublicKey>')
+    .action((options) => {
+        if (options.export) {
+            if (options.specificDelegate) {
+                exportResult(getDelegateByID, options.specificDelegate , options.export);
+            }
+            else{
+                exportResult(getDelegates, null, options.export);
+            }
+        }
+        else{
+            if (options.specificDelegate) {
+                showResult(getDelegateByID, options.specificDelegate , options.export);
+            }
+            else{
+                showResult(getDelegates, null, options.export);
+            }
+        }
+    })
+
+
+// $ monitor mnc
+program
+    .command('mainNodeConfiguration')
+    .alias('mnc')
+    .description('Get different information about the main node configuration')
+    .action(function () {
+        getMainNodeConfiguration();
+    });
 
 // allow commander to parse `process.argv`
 program.parse(process.argv);
