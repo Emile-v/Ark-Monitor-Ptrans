@@ -25,9 +25,13 @@ async function numberOfNodesByVersion (nodeList){
     return result_final;
 }
 
-/* async function testVersion(){
-    let nodeList = await getAllNodeIPs();
-    let result = await numberOfNodesByVersion(nodeList);
-    console.log(result);
-} */
+/** test de la fonction */
+// async function testVersion(){
+//     let nodeList = require('../../listOfNodes.json')
+//     let result = await numberOfNodesByVersion(nodeList);
+//     console.log(result);
+// }
+// testVersion()
+
+
 module.exports.numberOfNodesByVersion = numberOfNodesByVersion

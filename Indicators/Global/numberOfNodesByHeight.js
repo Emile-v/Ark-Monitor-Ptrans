@@ -23,10 +23,13 @@ async function numberOfNodesByHeight(nodeList){
     return result_final;
 }
 
-/* async function testHeight(){
-    let nodeList = await getAllNodeIPs();
-    let result = await numberOfNodesByHeight(nodeList);
-    console.log(result);
-} */
+
+/* test de la fonction */
+// async function testHeight(){
+//     let nodeList = require('../../listOfNodes.json')
+//     let result = await numberOfNodesByHeight(nodeList);
+//     console.log(result);
+// }
+// testHeight()
 
 module.exports.numberOfNodesByHeight = numberOfNodesByHeight;

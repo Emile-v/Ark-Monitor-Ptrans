@@ -11,7 +11,8 @@ async function numberOfNodesByBlockId(nodeList){
 
     let result = {}
 
-    for (const [key, value] of Object.entries(byHeight)){
+
+    for (const [key, value] of Object.entries(byHeight.result)){
         let res = await fetchAsync(`https://api.ark.io/api/blocks/${key}`);
         let blockId = res.data.id;
         result[`${blockId}`] = value;
@@ -21,19 +22,12 @@ async function numberOfNodesByBlockId(nodeList){
     return result_final;
 }
 
-
-/* async function testBlockId(){
-    let nodeList = await getAllNodeIPs();
-    let result = await numberOfNodesByBlockId(nodeList);
-    console.log(result);
-    console.log(Object.keys(result));
-} */
-
-//  let nodes = require('../../ListNode')
-
-
-/**
- const nodes = require('../../ListNode')
- nodes.getAllNodeIPs().then(res=> {console.log(res.length)})*/
+/**test de la fonction */
+//  async function testBlockId(){
+//     let nodeList = require('../../listOfNodes.json')
+//     let result = await numberOfNodesByBlockId(nodeList);
+//     console.log(result);
+// } 
+// testBlockId()
 
  module.exports.numberOfNodesByBlockId = numberOfNodesByBlockId;

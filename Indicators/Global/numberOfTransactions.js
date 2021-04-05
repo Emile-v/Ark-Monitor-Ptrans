@@ -1,9 +1,9 @@
 
 let fetchAsync = require('../../utils/fetch')
 
-let main = async (duree, numPage) => {
+let main = async (duree, numPage, typeOfTransaction) => {
 
-    let res = fetchAsync(`https://api.ark.io/api/transactions?page=${numPage}&limit=100&type=0`);
+    let res = fetchAsync(`https://api.ark.io/api/transactions?page=${numPage}&limit=100&type=${typeOfTransaction}`);
   
     let res2 = await res.then(res => {
   
@@ -30,31 +30,25 @@ let main = async (duree, numPage) => {
   
   
   
-  async function RetrieveTransaction(duree){
-
+  async function RetrieveTransaction(duree, typeOfTransaction=0){
     let result_final = {
       name : "Retrieve Transaction",
       result : null
     };
     
     let numPage = 1;
-    // let res1 = await main(numPage)
-    // res = res1;
-    let res1 = 0;
-    let res = await main(duree, numPage)
+    let res = await main(duree, numPage, typeOfTransaction)
     
     if(res == 100 ){
       res = 0
-  
-  
       let res1 = 0;
   
-      while( (res1= await main(duree, numPage) ) == 100 ){
+      while( (res1= await main(duree, numPage, typeOfTransaction) ) == 100 ){
         numPage++;
         res += res1;
         res1 = 0;
       }
-      res1= await main(duree, numPage)
+      res1= await main(duree, numPage, typeOfTransaction)
       res += res1
     } 
   
@@ -64,4 +58,12 @@ let main = async (duree, numPage) => {
     
   }
   
+
+  /**test de la fonction */
+//   async function testTransaction(){
+//     let result = await RetrieveTransaction(3);
+//     console.log(result);
+// } 
+// testTransaction()
+
 module.exports.RetrieveTransaction = RetrieveTransaction;
