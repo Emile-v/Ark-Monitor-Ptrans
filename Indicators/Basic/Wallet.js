@@ -30,11 +30,17 @@ async function getAllWallet(maxPage){
     return wallet;
 }
 
+/*
 // getAllNodeIPs()
 async function printO(){
     let res = await getAllWallet(5)
     console.log(res)
 }
 printO()
+*/
 
 /** %%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%%%%%%%%%%% */
+
+
+
+module.exports.getAllWallet = getAllWallet;

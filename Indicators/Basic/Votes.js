@@ -16,7 +16,7 @@ async function callVotesApi(listOfAllPeers, numPage){
     return stop
 }
 
-async function getAllVotes(maxPage){
+async function getAllVotes(maxPage=1){
 
     let votes = []
     let stop = false
@@ -29,15 +29,17 @@ async function getAllVotes(maxPage){
     return votes;
 }
 
+/*
 // getAllNodeIPs()
 async function printO(){
     let res = await getAllVotes()
     console.log(res)
 }
 // printO()
+*/
 
 /** %%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%%%%%%%%%%% */
-async function retrieve_a_vote(id){
+async function retrieveAVote(id){
     let res = await fetchAsync(`https://api.ark.io/api/votes/${id}`);
         
     if(Object.keys(res).includes('data')){
@@ -49,8 +51,13 @@ async function retrieve_a_vote(id){
     
 }
 
+/*
 async function printR(){
     let res = await retrieve_a_vote("10a6fd0ab3244a88b21a17fb74e246e2ec0381992962eeb17053976593c3ddcc")
     console.log(res)
 }
 printR()
+*/
+
+module.exports.retrieveAVote = retrieveAVote;
+module.exports.getAllVotes = getAllVotes;

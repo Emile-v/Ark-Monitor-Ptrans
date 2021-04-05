@@ -16,6 +16,9 @@ const getBlockInfos = require('../Indicators/Basic/Blocks');
 const { retrieveAPeer } = require('../Indicators/Basic/Peers');
 const { getDelegates, getDelegateByID } = require('../Indicators/Basic/Delegates');
 const { getMainNodeConfiguration } = require('../Indicators/Basic/Node');
+const { retrieveAVote, getAllVotes } = require('../Indicators/Basic/Votes');
+const { getAllWallet } = require('../Indicators/Basic/Wallet');
+
 
 
 const { refreshData } = require('../utils/refresh');
@@ -279,9 +282,9 @@ program
 program
     .command('delegate')
     .alias('dg')
-    .description('Get a list of delegates or a specifific delegate if a id is specified')
+    .description('Get a list of delegates or a specifific delegate if an id is specified')
     .option('-e, --export <directory>', 'export indicator to specified directory')
-    .option('-sd, --specificDelegate <username_or_Adress_or_PublicKey>')
+    .option('-sd, --specificDelegate <username_or_Adress_or_PublicKey>', 'get a specific delegate by his username, adress, or public key')
     .action((options) => {
         if (options.export) {
             if (options.specificDelegate) {
@@ -310,6 +313,47 @@ program
     .action(function () {
         getMainNodeConfiguration();
     });
+
+
+//monitor vote
+program
+    .command('vote')
+    .description('Get a list of votes or a specifific vote if an id is specified')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .option('-sv, --specificVote <id>', 'get a specific vote by its id')
+    .action((options) => {
+        if (options.export) {
+            if (options.id) {
+                exportResult(retrieveAVote, options.id , options.export);
+            }
+            else{
+                exportResult(getAllVotes, null, options.export);
+            }
+        }
+        else{
+            if (options.id) {
+                showResult(retrieveAVote, options.id , options.export);
+            }
+            else{
+                showResult(getAllVotes, null, options.export);
+            }
+        }
+    })
+
+// $ monitor wallet
+program
+    .command('wallet')
+    .description('get a list of wallets, list of 100 by default, more if more pages a number of pages is specified')
+    .option('-e, --export <directory>', 'export indicator to specified directory')
+    .option('-nop, --numberOfPages <nop>', 'specify the number of pages of wallets to be returned (100 wallets per pages)')
+    .action((options) => {
+        if (options.export) {
+            exportResult(getAllWallet, options.numberOfPages, options.export);
+        }
+        else{
+            showResult(getAllWallet, options.numberOfPages)
+        }
+    })
 
 // allow commander to parse `process.argv`
 program.parse(process.argv);
