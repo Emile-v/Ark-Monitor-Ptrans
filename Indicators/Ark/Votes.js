@@ -23,17 +23,17 @@ async function getAllVotes(maxPage){
     let numPage = 1
 
     while(stop==false && numPage<=maxPage){
-        stop = await callVotesApi(votes, numPage, maxPage);
+        stop = await callVotesApi(votes, numPage);
         numPage++;
     }
     return votes;
 }
 
-// getAllNodeIPs()
-async function printO(){
-    let res = await getAllVotes()
-    console.log(res)
-}
+/**  test function */
+// async function printO(){
+//     let res = await getAllVotes(3)
+//     console.log(res)
+// }
 // printO()
 
 /** %%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%%%%%%%%%%% */
@@ -49,8 +49,8 @@ async function retrieve_a_vote(id){
     
 }
 
-async function printR(){
-    let res = await retrieve_a_vote("10a6fd0ab3244a88b21a17fb74e246e2ec0381992962eeb17053976593c3ddcc")
-    console.log(res)
-}
-printR()
+// async function printR(){
+//     let res = await retrieve_a_vote("10a6fd0ab3244a88b21a17fb74e246e2ec0381992962eeb17053976593c3ddcc")
+//     console.log(res)
+// }
+// printR()
