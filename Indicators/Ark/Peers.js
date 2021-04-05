@@ -1,22 +1,31 @@
-let fetchAsync = require('./../../utils/fetch')
 
-async function retrieveAPeer(ip){
-        let res = await fetchAsync(`https://api.ark.io/api/peers/${ip}`);
-        
-        if(Object.keys(res).includes('data')){
-            return res;
-        }
-        else{
-            return false; // the ip doesn't exist
-        }
-        
-    
+const fetchAsync = require("../../utils/fetch");
+const template = require("../../utils/templates");
+/** %%%%%%%%%%%%  List All Peers %%%%%%%%%%%%%%%%%%%% */
+async function list_All_Peers(maxPage){
+    let path = "https://api.ark.io/api/peers?"
+    let res = await template.retrieve_with_limitation_template(path, maxPage)
+    return res
 }
+/** test function */
+// async function printR(){
+//     let res = await list_All_Peers(2)
+//     console.log(res)
+// }
+// printR()
 
-async function printR(){
-    let res = await retrieveAPeer("213.32.9.96")
-    console.log(res)
+/** %%%%%%%%%%% Retrieve a Peer %%%%%%%%%%%%%%%% */
+async function retrieve_A_Peer(id){
+    let path = `https://api.ark.io/api/peers/${id}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
 }
-printR()
+/** test function */
+// async function printY(){
+//     let res = await retrieve_A_Peer("178.32.65.140")
+//     console.log(res)
+// }
+// printY()
 
-module.exports.retrieveAPeer = retrieveAPeer;
+
+// module.exports.retrieveAPeer = retrieveAPeer;

@@ -1,110 +1,73 @@
+
 const fetchAsync = require("../../utils/fetch");
-
-
-// %%%%%% retrieve all transaactions %%%%%%%%%%%
-async function callTransactionsApi(listOfAllPeers, numPage){
-    let stop = false;
-    try{
-        let res = await fetchAsync(`https://api.ark.io/api/transactions?page=${numPage}&limit=100`);
-        listOfAllPeers.push(...res.data);
-        if(res.data.length == 0){
-            stop = true;
-        }
-    }catch(e){
-        stop = true;
-    }
-    return stop
-}
-
-async function getAllNodeIPs(maxPage){
-
-    let transactions = []
-    let stop = false
-    let numPage = 1
-
-    while(stop==false && numPage<=maxPage){
-        stop = await callTransactionsApi(transactions, numPage, maxPage);
-        numPage++;
-    }
-
-    // console.log(transactions)
-    return transactions;
-}
-
-// getAllNodeIPs()
-async function printO(){
-    let res = await getAllNodeIPs(10)
-    console.log(res)
-}
-printO()
-
-//%%%%%%%%%%%%%%%%%% retrieve a transaaction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-async function retrieve_a_transaction(id){
-    let res = await fetchAsync(`https://api.ark.io/api/transactions/${id}`);
-        
-    if(Object.keys(res).includes('data')){
-        return res;
-    }
-    else{
-        return false; // the id doesn't exist
-    }
-    
-}
-
-async function printR(){
-    let res = await retrieve_a_transaction("66f11a37f05e5322587eadcfa796e951a83bc583a50d41d62ebfed056f76f6b2")
-    console.log(res)
-}
-// printR()
-
-//%%%%%%%%%%%%%%%%%%%%%%%%% List of all Unconfirmed Transaction %%%%%%%%%%%%%%
-async function callUnconfirmedTransactionsApi(listOfAllPeers, numPage){
-    let stop = false;
-    try{
-        let res = await fetchAsync(`https://api.ark.io/api/transactions/unconfirmed?page=${numPage}&limit=100&id=66f11a37f05e5322587eadcfa796e951a83bc583a50d41d62ebfed056f76f6b2`);
-        listOfAllPeers.push(...res.data);
-        if(res.data.length == 0){
-            stop = true;
-        }
-    }catch(e){
-        stop = true;
-    }
-    return stop
-}
-
-async function UnconfirmedTransaction(){
-    let unconfirmedTransactions = []
-    let stop = false
-    let numPage = 1
-
-    while(stop==false){
-        stop = await callUnconfirmedTransactionsApi(unconfirmedTransactions, numPage);
-        numPage++;
-    }
-    return unconfirmedTransactions;    
-}
-
-async function printT(){
-    let res = await UnconfirmedTransaction()
-    console.log(res)
-}
-// printT()
-
-//%%%%%%%%%%%%%%%%%%%% Transaction fees %%%%%%%%%%%%%%%%%%%%ùùù
-async function transactionFees(){
-    let res = await fetchAsync(`https://api.ark.io/api/transactions/fees`);     
+const template = require("../../utils/templates");
+/** %%%%%%%%%%%%  List All Transactions %%%%%%%%%%%%%%%%%%%% */
+async function list_All_Transaction(maxPage){
+    let path = "https://api.ark.io/api/transactions?"
+    let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
+/** test function */
+// async function printR(){
+//     let res = await list_All_Transaction(2)
+//     console.log(res)
+// }
+// printR()
 
-async function printU(){
-    let res = await transactionFees()
+/**%%%%%%%%%%%%%%% Retrieve a Transaction %%%%%%%%%%%%%% */
+async function retrieve_A_Transaction(id){
+    let path = `https://api.ark.io/api/transactions/${id}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
+}
+/** test function */
+// async function printY(){
+//     let res = await retrieve_A_Transaction("d1431e1454df90084222ce639544353ae3b5e72af8565f684f5e196ead5aab66")
+//     console.log(res)
+// }
+// printY()
+
+/** %%%%%%%%%%% List All Unconfirmed Transaction %%%%%%%%%%% */
+async function list_All_Unconfirmed_Transaction(maxPage){
+    let path = "https://api.ark.io/api/transactions/unconfirmed?"
+    let res = await template.retrieve_with_limitation_template(path, maxPage)
+    return res
+}
+/** test function */
+async function printA(){
+    let res = await list_All_Unconfirmed_Transaction(2)
     console.log(res)
 }
-// printU()
+printA()
+
+/** %%%%%%%%%% Get an Unconfirmed Transaction %%%%%%%%%%%%%%% */
+async function retrieve_A_Transaction(id){
+    let path = `https://api.ark.io/api/transactions/${id}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
+}
+/** test function */
+// async function printY(){
+//     let res = await retrieve_A_Transaction("d1431e1454df90084222ce639544353ae3b5e72af8565f684f5e196ead5aab66")
+//     console.log(res)
+// }
+// printY()
+
+/** %%%%%%%%%%%%%%%%%  Get an Unconfirmed Transaction %%%%%%%%%%%%*/
+async function retrieve_An_Unconfirmed_Transaction(id){
+    let path = `https://api.ark.io/api/transactions/unconfirmed/${id}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
+}
+/** test function */
+// async function printK(){
+//     let res = await retrieve_An_Unconfirmed_Transaction("d1431e1454df90084222ce639544353ae3b5e72af8565f684f5e196ead5aab66")
+//     console.log(res)
+// }
+// printK()
 
 
-/**
+/** TODO
  * search for transactions
  * broadcast transactions
  * get transaction types

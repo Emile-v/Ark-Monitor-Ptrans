@@ -67,6 +67,7 @@ async function retrieve_OBJ_template(path){
         return res;
     }
     else{
+        console.log("the id doesn't exist")
         return false; // the id doesn't exist
     }
     

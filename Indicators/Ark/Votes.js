@@ -1,56 +1,29 @@
+
 const fetchAsync = require("../../utils/fetch");
+const template = require("../../utils/templates");
 
-
-// %%%%%% retrieve all Votes %%%%%%%%%%%
-async function callVotesApi(listOfAllPeers, numPage){
-    let stop = false;
-    try{
-        let res = await fetchAsync(`https://api.ark.io/api/votes?page=${numPage}&limit=100`);
-        listOfAllPeers.push(...res.data);
-        if(res.data.length == 0){
-            stop = true;
-        }
-    }catch(e){
-        stop = true;
-    }
-    return stop
+/** %%%%%%%%%%%% List All Votes %%%%%%%%%%%%%%%%%%%% */
+async function list_All_Votes(maxPage){
+    let path = "https://api.ark.io/api/wallets?"
+    let res = await template.retrieve_with_limitation_template(path, maxPage)
+    return res
 }
-
-async function getAllVotes(maxPage){
-
-    let votes = []
-    let stop = false
-    let numPage = 1
-
-    while(stop==false && numPage<=maxPage){
-        stop = await callVotesApi(votes, numPage);
-        numPage++;
-    }
-    return votes;
-}
-
-/**  test function */
-// async function printO(){
-//     let res = await getAllVotes(3)
-//     console.log(res)
-// }
-// printO()
-
-/** %%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%%%%%%%%%%% */
-async function retrieve_a_vote(id){
-    let res = await fetchAsync(`https://api.ark.io/api/votes/${id}`);
-        
-    if(Object.keys(res).includes('data')){
-        return res;
-    }
-    else{
-        return false; // the id doesn't exist
-    }
-    
-}
-
+/** test function */
 // async function printR(){
-//     let res = await retrieve_a_vote("10a6fd0ab3244a88b21a17fb74e246e2ec0381992962eeb17053976593c3ddcc")
+//     let res = await list_All_Votes(4)
 //     console.log(res)
 // }
 // printR()
+
+/** %%%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%% */
+async function retrieve_a_Vote(id){
+    let path = `https://api.ark.io/api/votes/${id}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
+}
+/** test function */
+// async function printY(){
+//     let res = await retrieve_a_Vote("6f4165236994d9362faa74305fa9e2fc52204e48b6e615d9762a814a16b969c5")
+//     console.log(res)
+// }
+// printY()
