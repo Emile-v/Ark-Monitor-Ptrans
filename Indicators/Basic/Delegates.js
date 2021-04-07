@@ -1,38 +1,37 @@
 
 let fetchAsync = require('../../utils/fetch')
-
-function getDelegates(page=1, limit=100){
-    console.log("Liste des delegates : ")
-    fetchAsync('https://api.ark.io/api/delegates?page='+page+'&limit='+limit)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+const template = require("../../utils/templates");
+ 
+async function getDelegates(page=1, limit=100){
+    let path='https://api.ark.io/api/delegates?'
+    let res = await template.retrieve_with_limitation_template(path, page,limit)
+    return res;
   }
 
-  function getDelegateByUsername(username){
-    console.log("Delegate : ")
-    fetchAsync('https://api.ark.io/api/delegates/'+username)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+ 
+
+
+  async function getDelegateByUsername(username){
+    let path='https://api.ark.io/api/delegates/'+username
+    let res = await template.retrieve_OBJ_template(path)
+    return res;
   }
 
-  function getDelegateByAddress(address){
-    console.log("Delegate : ")
-    fetchAsync('https://api.ark.io/api/delegates/'+address)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+
+
+  async function getDelegateByAddress(address){
+    let path='https://api.ark.io/api/delegates/'+address
+    let res = await template.retrieve_OBJ_template(path)
+    return res;
   }
-  function getDelegateByPublicKey(publickKey){
-    console.log("Delegate : ")
-    fetchAsync('https://api.ark.io/api/delegates/'+publickKey)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+   
+  async function getDelegateByPublicKey(publickKey){
+    let path='https://api.ark.io/api/delegates/'+publickKey
+    let res = await template.retrieve_OBJ_template(path)
+    return res;
   }
 
+  module.exports.getDelegates=getDelegates ;
+  module.exports.getDelegateByPublicKey =getDelegateByPublicKey;
+  module.exports.getDelegateByUsername=getDelegateByUsername;
+  module.exports.getDelegateByAddress=getDelegateByAddress  ;
