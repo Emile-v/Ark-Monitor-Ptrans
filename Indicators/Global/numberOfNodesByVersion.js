@@ -1,6 +1,6 @@
 
-async function numberOfNodesByVersion (nodeList){
-
+async function numberOfNodesByVersion (){
+    let nodeList = require('../../listOfNodes.json')
     let result_final = {
         name : "number Of Nodes By Height",
         result : null

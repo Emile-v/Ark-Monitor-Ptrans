@@ -14,6 +14,8 @@ async function list_All_Votes(maxPage){
 //     console.log(res)
 // }
 // printR()
+module.exports.list_All_Votes = list_All_Votes;
+
 
 /** %%%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%% */
 async function retrieve_a_Vote(id){
@@ -27,3 +29,4 @@ async function retrieve_a_Vote(id){
 //     console.log(res)
 // }
 // printY()
+module.exports.retrieve_a_Vote = retrieve_a_Vote;

@@ -5,7 +5,6 @@ const template = require("../../utils/templates");
 async function getAllWallet (maxPage=1){
     let path = "https://api.ark.io/api/wallets?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
-    console.log(maxPage)
     return res
 }
 /** test function */
@@ -19,7 +18,7 @@ module.exports.getAllWallet = getAllWallet;
 
 /** %%%%%%%%%%%%%%% Retrieve a Wallet %%%%%%%%%%%%%%%%%%*/
 
-async function retrieve_a_transaction(id){
+async function retrieve_a_wallet(id){
     let path = `https://api.ark.io/api/wallets/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
@@ -31,14 +30,11 @@ async function retrieve_a_transaction(id){
 // }
 // printY()
 
-module.exports.retrieve_a_transaction = retrieve_a_transaction;
+module.exports.retrieve_a_wallet = retrieve_a_wallet;
 
 
 /** %%%%%%%%%%%%% List All Transactions of a Wallet %%%%%%%%%%%%%%%*/
-async function list_Of_All_Transactions_Wallet(id, maxPage){
-    if(maxPage==null){
-        console.log("maxPage not defined")
-    }
+async function list_Of_All_Transactions_Wallet(id, maxPage=1){
     if(id==null){
         console.log("id not defined")
     }
@@ -58,11 +54,9 @@ module.exports.list_Of_All_Transactions_Wallet = list_Of_All_Transactions_Wallet
 
 /** %%%%%%%%%%%%%  List All Sent Transactions of a Wallet %%%%%%%%%%%%%%%%%*/
 async function list_All_Sent_Transactions_Wallet(id, maxPage=1){
-    if(maxPage==null){
-        console.log("maxPage not defined")
-    }
     if(id==null){
         console.log("id not defined")
+        return false
     }
 
     let path = `https://api.ark.io/api/wallets/${id}/transactions/sent?`

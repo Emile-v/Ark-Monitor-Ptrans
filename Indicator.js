@@ -64,11 +64,9 @@ class Indicator {
             requireParam += ` <${this.parameter[0][i]}>` 
         }
 
-        for(let i=0; i<this.parameter[0].length ; i++){
+        for(let i=0; i<this.parameter[1].length ; i++){
             optionnalPara += ` [${this.parameter[1][i]}]` 
         }
-
-        console.log(optionnalPara)
         let comRequire = this.name +  requireParam + optionnalPara
         
         let comOptionnal = this.name + optionnalPara
@@ -77,16 +75,10 @@ class Indicator {
         .command(comRequire)
         .alias(this.alias)
         .description(this.description)
-        .option('-e, --export <directory>', 'export indicator to specified directory')
         .action(async(comRequire, comOptionnal, options) => {
             let indicator = await this.indicatorFunction(comRequire, comOptionnal)
-            if(options.export){
-              this.exportDataJSON(indicator, options.export)  
-            } 
-            console.log(comRequire)
-            console.log(comOptionnal)
+            console.log("indicator :") 
             console.log(indicator)
-
         })
     }
 

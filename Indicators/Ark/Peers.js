@@ -2,7 +2,7 @@
 const fetchAsync = require("../../utils/fetch");
 const template = require("../../utils/templates");
 /** %%%%%%%%%%%%  List All Peers %%%%%%%%%%%%%%%%%%%% */
-async function list_All_Peers(maxPage){
+async function list_All_Peers(maxPage=1){
     let path = "https://api.ark.io/api/peers?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
@@ -13,6 +13,8 @@ async function list_All_Peers(maxPage){
 //     console.log(res)
 // }
 // printR()
+module.exports.list_All_Peers = list_All_Peers;
+
 
 /** %%%%%%%%%%% Retrieve a Peer %%%%%%%%%%%%%%%% */
 async function retrieve_A_Peer(id){
@@ -28,4 +30,4 @@ async function retrieve_A_Peer(id){
 // printY()
 
 
-// module.exports.retrieveAPeer = retrieveAPeer;
+module.exports.retrieve_A_Peer = retrieve_A_Peer;
