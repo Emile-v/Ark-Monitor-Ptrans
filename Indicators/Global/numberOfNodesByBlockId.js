@@ -20,7 +20,7 @@ async function numberOfNodesByBlockId(){
     }
 
     result_final.result = result
-    return result_final;
+    return result;
 }
 
 /**test de la fonction */

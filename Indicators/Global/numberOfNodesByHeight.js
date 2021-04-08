@@ -20,7 +20,7 @@ async function numberOfNodesByHeight(){
     });
 
     result_final.result = result
-    return result_final;
+    return result;
 }
 
 

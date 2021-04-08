@@ -14,52 +14,18 @@ class Indicator {
       this.alias = alias;
       this.description = description;
       this.name_parameter = parameter;
+
+      this.format = {
+          name : this.name,
+          result : null
+      }
     }
-/**/////////////////////// */
-    // async CLI() {
-    //     program
-    //     .command(this.name + "<n>")
-    //     .alias(this.alias)
-    //     .description(this.description)
-    //     .option('-e, --export <directory>', 'export indicator to specified directory')
-    //     .action(async(options, n) => {
-    //         let indicator = await this.indicatorFunction(n)
-    //         if(options.export){
-    //           this.exportDataJSON(indicator, options.export)  
-    //         }
-    //         console.log(indicator)
-    //     })
-    // }
-
-    // async CLI() {
-    //     program
-    //     .command(this.name)
-    //     .arguments('<' + this.parameter + '>')
-    //     .alias(this.alias)
-    //     .description(this.description)
-    //     .action(async(argv) => {
-    //         let indicator = await this.indicatorFunction(argv)
-    //         console.log("rep")
-    //         console.log(argv)
-    //     })
-    // }
-
-    /**//////////////////////////////// */
 
     async CLI() {
         let requireParam = "";
         let optionnalPara = " ";
 
         
-        // for(let i=0; i<elem.length; i++){
-        //     // [ ['id'],['maxPage'] ]
-        //     for(let j=0; i<elem.length; j++){
-
-        //     }
-
-        // });
-        // requireParam = requireParam + "hemme"
-
         for(let i=0; i<this.parameter[0].length; i++){
             requireParam += ` <${this.parameter[0][i]}>` 
         }
@@ -76,9 +42,9 @@ class Indicator {
         .alias(this.alias)
         .description(this.description)
         .action(async(comRequire, comOptionnal, options) => {
-            let indicator = await this.indicatorFunction(comRequire, comOptionnal)
-            console.log("indicator :") 
-            console.log(indicator)
+            this.format.result = await this.indicatorFunction(comRequire, comOptionnal)
+            console.log("indicators :") 
+            console.log(this.format)
         })
     }
 

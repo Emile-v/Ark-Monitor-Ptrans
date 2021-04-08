@@ -54,7 +54,7 @@ let main = async (duree, numPage, typeOfTransaction) => {
   
 
     result_final.result = res
-    return result_final
+    return res
     
   }
   
