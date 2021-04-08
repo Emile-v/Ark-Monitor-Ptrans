@@ -2,7 +2,8 @@
  let data = require('./numberOfNodesByHeight')
 let fetchAsync = require('./../../utils/fetch')
 
-async function numberOfNodesByBlockId(nodeList){
+async function numberOfNodesByBlockId(){
+    let nodeList = require('../../listOfNodes.json')
     let byHeight = await data.numberOfNodesByHeight(nodeList);
     let result_final = {
         name : "number Of Nodes By BlockId",
@@ -31,3 +32,36 @@ async function numberOfNodesByBlockId(nodeList){
 // testBlockId()
 
  module.exports.numberOfNodesByBlockId = numberOfNodesByBlockId;
+
+
+//  {
+//      {
+//         name : jbkj,
+//         result: resultat
+//         type : transaction
+//         erase :true
+//      }
+
+//      {
+//         name : jbkj,
+//         result: resultat
+//         type : transaction
+//         erase :true
+//      }
+
+//      {
+//         name : jbkj,
+//         result: resultat
+//         type : transaction
+//         erase :true
+//      }
+//  }
+
+
+
+
+//  {
+//     numberOfNodesByBlockId : {
+//         ...data...
+//     }
+//  }

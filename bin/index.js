@@ -3,242 +3,54 @@
 const program = require('commander');
 
 const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
-const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByHeight');
-const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesByVersion');
-const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactions');
+const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
+const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
+const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
 
-const { getCountry } = require('../Indicators/Node/country');
-const { getStatusPeers } = require('../Indicators/Node/status');
-const { getStaticFeesPeers } = require('../Indicators/Node/staticFees');
 
-const { getBlockchain } = require('../Indicators/Basic/Blockchain');
-const { retrieveAPeer } = require('../Indicators/Ark/Peers');
 
-const { refreshData } = require('../utils/refresh');
+const { getAllWallet } = require('../Indicators/Ark/Wallet');
+const { retrieve_a_transaction } = require('../Indicators/Ark/Wallet');
+const { list_Of_All_Transactions_Wallet } = require('../Indicators/Ark/Wallet');
 
-// import function to list coffeee menu
-const list = require('../lib/list');
 
-// import function to order a coffee
-const order = require('../lib/order');
+const Indicator = require('./../Indicator')
 
-// import main function for all indicators
-const allIndicators = require('../main');
 
 /*******************************************/
+// constructor (name, indicatorFunction, parameter, alias, description) 
 
-async function exportData(jsObject, directory){
-    console.log('exporting');
-    exportData = require('../utils/export.js')
-    let exportJSON = await exportData.exportDataJSON(jsObject, directory)
-}
-
-/*******************************************/
-
-const listOfNodes = require('../listOfNodes.json');
-
-async function exportResult(indicatorFunction, parameter, directory){
-    const indicatorResult = await indicatorFunction(parameter);
-    exportData(indicatorResult, directory);
-}
-
-async function showResult(indicatorFunction, parameter){
-    const indicatorResult = await indicatorFunction(parameter);
-    console.log(indicatorResult);
+function f1(id){
+    console.log(id)
+    return id;
 }
 
 
-/*
 
-// Print coffee drinks menu
-// $ coffee-shop list
-// $ coffee-shop ls
-program
-    .command('list') // sub-command name
-    .alias('ls') // alternative sub-command is `al`
-    .description('List coffee menu') // command description
+/**%%%%%%%%%%%%%%%%%%%%%%%%%%% */
+// constructor (name, indicatorFunction, parameter, alias, description) 
 
-    // function to execute when command is uses
-    .action(function () {
-        list();
-    });
+// let number_Of_Nodes_By_Block_Id = new Indicator("numberOfNodesByBlockId", numberOfNodesByBlockId, '', "nonbbi", "blablablaba"  )
+// number_Of_Nodes_By_Block_Id.CLI()
+
+// let get_All_Wallet = new Indicator("getAllWallet", getAllWallet, 'nbPageMax', "allw", "blablablaba"  )
+// get_All_Wallet.CLI()
 
 
-// Order a coffee
-// $ coffee-shop order
-// $ coffee-shop o
-program
-    .command('order') // sub-command name
-    .alias('o') // alternative sub-command is `o`
-    .description('Order a coffee') // command description
-
-    // function to execute when command is uses
-    .action(function () {
-        order();
-    });
+// let retrieve_transaction = new Indicator("retrieve_a_transaction", retrieve_a_transaction, 'id', "rat", "blablablaba"  )
+// retrieve_transaction.CLI()
 
 
-// Print all indicators
-// $ monitor all
-program
-    .command('all')
-    .alias('a')
-    .description('Print all indicators')
-    .action(function () {
-        allIndicators();
-    });
-*/
+// let list_Transactions_Wallet = new Indicator("list_Of_All_Transactions_Wallet", list_Of_All_Transactions_Wallet, 'id', "ltw", "blablablaba"  )
+// list_Transactions_Wallet.CLI()
+/**%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
 
-/*
-// $ monitor r
-program
-    .command('refreshListOfNodes')
-    .alias('r')
-    .description('Refresh the stored list of known nodes')
-    .action((options) => {
-        refreshData();
-    })
-*/
+let list_Transactions_Wallet = new Indicator(
+    "list_Of_All_Transactions_Wallet", 
+    list_Of_All_Transactions_Wallet, 
+    [ ['id'],['maxPage'] ], 
+    "ltw", 
+    "blablablaba"  )
+list_Transactions_Wallet.CLI()
 
-// $ monitor nonbbi
-program
-    .command('numberOfNodesByBlockId')
-    .alias('nonbbi')
-    .description('Distribution of last known block id among the nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(numberOfNodesByBlockId, listOfNodes , options.export);
-        }
-        else{
-            showResult(numberOfNodesByBlockId, listOfNodes)
-        }
-    })
-
-// $ monitor nonbh
-program
-    .command('numberOfNodesByHeight')
-    .alias('nonbh')
-    .description('Distribution of current height among the nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(numberOfNodesByHeight, listOfNodes , options.export);
-        }
-        else{
-            showResult(numberOfNodesByHeight, listOfNodes)
-        }
-    })
-
-// $ monitor nonbv
-program
-    .command('numberOfNodesByVersion')
-    .alias('nonbv')
-    .description('Distribution of used version among the nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(numberOfNodesByVersion, listOfNodes , options.export);
-        }
-        else{
-            showResult(numberOfNodesByVersion, listOfNodes)
-        }
-    })
-
-
-// $ monitor not
-program
-    .command('numberOfTransactions')
-    .alias('not')
-    .description('Distribution of current height among the nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(RetrieveTransaction, listOfNodes , options.export);
-        }
-        else{
-            showResult(RetrieveTransaction, listOfNodes)
-        }
-    })
-
-
-// $ monitor ct
-program
-    .command('country')
-    .alias('ct')
-    .description('The localisation associated with the nodes ip')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(getCountry, listOfNodes , options.export);
-        }
-        else{
-            showResult(getCountry, listOfNodes)
-        }
-    })
-
-
-// $ monitor sf
-program
-    .command('staticFees')
-    .alias('sf')
-    .description('The static fees of nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(getStaticFeesPeers, listOfNodes , options.export);
-        }
-        else{
-            showResult(getStaticFeesPeers, listOfNodes)
-        }
-    })
-
-
-// $ monitor st
-program
-    .command('status')
-    .alias('st')
-    .description('The status of nodes')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options) => {
-        if (options.export) {
-            exportResult(getStatusPeers, listOfNodes , options.export);
-        }
-        else{
-            showResult(getStatusPeers, listOfNodes)
-        }
-    })
-
-
-//monitor retrieveAPeer <ip>
-program
-    .command('retrieveAPeer <ip>')
-    .alias('rap')
-    .description('Get a peer by its ip')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options, ip) => {
-        if (options.export) {
-            exportResult(retrieveAPeer, ip , options.export);
-        }
-        else{
-            showResult(retrieveAPeer, ip)
-        }
-    })
-
-//monitor gb
-program
-    .command('getBlockchain')
-    .alias('gb')
-    .description('Get the latest block and supply of the blockchain.')
-    .option('-e, --export <directory>', 'export indicator to specified directory')
-    .action((options, ip) => {
-        if (options.export) {
-            exportResult(getBlockchain, null, options.export);
-        }
-        else{
-            showResult(getBlockchain, null)
-        }
-    })
-
-// allow commander to parse `process.argv`
 program.parse(process.argv);
