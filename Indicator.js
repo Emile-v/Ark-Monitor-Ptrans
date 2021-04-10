@@ -1,10 +1,12 @@
-const { option } = require("commander");
+// const { option } = require("commander");
 const fs = require('fs')
 const yaml = require('js-yaml');
 const program = require('commander');
-const { argv } = require("process");
+// const { argv } = require("process");
 
-const {exportDataJSON, exportDataYAML} = require("./utils/export")
+const {exportDataJSON, exportDataYAML, exportDataXML} = require("./utils/export")
+
+
 
 'use strict';
 
@@ -44,6 +46,7 @@ class Indicator {
         .description(this.description)
         .option(`-exJSON, --exportJSON <file>`, 'description')
         .option(`-exYML, --exportYAML <file>`, 'description')
+        .option(`-exXML, --exportXML <file>`, 'description')
         .action(async(... option)=>{
             
             // List of arguments that user gives in the CLI
@@ -85,7 +88,11 @@ class Indicator {
                 console.log("export en .YAML encours ...")
                 exportDataYAML(this.format, allOption.exportYAML)
                 console.log("export en .YAML achevé")
-
+            }
+            if(allOption.exportXML){
+                console.log("export en .XML encours ...")
+                exportDataXML(this.format, allOption.exportXML)
+                console.log("export en .XML achevé")
             }
 
         })
