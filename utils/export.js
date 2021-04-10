@@ -3,6 +3,7 @@ const yaml = require('js-yaml');
 
 async function exportDataJSON(data, nameFile){
     let donnee = JSON.stringify(data)
+    nameFile = nameFile + ".json"
     fs.writeFileSync(nameFile, donnee, function(erreur){
         if(erreur){
             console.log(erreur)
@@ -14,7 +15,7 @@ async function exportDataJSON(data, nameFile){
 
 async function exportDataYAML(data, nameFile){
     let yamlStr = yaml.dump(data);
-    console.log(yamlStr)
+    nameFile = nameFile + ".yml"
     fs.writeFileSync(nameFile, yamlStr, 'utf8', function(erreur){
         if(erreur){
             console.log(erreur)

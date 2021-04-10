@@ -3,8 +3,8 @@
 let fetchAsync = require('./../../utils/fetch')
 
 async function numberOfNodesByBlockId(){
-    let nodeList = require('../../listOfNodes.json')
-    let byHeight = await data.numberOfNodesByHeight(nodeList);
+    // let nodeList = require('../../listOfNodes.json')
+    let byHeight = await data.numberOfNodesByHeight();
     let result_final = {
         name : "number Of Nodes By BlockId",
         result : null
@@ -13,7 +13,7 @@ async function numberOfNodesByBlockId(){
     let result = {}
 
 
-    for (const [key, value] of Object.entries(byHeight.result)){
+    for (const [key, value] of Object.entries(byHeight)){
         let res = await fetchAsync(`https://api.ark.io/api/blocks/${key}`);
         let blockId = res.data.id;
         result[`${blockId}`] = value;

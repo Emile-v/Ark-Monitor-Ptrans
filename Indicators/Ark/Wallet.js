@@ -3,6 +3,8 @@ const template = require("../../utils/templates");
 
 /*%%%%%%%%%%%%%%% List All Wallets %%%%%%%%%%%%%%%*/
 async function getAllWallet (maxPage=1){
+    console.log("maxePage")
+    console.log(maxPage)
     let path = "https://api.ark.io/api/wallets?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res

@@ -18,6 +18,8 @@ module.exports.list_All_Peers = list_All_Peers;
 
 /** %%%%%%%%%%% Retrieve a Peer %%%%%%%%%%%%%%%% */
 async function retrieve_A_Peer(id){
+    console.log("id : ")
+    console.log(id)
     let path = `https://api.ark.io/api/peers/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
