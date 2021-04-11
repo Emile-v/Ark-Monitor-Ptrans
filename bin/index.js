@@ -36,7 +36,36 @@ const { list_All_Votes,
     retrieve_a_Vote} 
 = require('../Indicators/Ark/Votes');
 
+//------- Blockchain --------------------
+const { getBlockchain}
+= require('../Indicators/Basic/Blockchain');
 
+//------- Blocks --------------------
+const { getBlocks,
+    getBlockbyHeight,
+    getBlockbyID,
+    getTransactionsbyBlockHeight,
+    getTransactionsbyBlockID
+}
+= require('../Indicators/Basic/Blocks');
+
+//------- Delegates --------------------
+const { getDelegates,
+    getDelegateByPublicKey,
+    getDelegateByUsername,
+    getDelegateByAddress
+}
+= require('../Indicators/Basic/Delegates');
+
+
+//------- Node --------------------
+const { getCryptoConfig,
+    getFeeStats,
+    getNodeConfig,
+    getNodeStatus,
+    getSyncStatus
+}
+= require('../Indicators/Basic/Node');
 
 const Indicator = require('./../Indicator')
 
@@ -234,4 +263,144 @@ let retrieve_Vote = new Indicator(
     "description retrieve_a_Vote"  )
     retrieve_Vote.CLI()
 
+//-----------------------------------
+// ----Blockchain Indicators----------
+//--------------------------------
+let get_blockchain= new Indicator(
+    "get_blockchain",
+    getBlockchain,
+    [[],[]],
+    "blkch",
+    "description get_blockchain")
+    get_blockchain.CLI()   
+
+//-----------------------------------
+// ----Blocks Indicators----------
+//--------------------------------
+let get_blocks=  new Indicator(
+    "get_blocks",
+    getBlocks,
+    [[],["page","limit"],],
+    "blks",
+    "description get_blocks")
+    get_blocks.CLI()
+
+
+let get_block_by_id=  new Indicator(
+    "get_block_by_id",
+    getBlockbyID,
+    [["id"],[],],
+    "blkid",
+    "description get_blockby_id")
+    get_block_by_id.CLI()   
+
+
+let get_block_by_height=  new Indicator(
+    "get_block_by_height",
+    getBlockbyHeight,
+    [["height"],[],],
+    "blkh",
+    "description get_blockby_height")
+    get_block_by_height.CLI()   
+
+
+let get_trans_by_blockid=  new Indicator(
+    "get_trans_by_blockid",
+    getTransactionsbyBlockID,
+    [["id"],["page","limit"]],
+    "trblid",
+    "description get_trans_by_blockid")
+    get_trans_by_blockid.CLI()   
+
+
+    let get_trans_by_blockheight=  new Indicator(
+        "get_trans_by_blockheight",
+        getTransactionsbyBlockHeight,
+        [["height"],["page","limit"]],
+        "trblh",
+        "description get_trans_by_blockheight")
+        get_trans_by_blockheight.CLI()  
+
+//-----------------------------------
+// ----Delegates Indicators----------
+//--------------------------------
+let get_delegates=  new Indicator(
+    "get_delegates",
+    getDelegates,
+    [[],["page","limit"]],
+    "deleg",
+    "description get_delegates")
+    get_delegates.CLI()  
+
+
+let get_delegate_by_pub_key=  new Indicator(
+    "get_delegate_by_pub_key",
+    getDelegateByPublicKey,
+    [["publicKey"],[]],
+    "delegpkey",
+    "description get_delegate_by_pub_key")
+    get_delegate_by_pub_key.CLI()  
+
+let get_delegate_by_username=  new Indicator(
+    "get_delegate_by_username",
+    getDelegateByUsername,
+    [["username"],[]],
+    "deleguname",
+    "description get_delegate_by_username")
+    get_delegate_by_username.CLI()  
+
+
+let get_delegate_by_address=  new Indicator(
+    "get_delegate_by_address",
+    getDelegateByAddress,
+    [["address"],[]],
+    "delegadd",
+    "description get_delegate_by_address")
+    get_delegate_by_address.CLI()  
+
+//-----------------------------------
+// ----Node Indicators----------
+//--------------------------------
+let get_crypto_config=  new Indicator(
+    "get_crypto_config",
+    getCryptoConfig,
+    [[],[]],
+    "crypc",
+    "description get_crypto_config")
+    get_crypto_config.CLI()  
+
+let get_fee_stats=  new Indicator(
+    "get_fee_stats",
+    getFeeStats,
+    [[],[]],
+    "feest",
+    "description get_fee_stats")
+    get_fee_stats.CLI()  
+
+let get_node_conf=  new Indicator(
+    "get_node_conf",
+    getNodeConfig,
+    [[],[]],
+    "nodec",
+    "description get_node_conf")
+    get_node_conf.CLI()  
+
+let get_node_status=  new Indicator(
+    "get_node_status",
+    getNodeStatus,
+    [[],[]],
+    "nodest",
+    "description get_node_status")
+    get_node_status.CLI()  
+
+let get_sync_status=  new Indicator(
+    "get_sync_status",
+    getSyncStatus,
+    [[],[]],
+    "syncst",
+    "description get_sync_status")
+    get_sync_status.CLI()  
+
+
+//---------------------------    
 program.parse(process.argv);

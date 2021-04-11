@@ -1,15 +1,13 @@
 let fetchAsync = require('../../utils/fetch')
+const template = require("../../utils/templates");
 
-function getBlockchain(){
-    console.log("Statut de la Blockchain : ")
-    fetchAsync('https://api.ark.io/api/blockchain')
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
-  }
 
-getBlockchain();
+/**%%%%%%%%%%%%%%% Retrieve the Blockchain object %%%%%%%%%%%%%% */
+async function getBlockchain(){
+  let path = `https://api.ark.io/api/blockchain`
+  let res = await template.retrieve_OBJ_template(path)
+  return res
+}
 
 
 module.exports.getBlockchain = getBlockchain;

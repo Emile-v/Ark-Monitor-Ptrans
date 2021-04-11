@@ -1,47 +1,45 @@
 let fetchAsync = require('../../utils/fetch')
+const template = require("../../utils/templates");
 
-function getBlocks(page=1, limit=100){
-    console.log("Liste des blocks: ")
-    fetchAsync('https://api.ark.io/api/blocks?page='+page+'&limit='+limit)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+async function getBlocks(page=1, limit){
+    let path= "https://api.ark.io/api/blocks?"
+    let res = await template.retrieve_with_limitation_template(path, page,limit)
+    return res
+    
   }
 
 
-  function getBlockbyID(idblock){
-    console.log("Block by ID ")
-    fetchAsync('https://api.ark.io/api/blocks/'+idblock)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+  async function getBlockbyID(idblock){
+    let path = `https://api.ark.io/api/blocks/${idblock}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
   }
-  function getBlockbyHeight(heightblock){
-    console.log("Block by Height ")
-    fetchAsync('https://api.ark.io/api/blocks/'+heightblock)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+
+  async function getBlockbyHeight(heightblock){
+    let path = `https://api.ark.io/api/blocks/${heightblock}`
+    let res = await template.retrieve_OBJ_template(path)
+    return res
+  }
+
+
+  
+  async function getTransactionsbyBlockID(idblock,page=1,limit=100){
+    let path = 'https://api.ark.io/api/blocks/'+idblock+'/transactions?'
+    let res = await template.retrieve_with_limitation_template(path, page,limit)
+    return res
   }
 
   
-  function getTransactionsbyID(idblock,page=1,limit=100){
-    console.log("Transactions by Block ID ")
-    fetchAsync('https://api.ark.io/api/blocks/'+idblock+'/transactions?page='+page+'&limit='+limit)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
-  }
   
-  function getTransactionsbyHeight(heightblock,page=1,limit=100){
-    console.log("Block by ID ")
-    fetchAsync('https://api.ark.io/api/blocks/'+heightblock+'/transactions?page='+page+'&limit='+limit)
-    .then(res => res.data)
-    .then((resultat) => {
-      return(resultat);
-    })
+  async function getTransactionsbyBlockHeight(heightblock,page=1,limit=100){
+    let path = 'https://api.ark.io/api/blocks/'+heightblock+'/transactions?'
+    let res = await template.retrieve_with_limitation_template(path, page,limit)
+    return res
   }
+
+  
+  module.exports.getBlocks = getBlocks;
+  module.exports.getBlockbyHeight = getBlockbyHeight;
+  module.exports.getBlockbyID = getBlockbyID;
+  module.exports.getTransactionsbyBlockHeight = getTransactionsbyBlockHeight;
+  module.exports.getTransactionsbyBlockID = getTransactionsbyBlockID;

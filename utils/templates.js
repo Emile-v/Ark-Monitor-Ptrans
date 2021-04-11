@@ -1,10 +1,10 @@
 const fetchAsync = require("./fetch");
 
 /**%%%%%%%%%%%%%%%%% template with limitation %%%%%%%%%%%%%%%%%%%%%%%% */
-async function call_Api_Template(path, Object_Result, numPage){
+async function call_Api_Template(path, Object_Result, numPage,limit=100){
     let stop = false;
     try{
-        let res = await fetchAsync(`${path}page=${numPage}&limit=100`);
+        let res = await fetchAsync(`${path}page=${numPage}&limit=`+limit);
 
         Object_Result.push(...res.data);
         if(res.data.length == 0){
@@ -16,14 +16,14 @@ async function call_Api_Template(path, Object_Result, numPage){
     return stop
 }
 
-async function retrieve_with_limitation_template(path, maxPage){
+async function retrieve_with_limitation_template(path, maxPage,limit){
     
     let Object_Result = []
     let stop = false
     let numPage = 1
 
     while(stop==false && numPage<=maxPage){
-        stop = await call_Api_Template(path, Object_Result, numPage);
+        stop = await call_Api_Template(path, Object_Result, numPage,limit);
         numPage++;
     }
     return Object_Result;

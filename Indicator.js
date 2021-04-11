@@ -39,7 +39,6 @@ class Indicator {
             optionnalPara += ` [${this.parameter[1][i]}]` 
         }
         let comRequire = this.name +  requireParam + optionnalPara
-        
         program
         .command(comRequire)
         .alias(this.alias)
@@ -67,10 +66,11 @@ class Indicator {
                     this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
                     console.log(this.format)
                     break;
+                // la fonction peut désormais prendre 3 arguments : id; page, limit.
                 case 3:
-                    /** si notre fonction prend 3 arguments */
-                    console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
-                    break;
+                    this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
+                    console.log(this.format)                    
+                break;
                 default:
                     console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
                     break;
