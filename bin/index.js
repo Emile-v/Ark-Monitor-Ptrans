@@ -8,6 +8,10 @@ const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByH
 const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesByVersion');
 const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactions');
 
+/** Node indicators */
+const { getCountry } =require('../Indicators/Node/country')
+const { getStaticFeesPeers } =require('../Indicators/Node/staticFees')
+const { getStatusPeers } =require('../Indicators/Node/status')
 
 /** Basic indicators */
 //------- Wallet --------------------
@@ -119,6 +123,36 @@ let Retrieve_Transaction = new Indicator(
     "description RetrieveTransaction")
     Retrieve_Transaction.CLI()
 
+
+/*******************************************
+            Node Indicators
+*******************************************/
+let get_Country = new Indicator(
+    "getCountry", 
+    getCountry,
+    [[],[]],
+    "cnt",
+    "description getCountry")
+    get_Country.CLI()
+
+let get_Static_Fees= new Indicator(
+    "getStaticFees", 
+    getStaticFeesPeers,
+    [[],[]],
+    "stfee",
+    "description getStaticFees")
+    get_Static_Fees.CLI()
+
+   
+let get_Status= new Indicator(
+    "getStatus", 
+    getStatusPeers,
+    [[],[]],
+    "status",
+    "description getStatus")
+    get_Status.CLI()
+
+     
 /*******************************************
             Wallet Indicators
 *******************************************/

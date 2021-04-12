@@ -1,13 +1,16 @@
-/*
+
 let fetchAsync = require('../../utils/fetch')
 let ip2loc = require("ip2location-nodejs");
-ip2loc.IP2Location_init("../../ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
+ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
+
+let data = require('../../ListNode')
 
 //Indicateur de localisation des noeuds
 // Ici on retourne seulement les localisations des 10 premiers pairs du noeud de l'api
 
-  async function getCountry(delegates){
+  async function getCountry(){
 
+        let delegates = await data.getAllNodeIPs()
         let result_final = {
           name : "Country",
           result : null
@@ -48,5 +51,6 @@ ip2loc.IP2Location_init("../../ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
         return result_final
   }
   
+
+
   module.exports.getCountry = getCountry;
-*/
