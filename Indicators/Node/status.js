@@ -36,8 +36,8 @@ function getStatusPeers1(){
 
   async function getStatusPeers(){
 
-    let delegates = await data.getAllNodeIPs()
 
+    let delegates = require('../../listOfNodes.json')
     let result_final = {
       name : "Status Peers",
       result : null

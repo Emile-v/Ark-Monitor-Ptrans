@@ -10,7 +10,9 @@ let data = require('../../ListNode')
 
   async function getCountry(){
 
-        let delegates = await data.getAllNodeIPs()
+        // let delegates = await data.getAllNodeIPs()
+        
+        let delegates = require('../../listOfNodes.json')
         let result_final = {
           name : "Country",
           result : null

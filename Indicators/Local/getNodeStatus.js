@@ -14,3 +14,5 @@ function getNodeStatus(){
       });
   
   }
+
+  getNodeStatus()
