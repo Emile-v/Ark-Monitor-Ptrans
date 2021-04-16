@@ -75,7 +75,9 @@ const { getCryptoConfig,
 /*Local Indicators*/
 
 const {getMachineSpec} = require('../Indicators/Local/getMachineSpec')
-
+const {getNodeEnvList} = require('../Indicators/Local/getNodeEnvList')
+const {getNodeProcessStatus} = require('../Indicators/Local/getNodeProcessStatus')
+const {getPublicIP_Port} = require('../Indicators/Local/getPublicIP_Port')
 
 
 
@@ -451,9 +453,36 @@ let get_machine_spec = new Indicator(
     getMachineSpec,
     [[],[]],
     "mspec",
-    "description get_machine_spec"
+    "description LOCAL get_machine_spec"
 )
 get_machine_spec.CLI()
 
+let get_node_env_list = new Indicator(
+    "get_node_env_list",
+    getNodeEnvList,
+    [[],[]],
+    "envlist",
+    "description LOCAL get_node_env_list"
+)
+get_node_env_list.CLI()
+
+
+let get_node_process_status = new Indicator(
+    "get_node_process_status",
+    getNodeProcessStatus,
+    [[],[]],
+    "prstat",
+    "description LOCAL get_node_process_status"
+)
+get_node_process_status.CLI()
+
+let get_public_ip_port = new Indicator(
+    "get_public_ip_port",
+    getPublicIP_Port,
+    [[],[]],
+    "ipp",
+    "description LOCAL get_public_ip_port"
+)
+get_public_ip_port.CLI()
 
 program.parse(process.argv);

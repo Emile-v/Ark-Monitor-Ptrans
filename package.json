@@ -7,6 +7,7 @@
     "monitor": "./bin/index.js"
   },
   "dependencies": {
+    "@rauschma/stringio": "^1.4.0",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
     "inquirer": "^8.0.0",
