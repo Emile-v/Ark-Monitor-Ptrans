@@ -9,10 +9,10 @@ function getNodeEnvList(){
       }
   
       if(stderr) {
-        console.log('stderr');
       }
       console.log(stdout);
     
   
   });
   }
+
