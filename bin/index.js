@@ -71,6 +71,14 @@ const { getCryptoConfig,
 }
 = require('../Indicators/Basic/Node');
 
+
+/*Local Indicators*/
+
+const {getMachineSpec} = require('../Indicators/Local/getMachineSpec')
+
+
+
+
 const Indicator = require('./../Indicator')
 
 /** template : 
@@ -437,4 +445,15 @@ let get_sync_status=  new Indicator(
 
 
 //---------------------------    
+
+let get_machine_spec = new Indicator(
+    "get_machine_spec",
+    getMachineSpec,
+    [[],[]],
+    "mspec",
+    "description get_machine_spec"
+)
+get_machine_spec.CLI()
+
+
 program.parse(process.argv);
