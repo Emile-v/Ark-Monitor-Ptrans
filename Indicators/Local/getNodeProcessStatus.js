@@ -9,7 +9,7 @@
  async function getNodeProcessStatus() {  
    const source = exec('ps -C node -o pid,comm,lstart,etime,%mem '); 
    let res= await objectify(source.stdout);
-   if(source.stderr) return {message:'error'}
+   if(source.stderr && !source.stdout) return {message:'error'}
    return res;
  }
  

@@ -5,7 +5,7 @@ const {chunksToLinesAsync} = require('@rauschma/stringio');
   async function getPublicIP() {  
     const source = exec('curl icanhazip.com'); 
     let res= await objectify(source.stdout);
-    if(source.stderr) return {message:'error'}
+    if(source.stderr && !source.stdout) return {message:'error'}
     return res;
   }
 
