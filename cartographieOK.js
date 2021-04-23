@@ -42,6 +42,10 @@ class Node {
 
       //TODO 
       //equals
+
+      setChilds(node){
+        this.Childs = node
+      }
 }
 
 /** début nouvelle tentative */
@@ -49,9 +53,18 @@ class Node {
 /** return un tableau de noeud */
 async function fill_Child_with_node(noeud, maxPeers){
   let listeNode = noeud.Childs
+
+
   /** prend un neoud et remplit le tableau de ses fils */
   if(await open_Port(noeud.IP) == true){
     tabIP = await list_All_Peers_Specific_Node_Max_Peer(noeud.IP, maxPeers) // retourne tous les peers à partir d'un noeud
+
+    
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    // // console.log("ip :"+ node)
+    // console.log(node)
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+
     if(tabIP.length>0){
         // console.log("4")
         tabIP.forEach(async(elem) => {
@@ -61,12 +74,18 @@ async function fill_Child_with_node(noeud, maxPeers){
     }
     else{
         console.log("22")
-        listeNode.push(new Leave("Aucun Peer récupérer"))
+        // listeNode.push(new Leave("Aucun Peer récupérer"))
     }
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    // console.log("ip :"+ node)
+    // console.log(listeNode)
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    
     return listeNode
   }
   else{
-    new Leave("Aucun Peer récupérer")
+    // new Leave("Aucun Peer récupérer")
+    return []
   }
 }
 
@@ -114,19 +133,24 @@ async function main(racine, iteration, maxPeers){
           if(tabIP.length>0){
             /** on a un tableau de node */
             noeuds = await fill_Child_with_node(racine, maxPeers)
-            noeuds.forEach(async(elem) => {
-              elem.Childs = await main(elem, iteration-1, maxPeers)
-            //   racine.Childs = await racine.Childs.concat(elem)
-            await racine.Childs.push(elem)
+            if(noeuds.length != 0){
+              noeuds.forEach(async(elem) => {
+                elem.Childs = await main(elem, iteration-1, maxPeers)
+              // await racine.Childs.push(elem)
+              });
+              racine.setChilds(await noeuds) 
+            }
+            else{
+              racine.setChilds([])
+            }
 
 
-            });
-      
             await timeout(10000);
             return racine
           }
           else{
-            return new Node (racine.IP, ["Aucun Peer récupérer"])
+            racine.Childs.push(new Leave("Ce noeud à Aucun Peer"))
+            return racine
           }
         }
         else{
@@ -143,7 +167,8 @@ async function main(racine, iteration, maxPeers){
         }
     }
     else{
-        return new Leave("Aucun Peer récupérer")
+        racine.Childs.push(new Leave("Aucun Peer récupérer"))
+        return racine
     }
 
 }
@@ -189,5 +214,19 @@ async function printY(){
   }
   
 
+  // let a = new Node ("hello")
+  // let b = new Node ("hello")
+
+  // console.log(a===b)
+
 }
 printY()
+
+/** les potentiels problèmes : 
+ * 
+ * Voir si le réseau bouge beaucoup => création de cycle : le noeud peu se retrouver petit fils de lui même lui=>un_Noeud=>lui 
+ * 
+ * 
+ * 
+ *
+*/

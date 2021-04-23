@@ -86,10 +86,15 @@ module.exports.list_All_Peers_Specific_Node_Max_Peer = list_All_Peers_Specific_N
 
 //--------------------check if its ports is open -------------------
 async function open_Port(ip){
-    let node = await retrieve_A_Peer(ip)
-    if(node.data.ports==undefined)return false
-    if(node.data.ports['@arkecosystem/core-api']==4003) return true
-    else return false
+    try{
+        let node = await retrieve_A_Peer(ip)
+        if(node.data.ports['@arkecosystem/core-api']==4003) return true
+        else return false
+    }
+    catch(e){
+        return false
+    }
+    
 }
 module.exports.open_Port = open_Port;
 
