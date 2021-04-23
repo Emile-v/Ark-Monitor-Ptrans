@@ -67,7 +67,14 @@ const { getCryptoConfig,
 }
 = require('../Indicators/Basic/Node');
 
+
+// ------------- refresh ---------------
+// const {refreshData} = require('./')
+
+
 const Indicator = require('./../Indicator')
+
+
 
 /** template : 
  * constructor ( name,
@@ -401,6 +408,13 @@ let get_sync_status=  new Indicator(
     "description get_sync_status")
     get_sync_status.CLI()  
 
+/** ----------------------------------------
+        refresh commande
+//------------------------------------------ */
+let refresh = new Indicator(
+    "refresh",
+    refreshData,
+)
 
 //---------------------------    
 program.parse(process.argv);

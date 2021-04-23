@@ -39,6 +39,7 @@ class Indicator {
             optionnalPara += ` [${this.parameter[1][i]}]` 
         }
         let comRequire = this.name +  requireParam + optionnalPara
+        
         program
         .command(comRequire)
         .alias(this.alias)
@@ -53,6 +54,7 @@ class Indicator {
 
             let argsList_Length = argsList.length
 
+            console.log("chargement...")
             switch(argsList_Length){
                 case 0:
                     this.format.result = await this.indicatorFunction()
@@ -66,11 +68,10 @@ class Indicator {
                     this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
                     console.log(this.format)
                     break;
-                // la fonction peut désormais prendre 3 arguments : id; page, limit.
                 case 3:
-                    this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
-                    console.log(this.format)                    
-                break;
+                    /** si notre fonction prend 3 arguments */
+                    console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
+                    break;
                 default:
                     console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
                     break;
@@ -80,21 +81,22 @@ class Indicator {
 
             // Option 
             if(allOption.exportJSON){
-                console.log("export en .JSON encours ...")
+                console.log("export en .JSON en cours ...")
                 exportDataJSON(this.format, allOption.exportJSON)
                 console.log("export en .JSON achevé")
             }
             if(allOption.exportYAML){
-                console.log("export en .YAML encours ...")
+                console.log("export en .YAML en cours ...")
                 exportDataYAML(this.format, allOption.exportYAML)
                 console.log("export en .YAML achevé")
             }
             if(allOption.exportXML){
-                console.log("export en .XML encours ...")
+                console.log("export en .XML en cours ...")
                 exportDataXML(this.format, allOption.exportXML)
                 console.log("export en .XML achevé")
             }
 
+            console.log("fin du programme")
         })
     }
     //-------------------------------------------------------------------------------
