@@ -47,12 +47,16 @@ class Node {
         this.Childs = node
       }
 }
+/** création d'une variable de classe */
+Node.prototype.all_Element = [];
 
 /** début nouvelle tentative */
 
 /** return un tableau de noeud */
 async function fill_Child_with_node(noeud, maxPeers){
   let listeNode = noeud.Childs
+
+  noeud.all_Element.push(noeud.IP)
 
 
   /** prend un neoud et remplit le tableau de ses fils */
@@ -68,8 +72,12 @@ async function fill_Child_with_node(noeud, maxPeers){
     if(tabIP.length>0){
         // console.log("4")
         tabIP.forEach(async(elem) => {
-        node = new Node(elem.ip)
-        listeNode.push(node)
+
+          if( noeud.all_Element.includes(elem.ip) == false ){
+            noeud.all_Element.push(elem.ip)
+            node = new Node(elem.ip)
+            listeNode.push(node)
+          }
         })
     }
     else{
@@ -91,6 +99,7 @@ async function fill_Child_with_node(noeud, maxPeers){
 
 /** return un tableau de leaf */
 async function fill_Child_with_leaf(noeud, maxPeers){
+  
   let listeNode = noeud.Childs
   /** prend un neoud et remplit le tableau de ses fils */
     if(await open_Port(noeud.IP) == true){
@@ -101,8 +110,11 @@ async function fill_Child_with_leaf(noeud, maxPeers){
                 // console.log("4")
                 tabIP.forEach(async(elem) => {
                     if(elem!=undefined){
+                      if( noeud.all_Element.includes(elem.ip) == false ){
+                        noeud.all_Element.push(elem.ip)
                         leaf = new Leave(elem.ip)
                         listeNode.push(leaf)
+                      }
                     }
                     else{
                         console.log("11")
@@ -204,12 +216,20 @@ async function printY(){
 
   console.log('more precision')
 
+  console.log('couche 1')
   if(a.Childs!=undefined){
     a.Childs.forEach(elem => {
         // console.log(elem.Childs[0])
         console.log(elem.Childs)
+      });
+  }
 
-        
+  console.log('couche 2')
+  if(a.Childs!=undefined){
+    a.Childs.forEach(elem => {
+        elem.Childs.forEach(element => {
+          console.log(element.Childs)          
+        });
       });
   }
   
