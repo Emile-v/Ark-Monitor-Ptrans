@@ -46,9 +46,35 @@ class Node {
       setChilds(node){
         this.Childs = node
       }
+
 }
 /** création d'une variable de classe */
 Node.prototype.all_Element = [];
+
+
+/**circular */
+function isCyclic (obj) {
+  var seenObjects = [];
+
+  function detect (obj) {
+    if (obj && typeof obj === 'object') {
+      if (seenObjects.indexOf(obj) !== -1) {
+        return true;
+      }
+      seenObjects.push(obj);
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key) && detect(obj[key])) {
+          console.log(obj, 'cycle at ' + key);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  return detect(obj);
+}
+/**----------------- */
 
 /** début nouvelle tentative */
 
@@ -57,7 +83,6 @@ async function fill_Child_with_node(noeud, maxPeers){
   let listeNode = noeud.Childs
 
   noeud.all_Element.push(noeud.IP)
-
 
   /** prend un neoud et remplit le tableau de ses fils */
   if(await open_Port(noeud.IP) == true){
@@ -82,18 +107,21 @@ async function fill_Child_with_node(noeud, maxPeers){
     }
     else{
         console.log("22")
-        // listeNode.push(new Leave("Aucun Peer récupérer"))
+
+        listeNode.push(new Leave("Aucun Peer récupérer"))
     }
     // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     // console.log("ip :"+ node)
     // console.log(listeNode)
     // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    
+    if(listeNode.length == 0){
+      listeNode.push(new Leave("Aucun Peer récupérer"))
+    }
     return listeNode
   }
   else{
     // new Leave("Aucun Peer récupérer")
-    return []
+    return [new Leave("Aucun Peer récupérer")]
   }
 }
 
@@ -126,6 +154,9 @@ async function fill_Child_with_leaf(noeud, maxPeers){
                 console.log("12")
                 listeNode.push(new Leave("Aucun Peer récupérer"))
             }  
+        if(listeNode.length == 0){
+          listeNode.push(new Leave("Aucun Peer récupérer"))
+        }
         return listeNode
     }
     else{
@@ -137,8 +168,7 @@ async function fill_Child_with_leaf(noeud, maxPeers){
 
 
 async function main(racine, iteration, maxPeers){
-
-    if(await open_Port(racine.IP) == true){
+    if(await open_Port(racine.IP) == true){ // n'est plus valable à cause de la fonction retrive and IP
         tabIP = await list_All_Peers_Specific_Node_Max_Peer(racine.IP, maxPeers) // retourne tous les peers à partir d'un noeud
             
         if(iteration > 1){
@@ -147,13 +177,15 @@ async function main(racine, iteration, maxPeers){
             noeuds = await fill_Child_with_node(racine, maxPeers)
             if(noeuds.length != 0){
               noeuds.forEach(async(elem) => {
-                elem.Childs = await main(elem, iteration-1, maxPeers)
+                if(elem instanceof Node){
+                  elem.Childs = await main(elem, iteration-1, maxPeers)
+                }    
               // await racine.Childs.push(elem)
               });
               racine.setChilds(await noeuds) 
             }
             else{
-              racine.setChilds([])
+              racine.setChilds(new Leave("Ce noeud à Aucun Peer"))
             }
 
 
@@ -234,10 +266,7 @@ async function printY(){
   }
   
 
-  // let a = new Node ("hello")
-  // let b = new Node ("hello")
 
-  // console.log(a===b)
 
 }
 printY()

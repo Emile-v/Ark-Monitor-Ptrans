@@ -20,7 +20,7 @@ module.exports.list_All_Peers = list_All_Peers;
 async function retrieve_A_Peer(id){
     let path = `https://api.ark.io/api/peers/${id}`
     let res = await template.retrieve_OBJ_template(path)
-    return res
+    return res //is an empty objet if the ID doesn't exist
 }
 /** test function */
 // async function printY(){
@@ -87,9 +87,17 @@ module.exports.list_All_Peers_Specific_Node_Max_Peer = list_All_Peers_Specific_N
 //--------------------check if its ports is open -------------------
 async function open_Port(ip){
     try{
-        let node = await retrieve_A_Peer(ip)
-        if(node.data.ports['@arkecosystem/core-api']==4003) return true
-        else return false
+        let node = await fetchAsync(`http://${ip}:4003/api/peers?`) // parfois il y a des IP qui sont forbiden ex :46.105.98.157
+        if(Object.keys(node).includes('data')){
+            return true
+        }
+        else{
+            return false
+        }
+
+        // if(node == {}) return false
+        // if(node.data.ports['@arkecosystem/core-api']==4003) return true
+        // else return false
     }
     catch(e){
         return false
