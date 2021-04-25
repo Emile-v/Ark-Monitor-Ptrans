@@ -240,7 +240,7 @@ async function printY(){
 
   let racine = new Node("5.135.143.111")
   let nbIteration = 3
-  let maxPeers = 3
+  let maxPeers = 4
 
   a = await main(racine, nbIteration, maxPeers)
 
@@ -279,3 +279,28 @@ printY()
  * 
  *
 */
+
+// {
+//   '0.0.0.0' : ['1.1.1.1', '2.2.2.2'],
+
+//   '1.1.1.1' : ['0.0.0.0', '2.2.2.2'],
+  
+//   '2.2.2.2' : ['0.0.0.0', '1.1.1.1'],
+// }
+
+
+// explorer(racine, sommet s)
+//       marquer le sommet s
+//       afficher(s)
+//       pour tout sommet t voisin du sommet s
+//             si t n'est pas marqué alors
+//                    explorer(G, t);
+
+// parcoursProfondeur(graphe G)
+// pour tout sommet s du graphe G
+//       si s n'est pas marqué alors
+//             explorer(G, s)
+
+
+
+
