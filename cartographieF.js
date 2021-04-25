@@ -1,6 +1,8 @@
 const { list_All_Peers_Specific_Node, list_All_Peers_Specific_Node_Max_Peer, open_Port } 
 = require('./Indicators/Ark/Peers');
 
+const {exportDataYAML} = require('./utils/export')
+
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
@@ -129,7 +131,6 @@ class Graph {
     let id_Node = 0 // increment the id of node
     let id_Edge = 0 // increment the id of node
 
-    console.log("1111") 
 
     if(await open_Port(this.racine.label) == true){    
 
@@ -148,7 +149,6 @@ class Graph {
                     }
 
                     /**edge init */
-                    
                     let edge = new Edge(id_Edge, node, this.racine)
                     if(this.includes_Edge(edge)==false){
                         this.add_Edge(edge)
@@ -174,12 +174,16 @@ class Graph {
 
                     /**edge init */
                     
-                    let edge = new Edge(id_Edge, node, this.racine)
+                    let edge = new Edge(id_Edge, this.racine, node)
                     if(this.includes_Edge(edge)==false){
                         this.add_Edge(edge)
                     }
                     id_Edge++
 
+                    // console.log("nodes :")
+                    // console.log(this.nodes.length)
+                    // console.log("edges :")
+                    // console.log(this.edges.length)
                     
                 })
             }
@@ -192,17 +196,24 @@ class Graph {
 
                                 /**node init */
                                 id_Node++
-                                let node = new Node(id_Node, elem.ip)
-                                if(this.includes_Node(node)==false){
-                                    this.add_Node(node)
+                                let node2 = new Node(id_Node, elem.ip)
+                                if(this.includes_Node(node2)==false){
+                                    this.add_Node(node2)
                                 }
             
                                 /**edge init */
                                 id_Edge++
-                                let edge = new Edge(id_Edge, node, edge.target)
-                                if(this.includes_Edge(edge)==false){
-                                    this.add_Edge(edge)
+                                let edge2 = new Edge(id_Edge, edge.target, node2)
+                                if(this.includes_Edge(edge2)==false){
+                                    // console.log("yo")
+                                    this.add_Edge(edge2)
                                 }
+
+                                /** à décommenter pour faire une estimation du temps qu'il faut pour completer tous le graphe */
+                                // console.log("nodes :")
+                                // console.log(this.nodes.length)
+                                // console.log("edges :")
+                                // console.log(this.edges.length)
             
                                 
                             })
@@ -211,6 +222,7 @@ class Graph {
                     // let portOK = await open_Port(edge.target.label)
                     // console.log(portOK)                  
                 });
+                console.log("chargement " + iteration)
                 iteration--
             }
             
@@ -220,68 +232,6 @@ class Graph {
 }
 
 
-//             /** on a un tableau de node */
-//             noeuds = await fill_Child_with_node(this.racine, maxPeers)
-//             if(noeuds.length != 0){
-//               noeuds.forEach(async(elem) => {
-//                 if(elem instanceof Node){
-//                   elem.Childs = await main(elem, iteration-1, maxPeers)
-//                 }    
-//               // await racine.Childs.push(elem)
-//               });
-//               this.racine.setChilds(await noeuds) 
-//             }
-//             else{
-//               racine.setChilds(new Leave("Ce noeud à Aucun Peer 4"))
-//             }
-
-
-//             await timeout(10000);
-//             return racine
-//         }
-//         else{
-//           tabIP = await list_All_Peers_Specific_Node_Max_Peer(racine.IP, maxPeers) // retourne tous les peers à partir d'un noeud
-      
-//           if(tabIP.length>0){
-//             /** on a un tableau de leaf */
-//             leaf = await fill_Child_with_leaf(racine, maxPeers)
-//             return leaf;
-//           }
-//           else{
-//             return new Leave("Aucun Peer récupérer 2")
-//           }
-//         }
-//     }
-//     else{
-//         racine.Childs.push(new Leave("Aucun Peer récupérer 1"))
-//         return racine
-//     }
-//   }
-// }
-
-
-
-
-/*
-
-"edges": [
-    {
-      "id": "e0",
-      "source": "n0",
-      "target": "n1"
-    },
-    {
-      "id": "e1",
-      "source": "n1",
-      "target": "n2"
-    },
-    {
-      "id": "e2",
-      "source": "n2",
-      "target": "n0"
-    }
-  ]
-  */
  class Edge{
      constructor(id, source, target){
          this.source = source;
@@ -295,17 +245,6 @@ class Graph {
      }
  }
 
- // {
-//     "nodes": [
-//       {
-//         "id": "n0",
-//         "label": "A node"
-//       },
-//       {
-//         "id": "n1",
-//         "label": "Another node"
-//       }
-// }
 
 class Node{
     constructor (id, ip) {
@@ -359,14 +298,18 @@ async function testG(){
 
     
 
-    await g.graphInit(3)
-    console.log(g)
+    await g.graphInit(2)
+    // console.log(g)
 
-    console.log("nodes :")
+    // indispensable pour laisser le graphe se construire => pour faire une estimation du temps il faut 
+    await timeout(30000);
+
+    console.log("nodes final:")
     console.log(g.nodes.length)
-    console.log("edges :")
+    console.log("edges final :")
     console.log(g.edges.length)
 
+    exportDataYAML(g, "graphe1")
 
 }
 testG()
