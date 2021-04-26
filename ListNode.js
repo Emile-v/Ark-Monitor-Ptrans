@@ -82,6 +82,8 @@ async function fillUpWithPeers(All4003NodeIPs, AllNodeIPs, AllNodesInfos){
     }
 }
 
+const {exportDataJSON, exportDataYAML} = require('./utils/export')
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function getAllNodeIPs(){
 
@@ -102,5 +104,36 @@ async function getAllNodeIPs(){
 
     return AllNodesInfos;
 }
-
 module.exports.getAllNodeIPs = getAllNodeIPs;
+
+
+
+async function getAllNodeIPs1(){
+
+    let All4003NodeIPs = [];
+    let AllNodeIPs = [];
+    let AllNodesInfos = [];
+
+    await getIPsFromApiMainNode(All4003NodeIPs, AllNodeIPs, AllNodesInfos);
+
+    //All4003NodeIPs.push("85.235.64.251");
+    await fillUpWithPeers(All4003NodeIPs, AllNodeIPs, AllNodesInfos);  
+    
+    let NodeIPs = [All4003NodeIPs, AllNodeIPs];
+
+    // console.log(NodeIPs[0].length);
+    // console.log(NodeIPs[1].length);
+    //console.log(AllNodesInfos);
+
+    return AllNodeIPs;
+}
+
+/** test */
+async function testP(){
+    let a = await getAllNodeIPs1()
+    exportDataJSON(a, "test1")
+    
+}
+testP()
+
+module.exports.getAllNodeIPs1 = getAllNodeIPs1;
