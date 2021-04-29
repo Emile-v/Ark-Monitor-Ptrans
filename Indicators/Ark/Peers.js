@@ -66,14 +66,14 @@ async function list_All_Peers_Specific_Node_Max_Peer(ip, maxPeers, maxPage=1000)
     let resultat = []
 
     for(let i=0; i<maxPeers; i++){
-        resultat.push(res[i])//res[getRandomInt(0,res.length-1)])
+        resultat.push(res[i].ip)//res[getRandomInt(0,res.length-1)])
     }
 
     return resultat
 }
 module.exports.list_All_Peers_Specific_Node_Max_Peer = list_All_Peers_Specific_Node_Max_Peer;
 
-// // /** test function */
+// /** test function */
 // async function printM(){
 //     let res = await list_All_Peers_Specific_Node_Max_Peer("51.68.197.248", 4)
 //     /**

@@ -1,5 +1,4 @@
 
-const fetchAsync = require("../../utils/fetch");
 const template = require("../../utils/templates");
 
 /** %%%%%%%%%%%% List All Votes %%%%%%%%%%%%%%%%%%%% */

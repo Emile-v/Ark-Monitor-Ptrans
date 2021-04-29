@@ -37,14 +37,15 @@ class Graph {
     let id_Edge = 0 // increment the id of node
     let ctpIteration = 1 // optionnal
     let tab_Initialised_IP = [this.racine.label]
-    // let tab_Of_couple_Initialised = []
+    let tab_Of_couple_Initialised = []
 
 
     if(await open_Port(this.racine.label) == true){    
 
         /**first step */       
             /** as the first step */
-            let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
+            // let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
+            let tabIP = await list_All_Peers_Specific_Node_Max_Peer(this.racine.label, 3) // retourne tous les peers à partir d'un noeud
             if(tabIP.length>0){
                 tabIP.forEach(async(elem) => {
 
@@ -55,23 +56,24 @@ class Graph {
                         tab_Initialised_IP.push(elem.ip)
                         node = new Node(id_Node, elem.ip)
                         this.add_Node(node)
+                    }
 
                         /**edge init */         
                         let edge;
 
 
-                        /*  if(this.includes_Edge(edge)==false){ // %%%%%%%%%%%%%%%%%%%%%%%%%% un soucis ici*/
+                    //if(this.includes_Edge(edge)==false){ // %%%%%%%%%%%%%%%%%%%%%%%%%% un soucis ici*/
                         let combined_key = this.racine.id + node.id 
                         let inverse_combined_key = node.id + this.racine                        /** vu que les id sont uniques, 
                          * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
 
-                        // if(tab_Of_couple_Initialised.includes(combined_key) == false && tab_Of_couple_Initialised.includes(inverse_combined_key) == false){
+                    if(tab_Of_couple_Initialised.includes(combined_key) == false && tab_Of_couple_Initialised.includes(inverse_combined_key) == false){
                             // tab_Of_couple_Initialised.push(combined_key)
                             edge = new Edge(id_Edge, this.racine.id, node.id)
                             this.add_Edge(edge)
-                        // }
-                        id_Edge++
                     }
+                        id_Edge++
+                    
 
                     
 
@@ -89,55 +91,19 @@ class Graph {
 
              let evolution_Tab_Node = 0;
              let evolution_Tab_Edge = 0;
+             let i = 0
 
             while(iteration>1){ //|| (evolution_Tab_Edge==this.edges.length && evolution_Tab_Node==this.nodes.length)){
-
-                // evolution_Tab_Edge = this.nodes.length
-                // evolution_Tab_Node = this.edges.length
-
-
-                /** optimisation à faire ici */
-                this.edges.forEach(async (edge) => {
-
-                // while(i<)
-                    let target_node_tab = this.nodes.filter(node=> node.id == edge.target) //on recher dans la liste des noeuds les elements tels que elem.id == element.target
-                    // console.log(target_node[0].label)
-
-                    /** c'est un fils obtenu a partir d'un noeud */
+                let edge;
+                while(i<this.edges.length){
+                    edge=this.edges[i]
+                    let target_node_tab = this.nodes.filter(node=> node.id == edge.target)
                     let target_node = target_node_tab[0]
 
-                    /** une autre liste qui stockera les noeuds déjà fetch 
-                     * ou le contraire
-                     * créer une liste qui contient tous les IP et effacer à chaque fois les IP parcouru
-                    */
-                    /** si le noeud fait parti de la liste des noeud */
-
-/**
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * */
-
-
-                    /**
-                     * pour chaque edge
-                     *      j'extrait le noeud qui correspond au target
-                     *      si ce noeud n'est pas unidifined : 
-                     *          je fais un fetch de ses fils
-                     *          pour chacun de ses fils :
-                     *              je vérifie qu'un noeud est déja créer à partir de ce fils
-                     *                  si non alors : je crée le noeud
-                     *                  puis je regarde le couple target/fils si existe déjà
-                     */
-
-
-                    if(target_node !== undefined){
+                    if(target_node != undefined){
                         if(await open_Port(target_node.label) == true) {
-                            let tabIP = await list_All_Peers_Specific_Node(target_node.label) /** on remplit toujours avec la cible car c'est cencé être le peer */
+                            // let tabIP = await list_All_Peers_Specific_Node(target_node.label) /** on remplit toujours avec la cible car c'est cencé être le peer */
+                            let tabIP = await list_All_Peers_Specific_Node_Max_Peer(target_node.label, 3) /** on remplit toujours avec la cible car c'est cencé être le peer */
                             if(tabIP.length>0){
                                 tabIP.forEach(async(elem) => {
     
@@ -148,22 +114,44 @@ class Graph {
                                         tab_Initialised_IP.push(elem.ip)
                                         node2 = new Node(id_Node, elem.ip)
                                         this.add_Node(node2)
-    
-    
                                         let edge2;
                                         /*  if(this.includes_Edge(edge)==false){ // %%%%%%%%%%%%%%%%%%%%%%%%%% un soucis ici*/
                                         let combined_key2 = target_node.id + node2.id 
                                         let inverse_combined_key2 = node2.id + target_node.id
-                                        /** vu que les id sont uniques, 
-                                         * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
-    
-                                        // if(tab_Of_couple_Initialised.includes(combined_key2) == false && tab_Of_couple_Initialised.includes(inverse_combined_key2) == false){
-                                            // tab_Of_couple_Initialised.push(combined_key2)
+                                            /** vu que les id sont uniques, 
+                                             * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
+        
+                                        if(tab_Of_couple_Initialised.includes(combined_key2) == false && tab_Of_couple_Initialised.includes(inverse_combined_key2) == false){
+                                                // tab_Of_couple_Initialised.push(combined_key2)
                                             edge2 = new Edge(id_Edge, target_node.id, node2.id)
-                                            this.add_Edge(edge2)
-                                        // }
-                                        id_Edge++
+                                            this.edges.push(edge2)
+                                        }
                                     }
+                                    else{
+                                    
+                                      let exiting_Node = this.nodes.filter(node=> node.label == elem.ip)
+                                      let e_Node = exiting_Node[0]
+
+                                      let edge2;
+
+                                      let combined_key2 = target_node.id + e_Node.id 
+                                      let inverse_combined_key2 = e_Node.id + target_node.id
+                                          /** vu que les id sont uniques, 
+                                           * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
+      
+
+                                      if(tab_Of_couple_Initialised.includes(combined_key2) == false && tab_Of_couple_Initialised.includes(inverse_combined_key2) == false){
+                                              // tab_Of_couple_Initialised.push(combined_key2)
+                                          edge2 = new Edge(id_Edge, target_node.id, e_Node.id)
+                                          this.edges.push(edge2)
+
+                                        }
+                                    }
+                                        id_Edge++
+                                        console.log("i : " + i)
+                                        console.log("edges : " + this.edges.length)
+
+                                   
                 
                                     /**edge init */
                                     
@@ -181,8 +169,11 @@ class Graph {
                             }
                         }  
                     }
-                              
-                });
+
+                    console.log("i : " + i)
+                    // console.log("edges : " + this.edges.length)
+                    i++
+                }
                 iteration--
 
                 /**optionnelle */
@@ -247,13 +238,13 @@ function testE(){
 /** test graph*/
 async function testG(){
     let n1 = new Node(0,"5.135.143.111")
-    let n2 = new Node(22222, "5.196.105.34")
+    let n2 = new Node(22222, "37.59.70.164")
     let n3 = new Node(3, "5.135.143.12")
 
     let e1 = new Edge(1, "n1", "n3")
     let e2 = new Edge(2, "n2", "n3")
 
-    let g = new Graph(n1)
+    let g = new Graph(n2)
 
     /**test include_Node */
     // console.log(g.includes_Node(n2))
