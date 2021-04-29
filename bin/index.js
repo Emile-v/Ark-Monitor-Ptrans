@@ -2,6 +2,8 @@
 
 const program = require('commander');
 
+const { launch_graph } = require('../utils/NetGraph')
+
 /** Global indicators */
 const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
 const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByHeight');
@@ -484,5 +486,12 @@ let get_public_ip_port = new Indicator(
     "description LOCAL get_public_ip_port"
 )
 get_public_ip_port.CLI()
+
+program
+.command("netgraph")
+.alias("grp")
+.description("Visualize the network graph via a webpage.")
+.action(function(){
+    launch_graph();});
 
 program.parse(process.argv);

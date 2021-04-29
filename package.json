@@ -15,5 +15,8 @@
     "js-yaml": "^4.0.0",
     "node-fetch": "^2.6.1",
     "pad": "^3.2.0"
+  },
+  "scripts": {
+    "postinstall": "cd sigma && npm install"
   }
 }
