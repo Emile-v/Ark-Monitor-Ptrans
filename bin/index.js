@@ -2,12 +2,18 @@
 
 const program = require('commander');
 
+const { launch_graph } = require('../utils/NetGraph')
+
 /** Global indicators */
 const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
 const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByHeight');
 const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesByVersion');
 const { RetrieveTransaction } = require('../Indicators/Global/numberOfTransactions');
 
+/** Node indicators */
+const { getCountry } =require('../Indicators/Node/country')
+const { getStaticFeesPeers } =require('../Indicators/Node/staticFees')
+const { getStatusPeers } =require('../Indicators/Node/status')
 
 /** Basic indicators */
 //------- Wallet --------------------
@@ -16,24 +22,24 @@ const { getAllWallet,
         list_Of_All_Transactions_Wallet,
         list_All_Sent_Transactions_Wallet,
         list_All_Received_Transactions_Wallet,
-        list_All_Votes_Wallet } 
+        list_All_Votes_Wallet }
 = require('../Indicators/Ark/Wallet');
 
 //------- Peers --------------------
-const { list_All_Peers, 
-        retrieve_A_Peer} 
+const { list_All_Peers,
+        retrieve_A_Peer}
 = require('../Indicators/Ark/Peers');
 
 //------- Transactions --------------------
-const { list_All_Transaction, 
+const { list_All_Transaction,
         retrieve_A_Transaction,
         list_All_Unconfirmed_Transaction,
-        retrieve_An_Unconfirmed_Transaction} 
+        retrieve_An_Unconfirmed_Transaction}
 = require('../Indicators/Ark/Transactions');
 
 //------- Votes --------------------
-const { list_All_Votes, 
-    retrieve_a_Vote} 
+const { list_All_Votes,
+    retrieve_a_Vote}
 = require('../Indicators/Ark/Votes');
 
 //------- Blockchain --------------------
@@ -67,30 +73,35 @@ const { getCryptoConfig,
 }
 = require('../Indicators/Basic/Node');
 
-
 // ------------- refresh ---------------
 const {refreshData} = require('../utils/refresh')
+/*Local Indicators*/
 
-//==============================================================
+const {getMachineSpec} = require('../Indicators/Local/getMachineSpec')
+const {getNodeEnvList} = require('../Indicators/Local/getNodeEnvList')
+const {getNodeProcessStatus} = require('../Indicators/Local/getNodeProcessStatus')
+const {getPublicIP_Port} = require('../Indicators/Local/getPublicIP_Port')
+
+
 
 const Indicator = require('./../Indicator')
 
 
 
-/** template : 
+/** template :
  * constructor ( name,
  *               indicatorFunction,
- *               [ [Required_parameter],[optional_paramater] ], 
- *               alias, 
- *               description) 
-*/ 
+ *               [ [Required_parameter],[optional_paramater] ],
+ *               alias,
+ *               description)
+*/
 
 /*******************************************
             Global Indicators
 *******************************************/
 
 let number_Of_Nodes_By_BlockId = new Indicator(
-    "numberOfNodesByBlockId", 
+    "numberOfNodesByBlockId",
     numberOfNodesByBlockId,
     [[],[]],
     "nonbbi",
@@ -100,7 +111,7 @@ number_Of_Nodes_By_BlockId.CLI()
 //-------------------------------------------
 
 let number_Of_Nodes_By_Height = new Indicator(
-    "numberOfNodesByHeight", 
+    "numberOfNodesByHeight",
     numberOfNodesByHeight,
     [[],[]],
     "nonbh",
@@ -110,7 +121,7 @@ let number_Of_Nodes_By_Height = new Indicator(
 //-------------------------------
 
 let number_Of_Nodes_By_Version = new Indicator(
-    "numberOfNodesByVersion", 
+    "numberOfNodesByVersion",
     numberOfNodesByVersion,
     [[],[]],
     "nonbv",
@@ -120,12 +131,42 @@ let number_Of_Nodes_By_Version = new Indicator(
 // ----------------------------------
 
 let Retrieve_Transaction = new Indicator(
-    "RetrieveTransaction", 
+    "RetrieveTransaction",
     RetrieveTransaction,
     [["duree"],["typeOfTransaction"]],
     "rtd",
     "description RetrieveTransaction")
     Retrieve_Transaction.CLI()
+
+
+/*******************************************
+            Node Indicators
+*******************************************/
+let get_Country = new Indicator(
+    "getCountry",
+    getCountry,
+    [[],[]],
+    "cnt",
+    "description getCountry")
+    get_Country.CLI()
+
+let get_Static_Fees= new Indicator(
+    "getStaticFees",
+    getStaticFeesPeers,
+    [[],[]],
+    "stfee",
+    "description getStaticFees")
+    get_Static_Fees.CLI()
+
+
+let get_Status= new Indicator(
+    "getStatus",
+    getStatusPeers,
+    [[],[]],
+    "status",
+    "description getStatus")
+    get_Status.CLI()
+
 
 /*******************************************
             Wallet Indicators
@@ -133,58 +174,58 @@ let Retrieve_Transaction = new Indicator(
 
 
 let getAll_Wallet = new Indicator(
-    "getAllWallet", 
-    getAllWallet, 
-    [ [],['maxPage'] ], 
-    "gaw", 
+    "getAllWallet",
+    getAllWallet,
+    [ [],['maxPage'] ],
+    "gaw",
     "description getAllWallet"  )
     getAll_Wallet.CLI()
 
 //---------------------------------------------------
 let retrieve_wallet = new Indicator(
-    "retrieve_a_wallet", 
-    retrieve_a_wallet, 
-    [ ['id'],['maxPage'] ], 
-    "raw", 
+    "retrieve_a_wallet",
+    retrieve_a_wallet,
+    [ ['id'],['maxPage'] ],
+    "raw",
     "description retrieve_a_wallet"  )
     retrieve_wallet.CLI()
 
 //---------------------------------------------------
 
 let list_Transactions_Wallet = new Indicator(
-    "list_Of_All_Transactions_Wallet", 
-    list_Of_All_Transactions_Wallet, 
-    [ ['id'],['maxPage'] ], 
-    "ltw", 
+    "list_Of_All_Transactions_Wallet",
+    list_Of_All_Transactions_Wallet,
+    [ ['id'],['maxPage'] ],
+    "ltw",
     "description list_Of_All_Transactions_Wallet"  )
     list_Transactions_Wallet.CLI()
 
 // ------------------------------------------
 let list_Sent_Transactions_Wallet = new Indicator(
-    "list_All_Sent_Transactions_Wallet", 
-    list_All_Sent_Transactions_Wallet, 
-    [ ['id'],['maxPage'] ], 
-    "lstw", 
+    "list_All_Sent_Transactions_Wallet",
+    list_All_Sent_Transactions_Wallet,
+    [ ['id'],['maxPage'] ],
+    "lstw",
     "description list_All_Sent_Transactions_Wallet"  )
     list_Sent_Transactions_Wallet.CLI()
 
 //--------------------------------------
 
 let list_Received_Transactions_Wallet = new Indicator(
-    "list_All_Received_Transactions_Wallet", 
-    list_All_Received_Transactions_Wallet, 
-    [ ['id'],['maxPage'] ], 
-    "lrtw", 
+    "list_All_Received_Transactions_Wallet",
+    list_All_Received_Transactions_Wallet,
+    [ ['id'],['maxPage'] ],
+    "lrtw",
     "description list_All_Received_Transactions_Wallet"  )
     list_Received_Transactions_Wallet.CLI()
 
 //--------------------------------
 
 let list_Votes_Wallet = new Indicator(
-    "list_All_Votes_Wallet", 
-    list_All_Votes_Wallet, 
-    [ ['id'],['maxPage'] ], 
-    "lvw", 
+    "list_All_Votes_Wallet",
+    list_All_Votes_Wallet,
+    [ ['id'],['maxPage'] ],
+    "lvw",
     "description list_All_Votes_Wallet"  )
     list_Votes_Wallet.CLI()
 
@@ -192,21 +233,21 @@ let list_Votes_Wallet = new Indicator(
             Peers Indicators
 *******************************************/
 let list_Peers = new Indicator(
-    "list_All_Peers", 
-    list_All_Peers, 
-    [ [],['maxPage'] ], 
-    "lap", 
+    "list_All_Peers",
+    list_All_Peers,
+    [ [],['maxPage'] ],
+    "lap",
     "description list_All_Peers"  )
     list_Peers.CLI()
-     
+
 
 //------------------------------------------------
 
 let retrieve_Peer = new Indicator(
-    "retrieve_A_Peer", 
-    retrieve_A_Peer, 
-    [ ['ip'],[] ], 
-    "rp", 
+    "retrieve_A_Peer",
+    retrieve_A_Peer,
+    [ ['ip'],[] ],
+    "rp",
     "description retrieve_A_Peer"  )
     retrieve_Peer.CLI()
 
@@ -215,36 +256,36 @@ let retrieve_Peer = new Indicator(
 *******************************************/
 
 let list_Transaction = new Indicator(
-    "list_All_Transaction", 
-    list_All_Transaction, 
-    [ [],['maxPage'] ], 
-    "lat", 
+    "list_All_Transaction",
+    list_All_Transaction,
+    [ [],['maxPage'] ],
+    "lat",
     "description list_All_Transaction"  )
     list_Transaction.CLI()
 
 //---------------------
 let retrieve_Transaction = new Indicator(
-    "retrieve_A_Transaction", 
-    retrieve_A_Transaction, 
-    [ ['id'],[] ], 
-    "rat", 
+    "retrieve_A_Transaction",
+    retrieve_A_Transaction,
+    [ ['id'],[] ],
+    "rat",
     "description retrieve_A_Transaction"  )
     retrieve_Transaction.CLI()
 
 // -------------------------
 let list_Unconfirmed_Transaction = new Indicator(
-    "list_All_Unconfirmed_Transaction", 
-    list_All_Unconfirmed_Transaction, 
-    [ [],['maxPage'] ], 
-    "laut", 
+    "list_All_Unconfirmed_Transaction",
+    list_All_Unconfirmed_Transaction,
+    [ [],['maxPage'] ],
+    "laut",
     "list_All_Unconfirmed_Transaction"  )
     list_Unconfirmed_Transaction.CLI()
 //-------------------------------------------
 let retrieve_Unconfirmed_Transaction = new Indicator(
-    "retrieve_An_Unconfirmed_Transaction", 
-    retrieve_An_Unconfirmed_Transaction, 
-    [ ['id'],[] ], 
-    "raut", 
+    "retrieve_An_Unconfirmed_Transaction",
+    retrieve_An_Unconfirmed_Transaction,
+    [ ['id'],[] ],
+    "raut",
     "description retrieve_An_Unconfirmed_Transaction"  )
     retrieve_Unconfirmed_Transaction.CLI()
 
@@ -252,22 +293,22 @@ let retrieve_Unconfirmed_Transaction = new Indicator(
 /*******************************************
             Votes Indicators
 *******************************************/
-    
+
 let list_Votes = new Indicator(
-    "list_All_Votes", 
-    list_All_Votes, 
-    [ [],['maxPage'] ], 
-    "lav", 
+    "list_All_Votes",
+    list_All_Votes,
+    [ [],['maxPage'] ],
+    "lav",
     "description list_All_Votes"  )
     list_Votes.CLI()
 
 //------------------------------------
 
 let retrieve_Vote = new Indicator(
-    "retrieve_a_Vote", 
-    retrieve_a_Vote, 
-    [ ['id'],[] ], 
-    "rav", 
+    "retrieve_a_Vote",
+    retrieve_a_Vote,
+    [ ['id'],[] ],
+    "rav",
     "description retrieve_a_Vote"  )
     retrieve_Vote.CLI()
 
@@ -280,7 +321,7 @@ let get_blockchain= new Indicator(
     [[],[]],
     "blkch",
     "description get_blockchain")
-    get_blockchain.CLI()   
+    get_blockchain.CLI()
 
 //-----------------------------------
 // ----Blocks Indicators----------
@@ -300,7 +341,7 @@ let get_block_by_id=  new Indicator(
     [["id"],[],],
     "blkid",
     "description get_blockby_id")
-    get_block_by_id.CLI()   
+    get_block_by_id.CLI()
 
 
 let get_block_by_height=  new Indicator(
@@ -309,7 +350,7 @@ let get_block_by_height=  new Indicator(
     [["height"],[],],
     "blkh",
     "description get_blockby_height")
-    get_block_by_height.CLI()   
+    get_block_by_height.CLI()
 
 
 let get_trans_by_blockid=  new Indicator(
@@ -318,7 +359,7 @@ let get_trans_by_blockid=  new Indicator(
     [["id"],["page","limit"]],
     "trblid",
     "description get_trans_by_blockid")
-    get_trans_by_blockid.CLI()   
+    get_trans_by_blockid.CLI()
 
 
     let get_trans_by_blockheight=  new Indicator(
@@ -327,7 +368,7 @@ let get_trans_by_blockid=  new Indicator(
         [["height"],["page","limit"]],
         "trblh",
         "description get_trans_by_blockheight")
-        get_trans_by_blockheight.CLI()  
+        get_trans_by_blockheight.CLI()
 
 //-----------------------------------
 // ----Delegates Indicators----------
@@ -338,7 +379,7 @@ let get_delegates=  new Indicator(
     [[],["page","limit"]],
     "deleg",
     "description get_delegates")
-    get_delegates.CLI()  
+    get_delegates.CLI()
 
 
 let get_delegate_by_pub_key=  new Indicator(
@@ -347,7 +388,7 @@ let get_delegate_by_pub_key=  new Indicator(
     [["publicKey"],[]],
     "delegpkey",
     "description get_delegate_by_pub_key")
-    get_delegate_by_pub_key.CLI()  
+    get_delegate_by_pub_key.CLI()
 
 let get_delegate_by_username=  new Indicator(
     "get_delegate_by_username",
@@ -355,7 +396,7 @@ let get_delegate_by_username=  new Indicator(
     [["username"],[]],
     "deleguname",
     "description get_delegate_by_username")
-    get_delegate_by_username.CLI()  
+    get_delegate_by_username.CLI()
 
 
 let get_delegate_by_address=  new Indicator(
@@ -364,7 +405,7 @@ let get_delegate_by_address=  new Indicator(
     [["address"],[]],
     "delegadd",
     "description get_delegate_by_address")
-    get_delegate_by_address.CLI()  
+    get_delegate_by_address.CLI()
 
 //-----------------------------------
 // ----Node Indicators----------
@@ -375,7 +416,7 @@ let get_crypto_config=  new Indicator(
     [[],[]],
     "crypc",
     "description get_crypto_config")
-    get_crypto_config.CLI()  
+    get_crypto_config.CLI()
 
 let get_fee_stats=  new Indicator(
     "get_fee_stats",
@@ -383,7 +424,7 @@ let get_fee_stats=  new Indicator(
     [[],[]],
     "feest",
     "description get_fee_stats")
-    get_fee_stats.CLI()  
+    get_fee_stats.CLI()
 
 let get_node_conf=  new Indicator(
     "get_node_conf",
@@ -391,7 +432,7 @@ let get_node_conf=  new Indicator(
     [[],[]],
     "nodec",
     "description get_node_conf")
-    get_node_conf.CLI()  
+    get_node_conf.CLI()
 
 let get_node_status=  new Indicator(
     "get_node_status",
@@ -399,7 +440,7 @@ let get_node_status=  new Indicator(
     [[],[]],
     "nodest",
     "description get_node_status")
-    get_node_status.CLI()  
+    get_node_status.CLI()
 
 let get_sync_status=  new Indicator(
     "get_sync_status",
@@ -407,7 +448,7 @@ let get_sync_status=  new Indicator(
     [[],[]],
     "syncst",
     "description get_sync_status")
-    get_sync_status.CLI()  
+    get_sync_status.CLI()
 
 /** ----------------------------------------
         refresh commande
@@ -415,10 +456,55 @@ let get_sync_status=  new Indicator(
 let refresh = new Indicator(
     "refresh",
     refreshData,
-    [[], []], 
+    [[], []],
     "rfs",
     "Descritpion de refresh")
     refresh.CLI()
 
-//---------------------------    
+//---------------------------
+
+let get_machine_spec = new Indicator(
+    "get_machine_spec",
+    getMachineSpec,
+    [[],[]],
+    "mspec",
+    "description LOCAL get_machine_spec"
+)
+get_machine_spec.CLI()
+
+let get_node_env_list = new Indicator(
+    "get_node_env_list",
+    getNodeEnvList,
+    [[],[]],
+    "envlist",
+    "description LOCAL get_node_env_list"
+)
+get_node_env_list.CLI()
+
+
+let get_node_process_status = new Indicator(
+    "get_node_process_status",
+    getNodeProcessStatus,
+    [[],[]],
+    "prstat",
+    "description LOCAL get_node_process_status"
+)
+get_node_process_status.CLI()
+
+let get_public_ip_port = new Indicator(
+    "get_public_ip_port",
+    getPublicIP_Port,
+    [[],[]],
+    "ipp",
+    "description LOCAL get_public_ip_port"
+)
+get_public_ip_port.CLI()
+
+program
+.command("netgraph")
+.alias("grp")
+.description("Visualize the network graph via a webpage.")
+.action(function(){
+    launch_graph();});
+
 program.parse(process.argv);

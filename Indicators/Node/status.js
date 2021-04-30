@@ -1,5 +1,6 @@
 
 let fetchAsync = require('../../utils/fetch')
+let data = require('../../ListNode')
 
 function getStatusPeers1(){
     console.log("Statuts de 10 pairs")
@@ -33,7 +34,10 @@ function getStatusPeers1(){
 
   // }
 
-  async function getStatusPeers(delegates){
+  async function getStatusPeers(){
+
+
+    let delegates = require('../../listOfNodes.json')
     let result_final = {
       name : "Status Peers",
       result : null

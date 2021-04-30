@@ -1,7 +1,23 @@
-function getMachineSpec(){
-    console.log(os.type()+ " " + os.platform() + "  " + os.arch());
-    console.log(os.cpus()); 
-    console.log(os.networkInterfaces()); 
-    console.log(os.freemem() +" / "+ os.totalmem());
-    
+const os = require('os');
+
+ function getMachineSpec(){
+    let data={
+      ostype:'',
+      osplatform:'',
+      osarch:'',
+      cpus:[],
+      netinf:[],
+      freemem:'',
+      totalmem:'',
+    };
+    data.ostype=os.type();
+    data.osplatform=os.platform();
+    data.osarch=os.arch();
+    data.cpus=os.cpus();
+    data.netinf=os.networkInterfaces();
+    data.freemem=os.freemem();
+    data.totalmem= os.totalmem();
+    return data;
   }
+
+module.exports.getMachineSpec = getMachineSpec;

@@ -7,6 +7,7 @@
     "monitor": "./bin/index.js"
   },
   "dependencies": {
+    "@rauschma/stringio": "^1.4.0",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
     "inquirer": "^8.0.0",
@@ -14,5 +15,8 @@
     "js-yaml": "^4.0.0",
     "node-fetch": "^2.6.1",
     "pad": "^3.2.0"
+  },
+  "scripts": {
+    "postinstall": "cd sigma && npm install"
   }
 }
