@@ -82,7 +82,7 @@
 
 <script>
 
-var data='data/cartoFlorentF.json';
+var data='data/cartographie_total_2iteration.json';
 var s = new sigma({ 
         graph: {nodes:[],edges:[]},
         renderer:{
@@ -101,7 +101,7 @@ var s = new sigma({
 sigma.parsers.json(data,s,
     function(s) {
     s.startForceAtlas2();
-    window.setTimeout(function() {s.killForceAtlas2()}, 1000);
+    window.setTimeout(function() {s.killForceAtlas2()}, 500);
 },
 
 document.getElementById('export').onclick = function() {
