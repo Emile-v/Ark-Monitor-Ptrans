@@ -140,3 +140,31 @@ module.exports.open_Port = open_Port;
 //         "@arkecosystem\/core-webhooks": -1,
 //         "@arkecosystem\/core-exchange-json-rpc": -1
 //     },
+
+
+/** %%%%%%%%%%%%  List All Peers IP of specific node %%%%%%%%%%%%%%%%%%%% */
+async function list_All_IP(ip,maxPage=1000){
+    let path = `http://${ip}:4003/api/peers?`
+    let res = await template.retrieve_with_limitation_template(path, maxPage)
+
+    let resultat = []
+
+    for(let i=0; i<res.length; i++){
+        resultat.push(res[i].ip)//res[getRandomInt(0,res.length-1)])
+    }
+    return resultat
+}
+
+
+// /** test function */
+// async function printR(){
+//     let res = await list_All_IP("51.68.197.248")
+//     /**
+//      * Dans le cas ou l'IP est inconnu alors la fonction renvoie juste une liste vide
+//      */
+
+
+//     console.log(res)
+// }
+// printR()
+module.exports.list_All_IP = list_All_IP;

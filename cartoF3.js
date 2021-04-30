@@ -37,86 +37,86 @@ class Graph {
     return res[0]
   }
 
-  async graphInit(iteration){
-    let id_Node = 0 // increment the id of node
-    let id_Edge = 0 // increment the id of node
-    let ctpIteration = 1 // optionnal
-    let tab_Initialised_IP = [this.racine.label]
-    let tab_Of_couple_Initialised = []
+//   async graphInit(iteration){
+//     let id_Node = 0 // increment the id of node
+//     let id_Edge = 0 // increment the id of node
+//     let ctpIteration = 1 // optionnal
+//     let tab_Initialised_IP = [this.racine.label]
+//     let tab_Of_couple_Initialised = []
 
-    let cursor = 0;
+//     let cursor = 0;
 
 
-    let cursor_On_End_Iteration= 10
+//     let cursor_On_End_Iteration= 10
     
-    while(iteration>1 ){
-        let current_nodes_size = this.nodes.length
+//     while(iteration>1 ){
+//         let current_nodes_size = this.nodes.length
 
 
-        while(cursor < cursor_On_End_Iteration){
+//         while(cursor < cursor_On_End_Iteration){
             
-            // console.log("%%%%%%%%%%%% AVANT %%%%%%%%%%%%%%%%%%")
-            // console.log("node : ")
-            // console.log(this.nodes)
-            // console.log("cursor : " + cursor)
-            // console.log(cursor_On_End_Iteration)
-            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+//             // console.log("%%%%%%%%%%%% AVANT %%%%%%%%%%%%%%%%%%")
+//             // console.log("node : ")
+//             // console.log(this.nodes)
+//             // console.log("cursor : " + cursor)
+//             // console.log(cursor_On_End_Iteration)
+//             // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
 
-            let current_Node = this.nodes[cursor]//this.racine
-            if(await open_Port(current_Node.label) == true){   
-                /**first step */       
-                /** as the first step */
-                // let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
-                let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 3) // retourne tous les peers à partir d'un noeud (des IPs)
+//             let current_Node = this.nodes[cursor]//this.racine
+//             if(await open_Port(current_Node.label) == true){   
+//                 /**first step */       
+//                 /** as the first step */
+//                 // let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
+//                 let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 3) // retourne tous les peers à partir d'un noeud (des IPs)
 
-                /** MAJ of cursor_On_End_Iteration */
-                cursor_On_End_Iteration = current_nodes_size + tabIP.length - 1 // - 1 because the cursor 
+//                 /** MAJ of cursor_On_End_Iteration */
+//                 cursor_On_End_Iteration = current_nodes_size + tabIP.length - 1 // - 1 because the cursor 
 
-                if(tabIP.length>0){
-                    tabIP.forEach(async(IP) => {
+//                 if(tabIP.length>0){
+//                     tabIP.forEach(async(IP) => {
 
-                        /**node init */ 
-                        id_Node++
-                        if(tab_Initialised_IP.includes(IP)==false){
-                            tab_Initialised_IP.push(IP)
-                            this.add_Node(new Node(id_Node, IP))
-                        }
-                        else{
-                            /** if one node of Tabs have been already created,
-                             * it means the node haven't been push on "nodes" 
-                             * so whe have to decrease the cursor on the end of iteration  */
-                            cursor_On_End_Iteration--
-                        }
+//                         /**node init */ 
+//                         id_Node++
+//                         if(tab_Initialised_IP.includes(IP)==false){
+//                             tab_Initialised_IP.push(IP)
+//                             this.add_Node(new Node(id_Node, IP))
+//                         }
+//                         else{
+//                             /** if one node of Tabs have been already created,
+//                              * it means the node haven't been push on "nodes" 
+//                              * so whe have to decrease the cursor on the end of iteration  */
+//                             cursor_On_End_Iteration--
+//                         }
 
-                        let node = this.find_Node_By_IP(IP)
+//                         let node = this.find_Node_By_IP(IP)
 
-                        //if(this.includes_Edge(edge)==false){ // %%%%%%%%%%%%%%%%%%%%%%%%%% un soucis ici*/
-                            let combined_key = current_Node.id + node.id 
-                            let inverse_combined_key = node.id + current_Node.id                        /** vu que les id sont uniques, 
-                            * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
+//                         //if(this.includes_Edge(edge)==false){ // %%%%%%%%%%%%%%%%%%%%%%%%%% un soucis ici*/
+//                             let combined_key = current_Node.id + node.id 
+//                             let inverse_combined_key = node.id + current_Node.id                        /** vu que les id sont uniques, 
+//                             * en les additionnant on obtient egalement un nouvel id unique qui représente l'id des deux noeuds */
 
-                        if(tab_Of_couple_Initialised.includes(combined_key) == false && tab_Of_couple_Initialised.includes(inverse_combined_key) == false){
-                                // tab_Of_couple_Initialised.push(combined_key)
-                                this.add_Edge(new Edge(id_Edge, current_Node.id, node.id))
-                        }
-                            id_Edge++
-                    })
-                }        
-            }
-            cursor++
+//                         if(tab_Of_couple_Initialised.includes(combined_key) == false && tab_Of_couple_Initialised.includes(inverse_combined_key) == false){
+//                                 // tab_Of_couple_Initialised.push(combined_key)
+//                                 this.add_Edge(new Edge(id_Edge, current_Node.id, node.id))
+//                         }
+//                             id_Edge++
+//                     })
+//                 }        
+//             }
+//             cursor++
 
-            // console.log("%%%%%%%%%%%% APRES %%%%%%%%%%%%%%%%%%")
-            // console.log("node : ")
-            // console.log(this.nodes)
-            // console.log("cursor : " + cursor)
-            // console.log("cursorEND: " + cursor_On_End_Iteration)
-            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-        }    
-        iteration--
-    } 
- //|| (evolution_Tab_Edge==this.edges.length && evolution_Tab_Node==this.nodes.length)){            
-  }
+//             // console.log("%%%%%%%%%%%% APRES %%%%%%%%%%%%%%%%%%")
+//             // console.log("node : ")
+//             // console.log(this.nodes)
+//             // console.log("cursor : " + cursor)
+//             // console.log("cursorEND: " + cursor_On_End_Iteration)
+//             // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+//         }    
+//         iteration--
+//     } 
+//  //|| (evolution_Tab_Edge==this.edges.length && evolution_Tab_Node==this.nodes.length)){            
+//   }
 
 
 
@@ -141,7 +141,7 @@ class Graph {
         /**first step */       
         /** as the first step */
         // let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
-        let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 5) // retourne tous les peers à partir d'un noeud (des IPs)
+        let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 3) // retourne tous les peers à partir d'un noeud (des IPs)
 
         /** MAJ of cursor_On_End_Iteration */
         if(tabIP.length>0){
@@ -177,11 +177,11 @@ class Graph {
     }
     cursor++
 
-    // console.log("%%%%%%%%%%%% init APRES %%%%%%%%%%%%%%%%%%")
-    // console.log("node : ")
-    // console.log(this.nodes)
-    // console.log("cursor : " + cursor)
-    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    console.log("%%%%%%%%%%%% init APRES %%%%%%%%%%%%%%%%%%")
+    console.log("node : ")
+    console.log(this.nodes)
+    console.log("cursor : " + cursor)
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
 
     // let cursor_On_End_Iteration= 10
@@ -207,7 +207,7 @@ class Graph {
                 /**first step */       
                 /** as the first step */
                 // let tabIP = await list_All_Peers_Specific_Node(this.racine.label) // retourne tous les peers à partir d'un noeud
-                let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 20) // retourne tous les peers à partir d'un noeud (des IPs)
+                let tabIP = await list_All_Peers_Specific_Node_Max_Peer(current_Node.label, 3) // retourne tous les peers à partir d'un noeud (des IPs)
 
                 /** MAJ of cursor_On_End_Iteration */
                 if(tabIP.length>0){
@@ -324,13 +324,13 @@ async function testG(){
 
     // console.log(g.find_Node_By_IP("37.59.70.164"))
 
-    await g.graphInit(4) // nbIteration
+    await g.graphInit(3) // nbIteration
     await timeout(10000);
 
     // console.log(g)
 
-    exportDataYAML(g, "cartographeTest4")
-    exportDataJSON(g, "cartographeTest4")
+    // exportDataYAML(g, "cartographeTest4")
+    // exportDataYAML(g, "cartographeTest4")
 
 }
 testG()
