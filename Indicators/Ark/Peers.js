@@ -84,7 +84,7 @@ module.exports.list_All_Peers_Specific_Node_Max_Peer = list_All_Peers_Specific_N
 // }
 // printM()
 
-//--------------------check if its ports is open -------------------
+//--------------------check if the IP's port is open -------------------
 async function open_Port(ip){
     try{
         let node = await fetchAsync(`http://${ip}:4003/api/peers?`) // parfois il y a des IP qui sont forbiden ex :46.105.98.157

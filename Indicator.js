@@ -2,6 +2,7 @@
 const fs = require('fs')
 const yaml = require('js-yaml');
 const program = require('commander');
+const {display_enhanced} = require('./utils/visuelle')
 // const { argv } = require("process");
 
 const {exportDataJSON, exportDataYAML, exportDataXML} = require("./utils/export")
@@ -54,19 +55,31 @@ class Indicator {
 
             let argsList_Length = argsList.length
 
-            console.log("chargement...")
+            let display = ''
+
+            console.log("chargement... \n")
             switch(argsList_Length){
                 case 0:
                     this.format.result = await this.indicatorFunction()
-                    console.log(this.format)
+                    display = display_enhanced(this.format.result)
+                    console.log("-------------------------------------\n")
+                    console.log(display)
+                    console.log("-------------------------------------\n")
+
                     break;
                 case 1:
                     this.format.result = await this.indicatorFunction(argsList[0])
-                    console.log(this.format)
+                    display = display_enhanced(this.format.result)
+                    console.log("-------------------------------------\n")
+                    console.log(display)
+                    console.log("-------------------------------------\n")
                     break;
                 case 2:
                     this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
-                    console.log(this.format)
+                    display = display_enhanced(this.format.result)
+                    console.log("-------------------------------------\n")
+                    console.log(display)
+                    console.log("-------------------------------------\n")
                     break;
                 case 3:
                     /** si notre fonction prend 3 arguments */

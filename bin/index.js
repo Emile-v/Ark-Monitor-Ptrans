@@ -69,8 +69,9 @@ const { getCryptoConfig,
 
 
 // ------------- refresh ---------------
-// const {refreshData} = require('./')
+const {refreshData} = require('../utils/refresh')
 
+//==============================================================
 
 const Indicator = require('./../Indicator')
 
@@ -414,7 +415,10 @@ let get_sync_status=  new Indicator(
 let refresh = new Indicator(
     "refresh",
     refreshData,
-)
+    [[], []], 
+    "rfs",
+    "Descritpion de refresh")
+    refresh.CLI()
 
 //---------------------------    
 program.parse(process.argv);
