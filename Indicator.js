@@ -20,6 +20,8 @@ const categoriesEnum = {
     DELEGATES : "delegates",
     ENTITIES : "entities",
     NODE : "node",
+    BLOCKCHAIN : "blockchain",
+    BLOCKS : "blocks",
 }
 
 let context = {};

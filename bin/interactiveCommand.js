@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const {context, categoriesEnum, nonParametricIndicators} = require('../Indicator.js');
 const getParams = require('../utils/getParams');
-
+const {exportDataJSON, exportDataYAML, exportDataXML} = require("../utils/export")
 
 // un indicateur / un groupe d'incateurs
 // Global / Basic / Global
@@ -47,7 +47,7 @@ async function oneIndicatorType(){
         type: 'list',
         name: 'oneIndicatorType',
         message: 'What type of indicator do you want?',
-        choices: Object.keys(categoriesEnum),
+        choices: Object.values(categoriesEnum),
         },
     ])
     .then((answer) => {
@@ -61,7 +61,7 @@ async function oneIndicatorChoice(type){
         {
         type: 'list',
         name: 'oneIndicatorChoice',
-        message: 'What type of indicator do you want?',
+        message: 'What indicator do you want?',
         choices: Object.keys(context[type]),
         },
     ])
@@ -72,12 +72,12 @@ async function oneIndicatorChoice(type){
             printOrExport(fct,[])
         }
         else {
-            enterArguments(params);
+            enterArguments(fct, params);
         }
     });
 }
 
-async function enterArguments(parameters){
+async function enterArguments(indicatorFunction, parameters){
     inquirer
     .prompt([
         {
@@ -87,7 +87,7 @@ async function enterArguments(parameters){
         },
     ])
     .then((answer) => {
-        printOrExport(answer.oneIndicatorChoice,answer.enterArguments);
+        printOrExport(indicatorFunction,answer.enterArguments);
     });
 }
 
@@ -136,11 +136,11 @@ async function exportingDirectory(indicator, arguments){
         {
         type: 'input',
         name: 'exportingDirectory',
-        message: `Enter the directory and name of the file to export:`,
+        message: `Enter the name of the file to export (you can also specify a directory):`,
         },
     ])
     .then((answer) => {
-        exportType(indicator, arguments, directory);
+        exportType(indicator, arguments, answer.exportingDirectory);
     });
 }
 

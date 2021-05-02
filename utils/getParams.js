@@ -60,4 +60,4 @@ function getParams(func) {
 
 
 
-module.exports.getParams = getParams;
+module.exports = getParams;

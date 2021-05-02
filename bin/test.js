@@ -45,8 +45,8 @@ npi[f2.name] = f2;
 npi[f3.name] = f3;
 
 
-console.log(context);
-console.log(npi);
-console.log(Object.keys(npi));
+console.log(context["global"]);
+// console.log(npi);
+// console.log(Object.keys(npi));
 
 context[categoriesEnum.GLOBAL]["f3"]();
