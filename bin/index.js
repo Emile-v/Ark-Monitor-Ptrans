@@ -72,6 +72,21 @@ const { getCryptoConfig,
 // const {refreshData} = require('./')
 
 
+// ------------- interactive command ----------------
+const interact = require('./interactiveCommand');
+const {categoriesEnum, nonParametricIndicators, context} = require('../Indicator');
+
+program
+    .command('interact') // sub-command name
+    .alias('ic') // alternative sub-command is `o`
+    .description('Interactive command to request any indicator or group of indicators') // command description
+    // function to execute when command is uses
+    .action(function () {
+        interact();
+    });
+
+
+
 const Indicator = require('./../Indicator')
 
 
@@ -93,7 +108,9 @@ let number_Of_Nodes_By_BlockId = new Indicator(
     numberOfNodesByBlockId,
     [[],[]],
     "nonbbi",
-    "description numberOfNodesByBlockId")
+    "description numberOfNodesByBlockId",
+    categoriesEnum.GLOBAL
+    )
 number_Of_Nodes_By_BlockId.CLI()
 
 //-------------------------------------------
@@ -103,7 +120,9 @@ let number_Of_Nodes_By_Height = new Indicator(
     numberOfNodesByHeight,
     [[],[]],
     "nonbh",
-    "description numberOfNodesByHeight")
+    "description numberOfNodesByHeight",
+    categoriesEnum.GLOBAL
+    )
     number_Of_Nodes_By_Height.CLI()
 
 //-------------------------------
@@ -113,7 +132,9 @@ let number_Of_Nodes_By_Version = new Indicator(
     numberOfNodesByVersion,
     [[],[]],
     "nonbv",
-    "description number_Of_Nodes_By_Version")
+    "description number_Of_Nodes_By_Version",
+    categoriesEnum.GLOBAL
+    )
     number_Of_Nodes_By_Version.CLI()
 
 // ----------------------------------
@@ -123,7 +144,9 @@ let Retrieve_Transaction = new Indicator(
     RetrieveTransaction,
     [["duree"],["typeOfTransaction"]],
     "rtd",
-    "description RetrieveTransaction")
+    "description RetrieveTransaction",
+    categoriesEnum.TRANSACTIONS
+    )
     Retrieve_Transaction.CLI()
 
 /*******************************************
@@ -136,7 +159,9 @@ let getAll_Wallet = new Indicator(
     getAllWallet, 
     [ [],['maxPage'] ], 
     "gaw", 
-    "description getAllWallet"  )
+    "description getAllWallet",
+    categoriesEnum.WALLET
+    )
     getAll_Wallet.CLI()
 
 //---------------------------------------------------
@@ -145,7 +170,9 @@ let retrieve_wallet = new Indicator(
     retrieve_a_wallet, 
     [ ['id'],['maxPage'] ], 
     "raw", 
-    "description retrieve_a_wallet"  )
+    "description retrieve_a_wallet",
+    categoriesEnum.WALLET
+    )
     retrieve_wallet.CLI()
 
 //---------------------------------------------------
@@ -411,10 +438,15 @@ let get_sync_status=  new Indicator(
 /** ----------------------------------------
         refresh commande
 //------------------------------------------ */
+/*
 let refresh = new Indicator(
     "refresh",
     refreshData,
 )
+*/
 
-//---------------------------    
+//---------------------------   
+console.log('context : '+context)
+console.log('nonParametricIndicators : '+nonParametricIndicators)
+
 program.parse(process.argv);
