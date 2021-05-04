@@ -1,15 +1,16 @@
 let fetchAsync = require('../../utils/fetch')
 const template = require("../../utils/templates");
+const {url} = require("../../utils/globalvar")
 
 async function getNodeConfig(){
-    let path='https://api.ark.io/api/node/configuration'
+    let path=url+'/node/configuration'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
   async function getCryptoConfig(){
-    let path='https://api.ark.io/api/node/configuration/crypto'
+    let path=url+'/node/configuration/crypto'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
@@ -18,21 +19,21 @@ async function getNodeConfig(){
 
 
   async function getFeeStats(){
-    let path='https://api.ark.io/api/node/fees'
+    let path=url+'/node/fees'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
   async function getNodeStatus(){
-    let path='https://api.ark.io/api/node/status'
+    let path=url+'/node/status'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
   async function getSyncStatus(){
-    let path='https://api.ark.io/api/node/syncing'
+    let path=url+'/node/syncing'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }

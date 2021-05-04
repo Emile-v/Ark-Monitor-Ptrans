@@ -1,9 +1,10 @@
+const {url} = require("../../utils/globalvar")
 
 const template = require("../../utils/templates");
 
 /** %%%%%%%%%%%% List All Votes %%%%%%%%%%%%%%%%%%%% */
-async function list_All_Votes(maxPage){
-    let path = "https://api.ark.io/api/wallets?"
+async function list_All_Votes(maxPage=1){
+    let path = url+"/votes?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
@@ -18,7 +19,7 @@ module.exports.list_All_Votes = list_All_Votes;
 
 /** %%%%%%%%%%%% Retrieve a Vote %%%%%%%%%%%%%% */
 async function retrieve_a_Vote(id){
-    let path = `https://api.ark.io/api/votes/${id}`
+    let path = url+`/votes/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
 }

@@ -1,3 +1,4 @@
+const {url} = require("../../utils/globalvar")
 
  let data = require('./numberOfNodesByHeight')
 let fetchAsync = require('./../../utils/fetch')
@@ -14,7 +15,7 @@ async function numberOfNodesByBlockId(){
 
 
     for (const [key, value] of Object.entries(byHeight)){
-        let res = await fetchAsync(`https://api.ark.io/api/blocks/${key}`);
+        let res = await fetchAsync(url+`/blocks/${key}`);
         let blockId = res.data.id;
         result[`${blockId}`] = value;
     }

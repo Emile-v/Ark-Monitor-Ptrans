@@ -1,6 +1,6 @@
+const {url} = require("../../utils/globalvar")
 
 let fetchAsync = require('../../utils/fetch')
-let data = require('../../ListNode')
 
 function getStatusPeers1(){
     console.log("Statuts de 10 pairs")

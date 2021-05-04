@@ -23,24 +23,24 @@ const { getAllWallet,
         list_All_Sent_Transactions_Wallet,
         list_All_Received_Transactions_Wallet,
         list_All_Votes_Wallet }
-= require('../Indicators/Ark/Wallet');
+= require('../Indicators/Basic/Wallet');
 
 //------- Peers --------------------
 const { list_All_Peers,
         retrieve_A_Peer}
-= require('../Indicators/Ark/Peers');
+= require('../Indicators/Basic/Peers');
 
 //------- Transactions --------------------
 const { list_All_Transaction,
         retrieve_A_Transaction,
         list_All_Unconfirmed_Transaction,
         retrieve_An_Unconfirmed_Transaction}
-= require('../Indicators/Ark/Transactions');
+= require('../Indicators/Basic/Transactions');
 
 //------- Votes --------------------
 const { list_All_Votes,
     retrieve_a_Vote}
-= require('../Indicators/Ark/Votes');
+= require('../Indicators/Basic/Votes');
 
 //------- Blockchain --------------------
 const { getBlockchain}

@@ -1,9 +1,11 @@
-
+const {url} = require("../../utils/globalvar")
 const fetchAsync = require("../../utils/fetch");
 const template = require("../../utils/templates");
+
 /** %%%%%%%%%%%%  List All Peers %%%%%%%%%%%%%%%%%%%% */
 async function list_All_Peers(maxPage=1){
-    let path = "https://api.ark.io/api/peers?"
+    // console.log(url);
+    let path = url+"/peers?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
@@ -18,7 +20,7 @@ module.exports.list_All_Peers = list_All_Peers;
 
 /** %%%%%%%%%%% Retrieve a Peer %%%%%%%%%%%%%%%% */
 async function retrieve_A_Peer(id){
-    let path = `https://api.ark.io/api/peers/${id}`
+    let path = url+`/peers/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res //is an empty objet if the ID doesn't exist
 }
@@ -106,42 +108,6 @@ async function open_Port(ip){
 }
 module.exports.open_Port = open_Port;
 
-/** test function */
-// async function printL(){
-//     console.log(await check_Port("5.135.143.111"))
-//     /**
-//      * Dans le cas ou l'IP est inconnu alors la fonction renvoie juste une liste vide
-//      */
-    
-// }
-// printL()
-
-// {
-//     ip: '116.203.178.155',
-//     port: 4001,
-//     ports: {
-//       '@arkecosystem/core-api': -1,
-//       '@arkecosystem/core-wallet-api': -1,
-//       '@arkecosystem/core-webhooks': -1,
-//       '@arkecosystem/core-exchange-json-rpc': -1
-//     },
-//     version: '2.7.24',
-//     height: 15973656,
-//     latency: 129
-//   },
-
-
-// {
-//     "ip": "5.135.143.111",
-//     "port": 4001,
-//     "ports": {
-//         "@arkecosystem\/core-api": 4003,
-//         "@arkecosystem\/core-wallet-api": 4040,
-//         "@arkecosystem\/core-webhooks": -1,
-//         "@arkecosystem\/core-exchange-json-rpc": -1
-//     },
-
-
 /** %%%%%%%%%%%%  List All Peers IP of specific node %%%%%%%%%%%%%%%%%%%% */
 async function list_All_IP(ip,maxPage=1000){
     let path = `http://${ip}:4003/api/peers?`
@@ -156,15 +122,4 @@ async function list_All_IP(ip,maxPage=1000){
 }
 
 
-// /** test function */
-// async function printR(){
-//     let res = await list_All_IP("51.68.197.248")
-//     /**
-//      * Dans le cas ou l'IP est inconnu alors la fonction renvoie juste une liste vide
-//      */
-
-
-//     console.log(res)
-// }
-// printR()
 module.exports.list_All_IP = list_All_IP;
