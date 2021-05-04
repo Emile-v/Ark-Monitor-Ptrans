@@ -68,11 +68,12 @@ async function oneIndicatorChoice(type){
     .then((answer) => {
         let fct = context[type][answer.oneIndicatorChoice];
         let params = getParams(fct);
+        console.log(params);
         if (params.length===0){
             printOrExport(fct,[])
         }
         else {
-            enterArguments(fct, params);
+            enterArguments(fct, params[0]);
         }
     });
 }

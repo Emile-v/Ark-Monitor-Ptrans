@@ -20,7 +20,7 @@ function getParams(func) {
     // End parameter names is just before last ')'
     var end = str.length - 1;
   
-    var result = str.substring(start, end).split(", ");
+    var result = str.substring(start, end).split(",");
   
     var params = [];
   
