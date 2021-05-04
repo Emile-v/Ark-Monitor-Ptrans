@@ -1,8 +1,9 @@
 let fetchAsync = require('../../utils/fetch')
+const {url} = require("../../utils/globalvar")
 
 function getStaticFeesPeers(){
     console.log("Fees de 10 pairs.")
-    fetchAsync('https://api.ark.io/api/peers?page=1&limit=10')
+    fetchAsync(url+'/peers?page=1&limit=10')
     .then(res => res.data)
     .then((delegates) => {
       for (let i = 0; i < delegates.length; i++) {

@@ -1,9 +1,10 @@
+const {url} = require("../../utils/globalvar")
 
 let fetchAsync = require('../../utils/fetch')
 
 let main = async (duree, numPage, typeOfTransaction) => {
 
-    let res = fetchAsync(`https://api.ark.io/api/transactions?page=${numPage}&limit=100&type=${typeOfTransaction}`);
+    let res = fetchAsync(url+`/transactions?page=${numPage}&limit=100&type=${typeOfTransaction}`);
   
     let res2 = await res.then(res => {
   

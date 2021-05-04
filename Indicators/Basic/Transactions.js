@@ -1,8 +1,9 @@
+const {url} = require("../../utils/globalvar")
 
 const template = require("../../utils/templates");
 /** %%%%%%%%%%%%  List All Transactions %%%%%%%%%%%%%%%%%%%% */
 async function list_All_Transaction(maxPage=1){
-    let path = "https://api.ark.io/api/transactions?"
+    let path = url+"/transactions?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
@@ -18,7 +19,7 @@ module.exports.list_All_Transaction = list_All_Transaction;
 
 /**%%%%%%%%%%%%%%% Retrieve a Transaction %%%%%%%%%%%%%% */
 async function retrieve_A_Transaction(id){
-    let path = `https://api.ark.io/api/transactions/${id}`
+    let path = url+`/transactions/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
 }
@@ -34,7 +35,7 @@ module.exports.retrieve_A_Transaction = retrieve_A_Transaction;
 
 /** %%%%%%%%%%% List All Unconfirmed Transaction %%%%%%%%%%% */
 async function list_All_Unconfirmed_Transaction(maxPage=1){
-    let path = "https://api.ark.io/api/transactions/unconfirmed?"
+    let path = url+"/transactions/unconfirmed?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
@@ -50,7 +51,7 @@ module.exports.list_All_Unconfirmed_Transaction = list_All_Unconfirmed_Transacti
 
 /** %%%%%%%%%%%%%%%%%  Get an Unconfirmed Transaction %%%%%%%%%%%%*/
 async function retrieve_An_Unconfirmed_Transaction(id){
-    let path = `https://api.ark.io/api/transactions/unconfirmed/${id}`
+    let path = url+`/transactions/unconfirmed/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
 }

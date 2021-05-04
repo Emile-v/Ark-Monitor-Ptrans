@@ -1,11 +1,10 @@
 const fetchAsync = require("../../utils/fetch");
 const template = require("../../utils/templates");
+const {url} = require("../../utils/globalvar")
 
 /*%%%%%%%%%%%%%%% List All Wallets %%%%%%%%%%%%%%%*/
 async function getAllWallet (maxPage=1){
-    console.log("maxePage")
-    console.log(maxPage)
-    let path = "https://api.ark.io/api/wallets?"
+    let path = url+"/wallets?"
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res
 }
@@ -19,9 +18,9 @@ async function getAllWallet (maxPage=1){
 module.exports.getAllWallet = getAllWallet;
 
 /** %%%%%%%%%%%%%%% Retrieve a Wallet %%%%%%%%%%%%%%%%%%*/
-
+// by Public key or address
 async function retrieve_a_wallet(id){
-    let path = `https://api.ark.io/api/wallets/${id}`
+    let path = url+`/wallets/${id}`
     let res = await template.retrieve_OBJ_template(path)
     return res
 }
@@ -40,7 +39,7 @@ async function list_Of_All_Transactions_Wallet(id, maxPage=1){
     if(id==null){
         console.log("id not defined")
     }
-    let path = `https://api.ark.io/api/wallets/${id}/transactions?`
+    let path = url+`/wallets/${id}/transactions?`
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res;
 }
@@ -61,7 +60,7 @@ async function list_All_Sent_Transactions_Wallet(id, maxPage=1){
         return false
     }
 
-    let path = `https://api.ark.io/api/wallets/${id}/transactions/sent?`
+    let path = url+`/wallets/${id}/transactions/sent?`
     let res = await template.retrieve_with_limitation_template(path, maxPage=1)
     return res;
 }
@@ -85,7 +84,7 @@ async function list_All_Received_Transactions_Wallet(id, maxPage=1){
         console.log("id not defined")
     }
 
-    let path = `https://api.ark.io/api/wallets/${id}/transactions/received?`
+    let path = url+`/wallets/${id}/transactions/received?`
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res;
 }
@@ -108,7 +107,7 @@ async function list_All_Votes_Wallet(id, maxPage=1){
     if(id==null){
         console.log("id not defined")
     }
-    let path = `https://api.ark.io/api/wallets/${id}/votes?`
+    let path = url+`/wallets/${id}/votes?`
     let res = await template.retrieve_with_limitation_template(path, maxPage)
     return res;
 }
