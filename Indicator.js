@@ -109,7 +109,7 @@ class Indicator {
                 console.log("export en .XML achevé")
             }
 
-            console.log("fin du programme")
+            console.log("fin de la requête")
         })
     }
     //-------------------------------------------------------------------------------

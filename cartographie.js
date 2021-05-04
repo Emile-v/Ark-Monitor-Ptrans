@@ -314,3 +314,4 @@ async function testG(){
 }
 // testG()
 
+module.exports = Graph;
