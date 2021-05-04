@@ -82,12 +82,11 @@ const {getNodeEnvList} = require('../Indicators/Local/getNodeEnvList')
 const {getNodeProcessStatus} = require('../Indicators/Local/getNodeProcessStatus')
 const {getPublicIP_Port} = require('../Indicators/Local/getPublicIP_Port')
 
+/**----------- Cartographie --------------- */
+const {cartographie_All_Network, cartographie_With_Iteration, cartographie_With_Iteration_Max_Peer} = require('../cartographie')
 
 
 const Indicator = require('./../Indicator')
-const Graph = require('../cartographie')
-
-
 
 /** template :
  * constructor ( name,
@@ -464,6 +463,39 @@ let refresh = new Indicator(
 
 //---------------------------
 
+
+/** ----------------------------------------
+        cartographie commande
+//------------------------------------------ */
+let cartographieAllNetwork = new Indicator(
+    "cartographie_All_Network",
+    cartographie_All_Network,
+    [["Ip_roots"], []],
+    "can",
+    "Descritpion de cartographie_All_Network")
+cartographieAllNetwork.CLI()
+
+let cartographieWithIteration = new Indicator(
+    "cartographie_With_Iteration",
+    cartographie_With_Iteration,
+    [["Ip_roots"], ["nb_Iteration"]],
+    "cwi",
+    "Descritpion de cartographie_With_Iteration")
+cartographieWithIteration.CLI()
+
+let cartographieWithIterationMaxPeer = new Indicator(
+    "cartographie_With_Iteration_Max_Peer",
+    cartographie_With_Iteration_Max_Peer,
+    [["Ip_roots"], ["nb_Iteration", "nb_maxPeers"]],
+    "cwimp",
+    "Descritpion de cartographie_With_Iteration_Max_Peer")
+cartographieWithIterationMaxPeer.CLI()
+
+//--------------------------------------------------------------
+
+
+
+
 let get_machine_spec = new Indicator(
     "get_machine_spec",
     getMachineSpec,
@@ -507,5 +539,8 @@ program
 .description("Visualize the network graph via a webpage.")
 .action(function(){
     launch_graph();});
+
+
+    
 
 program.parse(process.argv);

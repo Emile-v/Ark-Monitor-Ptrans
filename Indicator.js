@@ -82,9 +82,14 @@ class Indicator {
                     console.log("-------------------------------------\n")
                     break;
                 case 3:
-                    /** si notre fonction prend 3 arguments */
-                    console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
+                    this.format.result = await this.indicatorFunction(argsList[0], argsList[1], argsList[2])
+                    display = display_enhanced(this.format.result)
+                    console.log("-------------------------------------\n")
+                    console.log(display)
+                    console.log("-------------------------------------\n")
                     break;
+                /** ... */
+
                 default:
                     console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
                     break;

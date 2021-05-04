@@ -1,17 +1,47 @@
 const { list_All_Peers_Specific_Node,list_All_IP, list_All_Peers_Specific_Node_Max_Peer, open_Port } 
-= require('../Indicators/Ark/Peers');
+= require('./Indicators/Ark/Peers');
 
-const {exportDataJSON, exportDataYAML} = require('../utils/export')
+const {exportDataJSON, exportDataYAML} = require('./utils/export')
 
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
-/** début nouvelle tentative */
+const fs = require('fs')
+
+
+
+class Edge{
+  constructor(id, source, target){
+      this.id = "e"+id
+      this.source = source;
+      this.target = target
+  }
+
+  /** check if two Edge are equals */
+  equals(edge){
+      return (this.source.equals(edge.source) && this.target.equals(edge.target))||(this.source.equals(edge.target) && this.target.equals(edge.source))
+  }
+}
+
+
+class Node{
+ constructor (id, ip) {
+     this.id = "n" + id
+     this.label = ip;
+     this.x = Math.random()
+     this.y= Math.random()
+     this.size = 0.5 //Math.random()
+   }
+   equals(node){
+     return this.label == node.label
+ }
+
+}
 
 class Graph {
-  constructor(racine){
-    this.racine = racine // noeud
-    this.nodes = [racine]
+  constructor(){
+    // this.racine = racine // noeud
+    this.nodes = []
     this.edges = []
   }
 
@@ -38,11 +68,15 @@ class Graph {
   }
 
   /** ----------- cartographie with number of iteration as parameter ------------------------ */
-    async graphInit_1(iteration){
+    async graphInit_1(IP_Racine, iteration){
         let id_Node = 0 // increment the id of node
         let id_Edge = 0 // increment the id of node
         let ctpIteration = 1 // optionnal
-        let tab_Initialised_IP = [this.racine.label]
+
+        let racine = new Node(0, IP_Racine)
+        this.nodes.push(racine)
+
+        let tab_Initialised_IP = [racine.label]
         let tab_Of_couple_Initialised = []
 
         let cursor = 0;
@@ -75,7 +109,7 @@ class Graph {
                         
                         this.add_Edge(new Edge(id_Edge, current_Node.id, node.id))
                     }
-                        id_Edge++
+                      id_Edge++
                 })
             }        
         }
@@ -131,11 +165,17 @@ class Graph {
     }
 
     /** ------------------ Cartography with two parameters : number of iteration & number of maxPeer per node ------------------- */
-    async graphInit_2(iteration, nbMaxPeer){
+    async graphInit_2( IP_Racine, iteration, nbMaxPeer){
         let id_Node = 0 // increment the id of node
         let id_Edge = 0 // increment the id of node
-        let tab_Initialised_IP = [this.racine.label]
+
+        let racine = new Node(0, IP_Racine)
+        this.nodes.push(racine)
+
+        let tab_Initialised_IP = [racine.label]
         let tab_Of_couple_Initialised = []
+
+        
     
         let cursor = 0;
     
@@ -249,69 +289,98 @@ class Graph {
     }
 }
 
-
- class Edge{
-     constructor(id, source, target){
-         this.id = "e"+id
-         this.source = source;
-         this.target = target
-     }
-
-     /** check if two Edge are equals */
-     equals(edge){
-         return (this.source.equals(edge.source) && this.target.equals(edge.target))||(this.source.equals(edge.target) && this.target.equals(edge.source))
-     }
- }
-
-
-class Node{
-    constructor (id, ip) {
-        this.id = "n" + id
-        this.label = ip;
-        this.x = Math.random()
-        this.y= Math.random()
-        this.size = Math.random()
-      }
-      equals(node){
-        return this.label == node.label
-    }
-
-}
-
     
-/** test Edge*/
-function testE(){
-    let n1 = new Node(0,"5.135.143.111")
-    let n2 = new Node(2, "5.135.143.112")
-    let n3 = new Node(3, "5.135.143.12")
+/** test Edge et nodes*/
+// function testE(){
+//     let n1 = new Node(0,"5.135.143.111")
+//     let n2 = new Node(2, "5.135.143.112")
+//     let n3 = new Node(3, "5.135.143.12")
 
-    let e1 = new Edge(1, n1, n2)
-    let e2 = new Edge(1, n1, n2)
-    console.log(e2.equals(e1))
-}
+//     let e1 = new Edge(1, n1, n2)
+//     let e2 = new Edge(1, n1, n2)
+//     console.log(e2.equals(e1))
+// }
 // testE()
 
 
-/** test graph*/
-async function testG(){
-    let n1 = new Node(0,"5.135.143.111")
-    let n2 = new Node(22222, "37.59.70.164")
-    let n3 = new Node(3, "5.135.143.12")
-
-    let g = new Graph(n2)
-
-    let nb_Iteration = 4
-    let max_Peer = 3    
-
-
-    await g.graphInit2(nb_Iteration, max_Peer) // nbIteration
-    await timeout(60000);
-
-    // console.log(g)
-    // exportDataYAML(g, "cartographie_total_2iteration")
-    // exportDataJSON(g, "cartographie_total_2iteration")
-
+/** permet d'afficher le graphe dans sigma en faisant un refresh du fichier visualisation dans sigma/data */
+async function refresh_Data_Vis(data){
+  let Name_File = "./sigma/data/visualisation.json"
+  let datas = JSON.stringify(data)
+  fs.writeFileSync(Name_File, datas, function(erreur){
+      if(erreur){
+          console.log(erreur)
+      }
+  })
+  console.log("cartographie refreshed")
 }
+
+
+/**--------------------------------------------------- */
+async function cartographie_With_Iteration(Ip_Roots, nbIteration=2){
+  let g = new Graph();
+  await g.graphInit_1(Ip_Roots, nbIteration)
+
+  /** permet d'afficher le graphe dans sigma en faisant un refresh du fichier visualisation dans sigma/data */
+  refresh_Data_Vis(g)
+
+  return g
+}
+module.exports.cartographie_With_Iteration = cartographie_With_Iteration;
+/** test graph*/
+// async function testG(){
+
+//   let graph = await cartographie("5.135.143.111",2)
+//   exportDataYAML(graph, "ptest")
+//   exportDataJSON(graph, "ptest")
+// }
 // testG()
 
-module.exports = Graph;
+/**--------------------------------------------------- */
+
+async function cartographie_With_Iteration_Max_Peer(Ip_Roots, nbIteration=2, max_Peer=2){
+  let g = new Graph();
+  await g.graphInit_2(Ip_Roots, nbIteration, max_Peer)
+
+  /** permet d'afficher le graphe dans sigma en faisant un refresh du fichier visualisation dans sigma/data */
+  refresh_Data_Vis(g)
+
+  return g
+}
+module.exports.cartographie_With_Iteration_Max_Peer = cartographie_With_Iteration_Max_Peer;
+/** test graph*/
+// async function testP(){
+
+//   let graph = await cartographie("5.135.143.111", 3, 5)
+//   exportDataYAML(graph, "ptest")
+//   exportDataJSON(graph, "ptest")
+// }
+// testP()
+
+/**--------------------------------------------------- */
+
+async function cartographie_All_Network(Ip_Roots){
+  let g = new Graph();
+  await g.graphInit_All_Network(Ip_Roots)
+
+  /** permet d'afficher le graphe dans sigma en faisant un refresh du fichier visualisation dans sigma/data */
+  refresh_Data_Vis(g)
+
+  return g
+}
+module.exports.cartographie_All_Network = cartographie_All_Network;
+
+
+/** test graph*/
+// async function testD(){
+
+//     let graph = await cartographie("5.135.143.111")
+//     exportDataYAML(graph, "ptest")
+//     exportDataJSON(graph, "ptest")
+// }
+// testD()
+
+
+
+
+
