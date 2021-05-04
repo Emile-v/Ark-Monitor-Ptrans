@@ -11,15 +11,38 @@ const {exportDataJSON, exportDataYAML, exportDataXML} = require("./utils/export"
 
 'use strict';
 
+const categoriesEnum = {
+    GLOBAL : "global",
+    LOCAL : "local",
+    PEERS : "peers",
+    TRANSACTIONS : "transactions",
+    VOTES : "votes",
+    WALLET : "wallet",
+    DELEGATES : "delegates",
+    ENTITIES : "entities",
+    NODE : "node",
+    BLOCKCHAIN : "blockchain",
+    BLOCKS : "blocks",
+}
+
+let context = {};
+
+for (let [key, value] of Object.entries(categoriesEnum)) {
+    context[value] = {};
+}
+
+let nonParametricIndicators = {};
+
 
 class Indicator {
-    constructor (name, indicatorFunction, parameter, alias, description) {
+    constructor (name, indicatorFunction, parameter, alias, description, category) {
       this.indicatorFunction = indicatorFunction;
       this.name = name;
-      this. parameter = parameter;
+      this.parameter = parameter;
       this.alias = alias;
       this.description = description;
       this.name_parameter = parameter;
+      this.category = category
 
       this.format = {
           name : this.name,
@@ -28,6 +51,13 @@ class Indicator {
     }
 
     async CLI() {
+        if (this.category){
+            context[this.category][this.indicatorFunction.name] = this.indicatorFunction;
+            if (this.indicatorFunction.length === 0) {
+                nonParametricIndicators[this.indicatorFunction.name] = this.indicatorFunction;
+            }
+        }
+        
         let requireParam = "";
         let optionnalPara = "";
 
@@ -116,4 +146,7 @@ class Indicator {
 
 }
 
-module.exports = Indicator
+module.exports = Indicator;
+module.exports.context = context;
+module.exports.categoriesEnum = categoriesEnum;
+module.exports.nonParametricIndicators = nonParametricIndicators;
