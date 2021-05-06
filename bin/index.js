@@ -483,7 +483,7 @@ let get_delegate_by_address=  new Indicator(
 let get_crypto_config=  new Indicator(
     "get_crypto_config",
     getCryptoConfig,
-    [[],[]],
+    [["ipnode"],[]],
     "crypc",
     "description get_crypto_config",
     categoriesEnum.NODE
@@ -493,7 +493,7 @@ let get_crypto_config=  new Indicator(
 let get_fee_stats=  new Indicator(
     "get_fee_stats",
     getFeeStats,
-    [[],[]],
+    [["ipnode"],[]],
     "feest",
     "description get_fee_stats",
     categoriesEnum.NODE
@@ -503,7 +503,7 @@ let get_fee_stats=  new Indicator(
 let get_node_conf=  new Indicator(
     "get_node_conf",
     getNodeConfig,
-    [[],[]],
+    [["ipnode"],[]],
     "nodec",
     "description get_node_conf",
     categoriesEnum.NODE
@@ -513,7 +513,7 @@ let get_node_conf=  new Indicator(
 let get_node_status=  new Indicator(
     "get_node_status",
     getNodeStatus,
-    [[],[]],
+    [["ipnode"],[]],
     "nodest",
     "description get_node_status",
     categoriesEnum.NODE)
@@ -522,7 +522,7 @@ let get_node_status=  new Indicator(
 let get_sync_status=  new Indicator(
     "get_sync_status",
     getSyncStatus,
-    [[],[]],
+    [["ipnode"],[]],
     "syncst",
     "description get_sync_status",
     categoriesEnum.NODE)

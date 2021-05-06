@@ -2,15 +2,15 @@ let fetchAsync = require('../../utils/fetch')
 const template = require("../../utils/templates");
 const {url} = require("../../utils/globalvar")
 
-async function getNodeConfig(){
-    let path=url+'/node/configuration'
+async function getNodeConfig(ipnode){
+    let path='http://'+ipnode+':4003/api/node/configuration'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
   async function getCryptoConfig(){
-    let path=url+'/node/configuration/crypto'
+    let path='http://'+ipnode+':4003/api/node/configuration/crypto'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
@@ -18,22 +18,22 @@ async function getNodeConfig(){
   
 
 
-  async function getFeeStats(){
-    let path=url+'/node/fees'
+  async function getFeeStats(ipnode){
+    let path='http://'+ipnode+':4003/api/node/fees'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
-  async function getNodeStatus(){
-    let path=url+'/node/status'
+  async function getNodeStatus(ipnode){
+    let path='http://'+ipnode+':4003/api/node/status'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
 
 
-  async function getSyncStatus(){
-    let path=url+'/node/syncing'
+  async function getSyncStatus(ipnode){
+    let path='http://'+ipnode+':4003/api/node/syncing'
     let res = await template.retrieve_OBJ_template(path)
     return res;
   }
