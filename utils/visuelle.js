@@ -1,14 +1,22 @@
 const yaml = require('js-yaml');
 
+const highlight = require('cli-highlight').highlight
+const Sequelize = require('sequelize')
+
+
 function display_enhanced(data){
     let yamlStr = yaml.dump(data);
-    return yamlStr    
+    console.log("-------------------------------------\n")
+    console.log(highlight(yamlStr, {language: 'yaml', ignoreIllegals: true}))
+    console.log("-------------------------------------\n")
+    // return yamlStr    
 }
 
 module.exports.display_enhanced = display_enhanced;
 
 /** function test */
 // function test(){
+
 //     let a = {
 //                 "name":"retrieve_a_wallet",
 //                 "result":{
@@ -27,7 +35,10 @@ module.exports.display_enhanced = display_enhanced;
 //                 }
 //             }
 //     a = display_enhanced(a)
-//     console.log(a)
+//     console.log("-------------------------------------\n")
+//     console.log(highlight(a, {language: 'yaml', ignoreIllegals: true}))
+//     console.log("-------------------------------------\n")
+
 // }
 
 // test()

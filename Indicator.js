@@ -91,32 +91,20 @@ class Indicator {
             switch(argsList_Length){
                 case 0:
                     this.format.result = await this.indicatorFunction()
-                    display = display_enhanced(this.format.result)
-                    console.log("-------------------------------------\n")
-                    console.log(display)
-                    console.log("-------------------------------------\n")
+                    display_enhanced(this.format.result)
 
                     break;
                 case 1:
                     this.format.result = await this.indicatorFunction(argsList[0])
-                    display = display_enhanced(this.format.result)
-                    console.log("-------------------------------------\n")
-                    console.log(display)
-                    console.log("-------------------------------------\n")
+                    display_enhanced(this.format.result)
                     break;
                 case 2:
                     this.format.result = await this.indicatorFunction(argsList[0], argsList[1])
-                    display = display_enhanced(this.format.result)
-                    console.log("-------------------------------------\n")
-                    console.log(display)
-                    console.log("-------------------------------------\n")
+                    display_enhanced(this.format.result)
                     break;
                 case 3:
                     this.format.result = await this.indicatorFunction(argsList[0], argsList[1], argsList[2])
-                    display = display_enhanced(this.format.result)
-                    console.log("-------------------------------------\n")
-                    console.log(display)
-                    console.log("-------------------------------------\n")
+                    display_enhanced(this.format.result)
                     break;
                 /** ... */
 
