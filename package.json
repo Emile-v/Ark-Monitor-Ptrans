@@ -1,10 +1,17 @@
 {
   "name": "ark-monitor",
   "version": "1.0.0",
+  "description": "A CLI to monitor the Ark blockchain.",
+  "homepage": "https://github.com/Emile-v/Ark-Monitor-Ptrans",
+  "license": "MIT",
   "lockfileVersion": 1,
   "preferGlobal": true,
   "bin": {
     "monitor": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Emile-v/Ark-Monitor-Ptrans.git"
   },
   "dependencies": {
     "@rauschma/stringio": "^1.4.0",
