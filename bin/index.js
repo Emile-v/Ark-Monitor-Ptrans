@@ -115,7 +115,7 @@ const Indicator = require('./../Indicator')
 *******************************************/
 
 let number_Of_Nodes_By_BlockId = new Indicator(
-    "numberOfNodesByBlockId",
+    "numberOf_Nodes_ByBlockId",
     numberOfNodesByBlockId,
     [[],[]],
     "nonbbi",
@@ -127,7 +127,7 @@ number_Of_Nodes_By_BlockId.CLI()
 //-------------------------------------------
 
 let number_Of_Nodes_By_Height = new Indicator(
-    "numberOfNodesByHeight",
+    "numberOf_Nodes_ByHeight",
     numberOfNodesByHeight,
     [[],[]],
     "nonbh",
@@ -139,7 +139,7 @@ let number_Of_Nodes_By_Height = new Indicator(
 //-------------------------------
 
 let number_Of_Nodes_By_Version = new Indicator(
-    "numberOfNodesByVersion",
+    "numberOf_Nodes_ByVersion",
     numberOfNodesByVersion,
     [[],[]],
     "nonbv",
@@ -151,7 +151,7 @@ let number_Of_Nodes_By_Version = new Indicator(
 // ----------------------------------
 
 let numberOfTransaction = new Indicator(
-    "numberOfTransaction",
+    "number_Of_Transaction",
     number_Of_Transaction,
     [["hours"],["typeOfTransaction"]],
     "not",
@@ -165,7 +165,7 @@ let numberOfTransaction = new Indicator(
             Node Indicators
 *******************************************/
 let get_Country = new Indicator(
-    "getCountry",
+    "get_Country",
     getCountry,
     [[],[]],
     "cnt",
@@ -191,7 +191,7 @@ let get_Status= new Indicator(
 
 
 let getAll_Wallet = new Indicator(
-    "getAllWallet",
+    "get_All_Wallet",
     getAllWallet,
     [ [],['maxPage'] ],
     "gaw",
@@ -275,7 +275,7 @@ let list_Peers = new Indicator(
 //------------------------------------------------
 
 let retrieve_Peer = new Indicator(
-    "Get a peer by its ip",
+    "get_Peer_by_IP",
     retrieve_A_Peer,
     [ ['ip'],[] ],
     "rp",
@@ -541,7 +541,7 @@ let refresh = new Indicator(
         cartographie commande
 //------------------------------------------ */
 let cartographieAllNetwork = new Indicator(
-    "cartographie_All_Network",
+    "map_All_Network",
     cartographie_All_Network,
     [["Ip_roots"], []],
     "can",
@@ -549,7 +549,7 @@ let cartographieAllNetwork = new Indicator(
 cartographieAllNetwork.CLI()
 
 let cartographieWithIteration = new Indicator(
-    "cartographie_With_Iteration",
+    "map_With_Iteration",
     cartographie_With_Iteration,
     [["Ip_roots"], ["nb_Iteration"]],
     "cwi",
@@ -557,7 +557,7 @@ let cartographieWithIteration = new Indicator(
 cartographieWithIteration.CLI()
 
 let cartographieWithIterationMaxPeer = new Indicator(
-    "cartographie_With_Iteration_Max_Peer",
+    "map_With_Iteration_Max_Peer",
     cartographie_With_Iteration_Max_Peer,
     [["Ip_roots"], ["nb_Iteration", "nb_maxPeers"]],
     "cwimp",
@@ -612,7 +612,7 @@ let get_public_ip_port = new Indicator(
 get_public_ip_port.CLI()
 
 program
-.command("netgraph")
+.command("network_graph")
 .alias("graph")
 .description("Visualize the network graph via a webpage.")
 .action(function(){
