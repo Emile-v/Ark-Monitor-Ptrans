@@ -1,6 +1,6 @@
-
+const path = require('path')
 let ip2loc = require("ip2location-nodejs");
-ip2loc.IP2Location_init("./ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN");
+ip2loc.IP2Location_init(path.join(__dirname, '../../ip2Location/IP2LOCATION-LITE-DB3.IPV6.BIN'));
 
 let data = require('../../ListNode')
 
