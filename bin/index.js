@@ -120,7 +120,7 @@ let number_Of_Nodes_By_BlockId = new Indicator(
     numberOfNodesByBlockId,
     [[],[]],
     "nonbbi",
-    "description numberOfNodesByBlockId",
+    "Distribution of last known block id among the nodes",
     categoriesEnum.GLOBAL
     )
 number_Of_Nodes_By_BlockId.CLI()
@@ -132,7 +132,7 @@ let number_Of_Nodes_By_Height = new Indicator(
     numberOfNodesByHeight,
     [[],[]],
     "nonbh",
-    "description numberOfNodesByHeight",
+    "Distribution of current height among the nodes",
     categoriesEnum.GLOBAL
     )
     number_Of_Nodes_By_Height.CLI()
@@ -144,7 +144,7 @@ let number_Of_Nodes_By_Version = new Indicator(
     numberOfNodesByVersion,
     [[],[]],
     "nonbv",
-    "description number_Of_Nodes_By_Version",
+    "Distribution of used version among the nodes",
     categoriesEnum.GLOBAL
     )
     number_Of_Nodes_By_Version.CLI()
@@ -170,7 +170,9 @@ let get_Country = new Indicator(
     getCountry,
     [[],[]],
     "cnt",
-    "description getCountry")
+    "The localisation associated with the nodes IPs",
+    categoriesEnum.GLOBAL
+    )
     get_Country.CLI()
 
 let get_Static_Fees= new Indicator(
@@ -178,7 +180,9 @@ let get_Static_Fees= new Indicator(
     getStaticFeesPeers,
     [[],[]],
     "stfee",
-    "description getStaticFees")
+    "The static fees of nodes",
+    categoriesEnum.NODE
+    )
     get_Static_Fees.CLI()
 
 
@@ -187,7 +191,9 @@ let get_Status= new Indicator(
     getStatusPeers,
     [[],[]],
     "status",
-    "description getStatus")
+    "The status of nodes",
+    categoriesEnum.NODE
+    )
     get_Status.CLI()
 
 
@@ -201,7 +207,7 @@ let getAll_Wallet = new Indicator(
     getAllWallet,
     [ [],['maxPage'] ],
     "gaw",
-    "description getAllWallet",
+    "List all wallets",
     categoriesEnum.WALLET
     )
     getAll_Wallet.CLI()
@@ -212,7 +218,7 @@ let retrieve_wallet = new Indicator(
     retrieve_a_wallet,
     [ ['id'],['maxPage'] ],
     "raw",
-    "description retrieve_a_wallet",
+    "Retrieve a wallet by its id",
     categoriesEnum.WALLET
     )
     retrieve_wallet.CLI()
@@ -224,7 +230,7 @@ let list_Transactions_Wallet = new Indicator(
     list_Of_All_Transactions_Wallet,
     [ ['id'],['maxPage'] ],
     "ltw",
-    "description list_Of_All_Transactions_Wallet",
+    "list all transactions belonging to a wallet (by its id)",
     categoriesEnum.WALLET
     )
     list_Transactions_Wallet.CLI()
@@ -235,7 +241,7 @@ let list_Sent_Transactions_Wallet = new Indicator(
     list_All_Sent_Transactions_Wallet,
     [ ['id'],['maxPage'] ],
     "lstw",
-    "description list_All_Sent_Transactions_Wallet",
+    "list all transactions sent by a wallet (by its id)",
     categoriesEnum.WALLET
     )
     list_Sent_Transactions_Wallet.CLI()
@@ -247,7 +253,7 @@ let list_Received_Transactions_Wallet = new Indicator(
     list_All_Received_Transactions_Wallet,
     [ ['id'],['maxPage'] ],
     "lrtw",
-    "description list_All_Received_Transactions_Wallet",
+    "list all transactions recieved by a wallet (by its id)",
     categoriesEnum.WALLET
     )
     list_Received_Transactions_Wallet.CLI()
@@ -272,7 +278,7 @@ let list_Peers = new Indicator(
     list_All_Peers,
     [ [],['maxPage'] ],
     "lap",
-    "description list_All_Peers",
+    "list all peers known by the main Node",
     categoriesEnum.PEERS
     )
     list_Peers.CLI()
@@ -281,11 +287,11 @@ let list_Peers = new Indicator(
 //------------------------------------------------
 
 let retrieve_Peer = new Indicator(
-    "retrieve_A_Peer",
+    "Get a peer by its ip",
     retrieve_A_Peer,
     [ ['ip'],[] ],
     "rp",
-    "description retrieve_A_Peer",
+    "Retrieve a peer by its ip",
     categoriesEnum.PEERS
     )
     retrieve_Peer.CLI()
@@ -299,7 +305,7 @@ let list_Transaction = new Indicator(
     list_All_Transaction,
     [ [],['maxPage'] ],
     "lat",
-    "description list_All_Transaction",
+    "List all transactions",
     categoriesEnum.TRANSACTIONS
     )
     list_Transaction.CLI()
@@ -310,7 +316,7 @@ let retrieve_Transaction = new Indicator(
     retrieve_A_Transaction,
     [ ['id'],[] ],
     "rat",
-    "description retrieve_A_Transaction",
+    "Retrieve a transaction by its id",
     categoriesEnum.TRANSACTIONS
     )
     retrieve_Transaction.CLI()
@@ -321,7 +327,7 @@ let list_Unconfirmed_Transaction = new Indicator(
     list_All_Unconfirmed_Transaction,
     [ [],['maxPage'] ],
     "laut",
-    "list_All_Unconfirmed_Transaction",
+    "List all unconfirmed transactions",
     categoriesEnum.TRANSACTIONS
     )
     list_Unconfirmed_Transaction.CLI()
@@ -331,7 +337,7 @@ let retrieve_Unconfirmed_Transaction = new Indicator(
     retrieve_An_Unconfirmed_Transaction,
     [ ['id'],[] ],
     "raut",
-    "description retrieve_An_Unconfirmed_Transaction",
+    "retrieve an unconfirmed transaction by its id",
     categoriesEnum.VOTES
     )
     retrieve_Unconfirmed_Transaction.CLI()
@@ -346,7 +352,7 @@ let list_Votes = new Indicator(
     list_All_Votes,
     [ [],['maxPage'] ],
     "lav",
-    "description list_All_Votes",
+    "List all votes",
     categoriesEnum.VOTES
     )
     list_Votes.CLI()
@@ -358,7 +364,7 @@ let retrieve_Vote = new Indicator(
     retrieve_a_Vote,
     [ ['id'],[] ],
     "rav",
-    "description retrieve_a_Vote",
+    "Retrieve a vote by its id",
     categoriesEnum.VOTES
     )
     retrieve_Vote.CLI()
@@ -370,8 +376,8 @@ let get_blockchain= new Indicator(
     "get_blockchain",
     getBlockchain,
     [[],[]],
-    "blkch",
-    "description get_blockchain",
+    "gbn",
+    "Get the latest block and supply of the blockchain",
     categoriesEnum.BLOCKCHAIN
     )
     get_blockchain.CLI()
@@ -384,7 +390,7 @@ let get_blocks=  new Indicator(
     getBlocks,
     [[],["page","limit"],],
     "blks",
-    "description get_blocks",
+    "List blocks",
     categoriesEnum.BLOCKS
     )
     get_blocks.CLI()
@@ -395,7 +401,7 @@ let get_block_by_id=  new Indicator(
     getBlockbyID,
     [["id"],[],],
     "blkid",
-    "description get_blockby_id",
+    "Retrieve a block by its id",
     categoriesEnum.BLOCKS
     )
     get_block_by_id.CLI()
@@ -406,7 +412,7 @@ let get_block_by_height=  new Indicator(
     getBlockbyHeight,
     [["height"],[],],
     "blkh",
-    "description get_blockby_height",
+    "Retrieve a block by its height",
     categoriesEnum.BLOCKS
     )
     get_block_by_height.CLI()
@@ -417,7 +423,7 @@ let get_trans_by_blockid=  new Indicator(
     getTransactionsbyBlockID,
     [["id"],["page","limit"]],
     "trblid",
-    "description get_trans_by_blockid",
+    "Retrieve the transactions contained within a block (by block id)",
     categoriesEnum.TRANSACTIONS
     )
     get_trans_by_blockid.CLI()
@@ -428,7 +434,7 @@ let get_trans_by_blockid=  new Indicator(
         getTransactionsbyBlockHeight,
         [["height"],["page","limit"]],
         "trblh",
-        "description get_trans_by_blockheight",
+        "Retrieve the transactions contained within a block (by block height)",
         categoriesEnum.TRANSACTIONS)
         get_trans_by_blockheight.CLI()
 
@@ -440,7 +446,7 @@ let get_delegates=  new Indicator(
     getDelegates,
     [[],["page","limit"]],
     "deleg",
-    "description get_delegates",
+    "List delegates",
     categoriesEnum.DELEGATES
     )
     get_delegates.CLI()
@@ -451,7 +457,7 @@ let get_delegate_by_pub_key=  new Indicator(
     getDelegateByPublicKey,
     [["publicKey"],[]],
     "delegpkey",
-    "description get_delegate_by_pub_key",
+    "Retrieve a delegate by its public key",
     categoriesEnum.DELEGATES
     )
     get_delegate_by_pub_key.CLI()
@@ -461,7 +467,7 @@ let get_delegate_by_username=  new Indicator(
     getDelegateByUsername,
     [["username"],[]],
     "deleguname",
-    "description get_delegate_by_username",
+    "Retrieve a delegate by its username",
     categoriesEnum.DELEGATES
     )
     get_delegate_by_username.CLI()
@@ -472,7 +478,7 @@ let get_delegate_by_address=  new Indicator(
     getDelegateByAddress,
     [["address"],[]],
     "delegadd",
-    "description get_delegate_by_address",
+    "Retrieve a delegate by its adress",
     categoriesEnum.DELEGATES
     )
     get_delegate_by_address.CLI()
@@ -483,9 +489,9 @@ let get_delegate_by_address=  new Indicator(
 let get_crypto_config=  new Indicator(
     "get_crypto_config",
     getCryptoConfig,
-    [[],[]],
+    [["ipnode"],[]],
     "crypc",
-    "description get_crypto_config",
+    "Access the main node cryptography configuration",
     categoriesEnum.NODE
     )
     get_crypto_config.CLI()
@@ -493,9 +499,9 @@ let get_crypto_config=  new Indicator(
 let get_fee_stats=  new Indicator(
     "get_fee_stats",
     getFeeStats,
-    [[],[]],
+    [["ipnode"],[]],
     "feest",
-    "description get_fee_stats",
+    "Access the main node fee statistics",
     categoriesEnum.NODE
     )
     get_fee_stats.CLI()
@@ -503,9 +509,9 @@ let get_fee_stats=  new Indicator(
 let get_node_conf=  new Indicator(
     "get_node_conf",
     getNodeConfig,
-    [[],[]],
+    [["ipnode"],[]],
     "nodec",
-    "description get_node_conf",
+    "Access the main node configuration and network it is attached to",
     categoriesEnum.NODE
     )
     get_node_conf.CLI()
@@ -513,7 +519,7 @@ let get_node_conf=  new Indicator(
 let get_node_status=  new Indicator(
     "get_node_status",
     getNodeStatus,
-    [[],[]],
+    [["ipnode"],[]],
     "nodest",
     "description get_node_status",
     categoriesEnum.NODE)
@@ -522,7 +528,7 @@ let get_node_status=  new Indicator(
 let get_sync_status=  new Indicator(
     "get_sync_status",
     getSyncStatus,
-    [[],[]],
+    [["ipnode"],[]],
     "syncst",
     "description get_sync_status",
     categoriesEnum.NODE)
@@ -537,7 +543,7 @@ let refresh = new Indicator(
     refreshData,
     [[], []],
     "rfs",
-    "Descritpion de refresh")
+    "Refresh the stored list of the nodes in the network")
     refresh.CLI()
 
 //---------------------------
