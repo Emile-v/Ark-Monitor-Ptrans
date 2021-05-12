@@ -545,7 +545,7 @@ let cartographieAllNetwork = new Indicator(
     cartographie_All_Network,
     [["Ip_roots"], []],
     "can",
-    "Descritpion de cartographie_All_Network")
+    "Tries to scan the full network")
 cartographieAllNetwork.CLI()
 
 let cartographieWithIteration = new Indicator(
@@ -553,7 +553,7 @@ let cartographieWithIteration = new Indicator(
     cartographie_With_Iteration,
     [["Ip_roots"], ["nb_Iteration"]],
     "cwi",
-    "Descritpion de cartographie_With_Iteration")
+    "Scan the network with the help of max number of iteration")
 cartographieWithIteration.CLI()
 
 let cartographieWithIterationMaxPeer = new Indicator(
@@ -561,7 +561,7 @@ let cartographieWithIterationMaxPeer = new Indicator(
     cartographie_With_Iteration_Max_Peer,
     [["Ip_roots"], ["nb_Iteration", "nb_maxPeers"]],
     "cwimp",
-    "Descritpion de cartographie_With_Iteration_Max_Peer")
+    "Scan the network with the help of max number of iteration and Peers")
 cartographieWithIterationMaxPeer.CLI()
 
 //--------------------------------------------------------------

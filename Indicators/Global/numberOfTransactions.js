@@ -60,7 +60,7 @@ let main = async (duree, numPage, typeOfTransaction) => {
   }
   
 
-  /**test de la fonction */
+  /**test of the fonction */
 //   async function testTransaction(){
 //     let result = await RetrieveTransaction(3);
 //     console.log(result);
