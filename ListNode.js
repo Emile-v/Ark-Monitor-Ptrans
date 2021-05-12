@@ -110,6 +110,8 @@ module.exports.getAllNodeIPs = getAllNodeIPs;
 
 async function getAllNodeIPs1(){
 
+    console.log()
+
     let All4003NodeIPs = [];
     let AllNodeIPs = [];
     let AllNodesInfos = [];

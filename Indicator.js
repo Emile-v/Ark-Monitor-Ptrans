@@ -2,7 +2,7 @@
 const fs = require('fs')
 const yaml = require('js-yaml');
 const program = require('commander');
-const {display_enhanced} = require('./utils/visuelle')
+const {display_enhanced} = require('./utils/display')
 // const { argv } = require("process");
 
 const {exportDataJSON, exportDataYAML, exportDataXML} = require("./utils/export")

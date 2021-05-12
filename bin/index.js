@@ -82,7 +82,7 @@ const {getNodeProcessStatus} = require('../Indicators/Local/getNodeProcessStatus
 const {getPublicIP_Port} = require('../Indicators/Local/getPublicIP_Port')
 
 /**----------- Cartographie --------------- */
-const {cartographie_All_Network, cartographie_With_Iteration, cartographie_With_Iteration_Max_Peer} = require('../cartographie')
+const {cartographie_All_Network, cartographie_With_Iteration, cartographie_With_Iteration_Max_Peer} = require('../Mapping')
 
 
 // ------------- interactive command ----------------
