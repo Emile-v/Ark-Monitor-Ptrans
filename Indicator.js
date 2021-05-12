@@ -108,7 +108,7 @@ class Indicator {
                 /** ... */
 
                 default:
-                    console.log("vous avez saisi trop d'argument, aucune fonction ne prend en compte votre requête")
+                    console.log("You entered too many arguments")
                     break;
             }
 
