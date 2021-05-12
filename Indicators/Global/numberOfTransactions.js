@@ -31,25 +31,25 @@ let main = async (duree, numPage, typeOfTransaction) => {
   
   
   
-  async function RetrieveTransaction(duree, typeOfTransaction=0){
+  async function RetrieveTransaction(hours, typeOfTransaction=0){
     let result_final = {
       name : "Retrieve Transaction",
       result : null
     };
     
     let numPage = 1;
-    let res = await main(duree, numPage, typeOfTransaction)
+    let res = await main(hours, numPage, typeOfTransaction)
     
     if(res == 100 ){
       res = 0
       let res1 = 0;
   
-      while( (res1= await main(duree, numPage, typeOfTransaction) ) == 100 ){
+      while( (res1= await main(hours, numPage, typeOfTransaction) ) == 100 ){
         numPage++;
         res += res1;
         res1 = 0;
       }
-      res1= await main(duree, numPage, typeOfTransaction)
+      res1= await main(hours, numPage, typeOfTransaction)
       res += res1
     } 
   
