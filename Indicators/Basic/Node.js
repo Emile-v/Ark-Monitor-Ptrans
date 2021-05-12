@@ -1,4 +1,3 @@
-let fetchAsync = require('../../utils/fetch')
 const template = require("../../utils/templates");
 const {url} = require("../../utils/globalvar")
 

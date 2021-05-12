@@ -33,36 +33,3 @@ async function numberOfNodesByBlockId(){
 // testBlockId()
 
  module.exports.numberOfNodesByBlockId = numberOfNodesByBlockId;
-
-
-//  {
-//      {
-//         name : jbkj,
-//         result: resultat
-//         type : transaction
-//         erase :true
-//      }
-
-//      {
-//         name : jbkj,
-//         result: resultat
-//         type : transaction
-//         erase :true
-//      }
-
-//      {
-//         name : jbkj,
-//         result: resultat
-//         type : transaction
-//         erase :true
-//      }
-//  }
-
-
-
-
-//  {
-//     numberOfNodesByBlockId : {
-//         ...data...
-//     }
-//  }

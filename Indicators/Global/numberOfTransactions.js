@@ -2,19 +2,20 @@ const {url} = require("../../utils/globalvar")
 
 let fetchAsync = require('../../utils/fetch')
 
-let main = async (duree, numPage, typeOfTransaction) => {
+async function main(duree, numPage, typeOfTransaction) {
 
     let res = fetchAsync(url+`/transactions?page=${numPage}&limit=100&type=${typeOfTransaction}`);
   
     let res2 = await res.then(res => {
   
-      /** on transforme toute les timestamps.human de notre data en DATE */
+      /**turns timestamps.human to date */
       res.data.forEach(element => {
         element.timestamp.human = new Date (element.timestamp.human)
       });
   
-      /** le jour d'aujourd'hui */
+      /** today */
       let now = new Date(Date.now())
+
       const result = res.data.filter(transaction => transaction.timestamp.human.getDate() == now.getDate() 
                                                     && transaction.timestamp.human.getUTCHours() >= now.getUTCHours()-duree) // filtrage par rapport à la derniere heure
                                                  
@@ -23,15 +24,12 @@ let main = async (duree, numPage, typeOfTransaction) => {
       return res2.length
   
   }
+
   
-  const getRes = async () => {
-  const number = await main(1)
-  console.log(number)
-  }
+
   
   
-  
-  async function RetrieveTransaction(hours, typeOfTransaction=0){
+  async function number_Of_Transaction(hours, typeOfTransaction=0){
     let result_final = {
       name : "Retrieve Transaction",
       result : null
@@ -62,9 +60,9 @@ let main = async (duree, numPage, typeOfTransaction) => {
 
   /**test of the fonction */
 //   async function testTransaction(){
-//     let result = await RetrieveTransaction(3);
+//     let result = await numberOfTransaction(3);
 //     console.log(result);
 // } 
 // testTransaction()
 
-module.exports.number_of_transaction = number_of_transaction;
+module.exports.number_Of_Transaction = number_Of_Transaction;

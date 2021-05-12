@@ -1,6 +1,5 @@
 const {url} = require("../../utils/globalvar")
 
-let fetchAsync = require('../../utils/fetch')
 const template = require("../../utils/templates");
  
 async function getDelegates(page=1, limit=100){

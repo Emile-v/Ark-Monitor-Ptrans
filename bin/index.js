@@ -8,7 +8,7 @@ const { launch_graph } = require('../utils/NetGraph')
 const { numberOfNodesByBlockId } = require('../Indicators/Global/numberOfNodesByBlockId');
 const { numberOfNodesByHeight } = require('../Indicators/Global/numberOfNodesByHeight');
 const { numberOfNodesByVersion } = require('../Indicators/Global/numberOfNodesByVersion');
-const { number_of_transaction } = require('../Indicators/Global/numberOfTransactions');
+const { number_Of_Transaction } = require('../Indicators/Global/numberOfTransactions');
 
 /** Node indicators */
 const { getCountry } =require('../Indicators/Node/country')
@@ -150,11 +150,11 @@ let number_Of_Nodes_By_Version = new Indicator(
 
 // ----------------------------------
 
-let Retrieve_Transaction = new Indicator(
-    "RetrieveTransaction",
-    RetrieveTransaction,
+let numberOfTransaction = new Indicator(
+    "numberOfTransaction",
+    number_Of_Transaction,
     [["hours"],["typeOfTransaction"]],
-    "rtd",
+    "not",
     "Retrieves the number of transaction based on given number of hours",
     categoriesEnum.TRANSACTIONS
     )
