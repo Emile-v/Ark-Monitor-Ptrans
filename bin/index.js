@@ -175,10 +175,10 @@ let get_Country = new Indicator(
     get_Country.CLI()
 
 let get_Status= new Indicator(
-    "getStatus",
+    "get_Status_Peers",
     getStatusPeers,
     [[],[]],
-    "status",
+    "stpeers",
     "The status of nodes",
     categoriesEnum.NODE
     )

@@ -1,15 +1,18 @@
 const {url} = require("../../utils/globalvar")
+const fetch = require('node-fetch');
 
-let fetchAsync = require('../../utils/fetch')
+
+async function fetchAsync (url) {
+    let response = await fetch(url);
+    let data = await response.json();
+    return data;
+  }
+
 
   async function getStatusPeers(){
 
 
     let delegates = require('../../listOfNodes.json')
-    let result_final = {
-      name : "Status Peers",
-      result : null
-    };  
     
     let result = {
         desactivatedAPI : [],
@@ -18,31 +21,31 @@ let fetchAsync = require('../../utils/fetch')
           notSynced : []
         }
       }
-      for (let i = 0; i < delegates.length; i++) {
-        try{
-           // si le port est -1, l'api n'est pas disponible.
-          if(delegates[i].ports['@arkecosystem/core-api']!='-1'){
-            if(delegates[i].ports['@arkecosystem/core-api']){
-              let add='http://'+delegates[i].ip+":"+delegates[i].ports['@arkecosystem/core-api']+'/api/node/status'
-              let pair = await fetchAsync(add)
-
-                if(pair.data.synced == true){
-                  result.activatedAPI.synced.push(delegates[i].ip)
-                }
-                else{
-                  result.activatedAPI.notSynced.push(delegates[i].ip)
-                }
-            }
+      for(const elem of delegates){
+        if(elem.ports['@arkecosystem/core-api']==4003){
+          let add='http://'+elem.ip+":4003"+'/api/node/status'
+          let pair = await fetchAsync(add)
+          if(pair.data.synced === true){
+            result.activatedAPI.synced.push(elem.ip)
           }
-          else result.desactivatedAPI.push(delegates[i].ip)
+          else{
+            result.activatedAPI.notSynced.push(elem.ip)
+          }
         }
-        catch(e){
-          
-        }       
-      }
-      result_final.result = result
+        else{
+          result.desactivatedAPI.push(elem.ip)
+        }
+      };
+
       return result
   }
-  // getStatusPeers()
+
+/** test function */
+// async function test(){
+//   let a = await getStatusPeers()
+//   console.log(a)
+// }
+
+// test()
 
   module.exports.getStatusPeers = getStatusPeers;
