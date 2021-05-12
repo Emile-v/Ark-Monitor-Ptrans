@@ -6,9 +6,9 @@ const Sequelize = require('sequelize')
 
 function display_enhanced(data){
     let yamlStr = yaml.dump(data);
-    console.log("-------------------------------------\n")
+    console.log("------------- "+ data + " ----------\n")
     console.log(highlight(yamlStr, {language: 'yaml', ignoreIllegals: true}))
-    console.log("-------------------------------------\n")
+    console.log("----------------\n")
     // return yamlStr    
 }
 

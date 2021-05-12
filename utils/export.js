@@ -23,7 +23,7 @@ async function exportDataYAML(data, nameFile){
 }
 /**--------------------------------------------------------------------- */
 
-function OBJtoXML(obj) { // TODO
+function OBJtoXML(obj) {
     var xml = '';
     for (var prop in obj) {
       xml += obj[prop] instanceof Array ? '' : "<" + prop + ">";
