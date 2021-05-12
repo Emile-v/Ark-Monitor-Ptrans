@@ -527,7 +527,7 @@ let get_sync_status=  new Indicator(
 //------------------------------------------ */
 
 let refresh = new Indicator(
-    "refresh",
+    "refresh_list",
     refreshData,
     [[], []],
     "rfs",
