@@ -3,17 +3,6 @@ const {context, categoriesEnum, nonParametricIndicators} = require('../Indicator
 const getParams = require('../utils/getParams');
 const {exportDataJSON, exportDataYAML, exportDataXML} = require("../utils/export")
 
-// un indicateur / un groupe d'incateurs
-// Global / Basic / Global
-// 
-
-function test1(){
-    console.log('111111111111111111111')
-}
-
-function test2(){
-    console.log('222222222222222222222')
-}
 
 async function interact() {
     inquirer
@@ -191,13 +180,7 @@ async function group(indicatorArray){
         let res = await indicatorFunction();
         resGroup.push(res);
     }
-    /*
-    indicatorArray.forEach(indicatorFunction =>{
-        console.log(indicatorFunction);
-        let res = await indicatorFunction();
-        resGroup.push(res);
-    });
-    */
+
     return resGroup;
 }
 
