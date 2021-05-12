@@ -150,12 +150,12 @@ let number_Of_Nodes_By_Version = new Indicator(
 
 // ----------------------------------
 
-let numberOfTransaction = new Indicator(
-    "numberOfTransaction",
-    number_of_transaction,
-    [["duree"],["typeOfTransaction"]],
-    "not",
-    "description numberOfTransaction",
+let Retrieve_Transaction = new Indicator(
+    "RetrieveTransaction",
+    RetrieveTransaction,
+    [["hours"],["typeOfTransaction"]],
+    "rtd",
+    "Retrieves the number of transaction based on given number of hours",
     categoriesEnum.TRANSACTIONS
     )
     numberOfTransaction.CLI()
@@ -253,7 +253,7 @@ let list_Votes_Wallet = new Indicator(
     list_All_Votes_Wallet,
     [ ['id'],['maxPage'] ],
     "lvw",
-    "description list_All_Votes_Wallet",
+    "Lists all votes of a wallet based on Wallet ID",
     categoriesEnum.WALLET
     )
     list_Votes_Wallet.CLI()
@@ -477,7 +477,7 @@ let get_delegate_by_address=  new Indicator(
 let get_crypto_config=  new Indicator(
     "get_crypto_config",
     getCryptoConfig,
-    [["ipnode"],[]],
+    [[],[]],
     "crypc",
     "Access the main node cryptography configuration",
     categoriesEnum.NODE
@@ -487,9 +487,9 @@ let get_crypto_config=  new Indicator(
 let get_fee_stats=  new Indicator(
     "get_fee_stats",
     getFeeStats,
-    [["ipnode"],[]],
+    [[],["ipnode"]],
     "feest",
-    "Access the main node fee statistics",
+    "Access the main node or parameter fee statistics",
     categoriesEnum.NODE
     )
     get_fee_stats.CLI()
@@ -497,9 +497,9 @@ let get_fee_stats=  new Indicator(
 let get_node_conf=  new Indicator(
     "get_node_conf",
     getNodeConfig,
-    [["ipnode"],[]],
+    [[],["ipnode"]],
     "nodec",
-    "Access the main node configuration and network it is attached to",
+    "Access the main node or parameter node fee configuration and network it is attached to",
     categoriesEnum.NODE
     )
     get_node_conf.CLI()
@@ -507,18 +507,18 @@ let get_node_conf=  new Indicator(
 let get_node_status=  new Indicator(
     "get_node_status",
     getNodeStatus,
-    [["ipnode"],[]],
+    [[],["ipnode"]],
     "nodest",
-    "description get_node_status",
+    "Access the main node or parameter node status",
     categoriesEnum.NODE)
     get_node_status.CLI()
 
 let get_sync_status=  new Indicator(
     "get_sync_status",
     getSyncStatus,
-    [["ipnode"],[]],
+    [[],["ipnode"]],
     "syncst",
-    "description get_sync_status",
+    "Access the main node or parameter sync status",
     categoriesEnum.NODE)
     get_sync_status.CLI()
 
@@ -574,7 +574,7 @@ let get_machine_spec = new Indicator(
     getMachineSpec,
     [[],[]],
     "mspec",
-    "description LOCAL get_machine_spec",
+    "Retrieves machine information:CPU,RAM,OS,NetInterface ...",
     categoriesEnum.LOCAL
 )
 
@@ -585,7 +585,7 @@ let get_node_env_list = new Indicator(
     getNodeEnvList,
     [[],[]],
     "envlist",
-    "description LOCAL get_node_env_list",
+    "Lists all ARK environment variables. Requires Ark node installed ",
     categoriesEnum.LOCAL
 )
 get_node_env_list.CLI()
@@ -596,7 +596,7 @@ let get_node_process_status = new Indicator(
     getNodeProcessStatus,
     [[],[]],
     "prstat",
-    "description LOCAL get_node_process_status",
+    "Retrieves data on running ARK relay node process. Requires an ARK relay Node running",
     categoriesEnum.LOCAL
 )
 get_node_process_status.CLI()
@@ -606,14 +606,14 @@ let get_public_ip_port = new Indicator(
     getPublicIP_Port,
     [[],[]],
     "ipp",
-    "description LOCAL get_public_ip_port",
+    "Retrieves the public IP port and blockchain port",
     categoriesEnum.LOCAL
 )
 get_public_ip_port.CLI()
 
 program
 .command("netgraph")
-.alias("grp")
+.alias("graph")
 .description("Visualize the network graph via a webpage.")
 .action(function(){
     launch_graph();});

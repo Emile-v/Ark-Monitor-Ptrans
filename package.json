@@ -8,13 +8,15 @@
   },
   "dependencies": {
     "@rauschma/stringio": "^1.4.0",
+    "cli-highlight": "^2.1.11",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
     "inquirer": "^8.0.0",
     "ip2location-nodejs": "^8.4.0",
     "js-yaml": "^4.0.0",
     "node-fetch": "^2.6.1",
-    "pad": "^3.2.0"
+    "pad": "^3.2.0",
+    "sequelize": "^6.6.2"
   },
   "scripts": {
     "postinstall": "cd sigma && npm install"
