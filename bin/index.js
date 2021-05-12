@@ -625,7 +625,7 @@ get_public_ip_port.CLI()
 
 program
 .command("netgraph")
-.alias("grp")
+.alias("graph")
 .description("Visualize the network graph via a webpage.")
 .action(function(){
     launch_graph();});
