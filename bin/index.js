@@ -12,7 +12,6 @@ const { number_of_transaction } = require('../Indicators/Global/numberOfTransact
 
 /** Node indicators */
 const { getCountry } =require('../Indicators/Node/country')
-const { getStaticFeesPeers } =require('../Indicators/Node/staticFees')
 const { getStatusPeers } =require('../Indicators/Node/status')
 
 /** Basic indicators */
@@ -174,17 +173,6 @@ let get_Country = new Indicator(
     categoriesEnum.GLOBAL
     )
     get_Country.CLI()
-
-let get_Static_Fees= new Indicator(
-    "getStaticFees",
-    getStaticFeesPeers,
-    [[],[]],
-    "stfee",
-    "The static fees of nodes",
-    categoriesEnum.NODE
-    )
-    get_Static_Fees.CLI()
-
 
 let get_Status= new Indicator(
     "getStatus",
