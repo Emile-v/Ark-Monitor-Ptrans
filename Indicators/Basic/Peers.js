@@ -55,11 +55,6 @@ module.exports.list_All_Peers_Specific_Node = list_All_Peers_Specific_Node;
 
 
 /** %%%%%%%%%%%%  List All Peers of specific node with 5 nodes %%%%%%%%%%%%%%%%%%%% */
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
 
 async function list_All_Peers_Specific_Node_Max_Peer(ip, maxPeers, maxPage=1000){
     let path = `http://${ip}:4003/api/peers?`
@@ -96,10 +91,6 @@ async function open_Port(ip){
         else{
             return false
         }
-
-        // if(node == {}) return false
-        // if(node.data.ports['@arkecosystem/core-api']==4003) return true
-        // else return false
     }
     catch(e){
         return false
@@ -116,7 +107,7 @@ async function list_All_IP(ip,maxPage=1000){
     let resultat = []
 
     for(let i=0; i<res.length; i++){
-        resultat.push(res[i].ip)//res[getRandomInt(0,res.length-1)])
+        resultat.push(res[i].ip) //res[getRandomInt(0,res.length-1)])
     }
     return resultat
 }

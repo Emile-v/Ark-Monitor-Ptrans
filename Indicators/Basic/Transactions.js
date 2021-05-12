@@ -64,10 +64,3 @@ async function retrieve_An_Unconfirmed_Transaction(id){
 
 module.exports.retrieve_An_Unconfirmed_Transaction = retrieve_An_Unconfirmed_Transaction;
 
-
-
-/** TODO
- * search for transactions
- * broadcast transactions
- * get transaction types
- */
