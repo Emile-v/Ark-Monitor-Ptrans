@@ -87,7 +87,6 @@ class Indicator {
 
             let display = ''
 
-            console.log("chargement... \n")
             switch(argsList_Length){
                 case 0:
                     this.format.result = await this.indicatorFunction()
@@ -117,22 +116,19 @@ class Indicator {
 
             // Option 
             if(allOption.exportJSON){
-                console.log("export en .JSON en cours ...")
                 exportDataJSON(this.format, allOption.exportJSON)
-                console.log("export en .JSON achevé")
+                console.log("data successfully exported in JSON")
             }
             if(allOption.exportYAML){
-                console.log("export en .YAML en cours ...")
                 exportDataYAML(this.format, allOption.exportYAML)
-                console.log("export en .YAML achevé")
+                console.log("data successfully exported in YAML")
             }
             if(allOption.exportXML){
-                console.log("export en .XML en cours ...")
                 exportDataXML(this.format, allOption.exportXML)
-                console.log("export en .XML achevé")
+                console.log("data successfully exported in XML")
             }
 
-            console.log("fin de la requête")
+            console.log("End of request")
         })
     }
     //-------------------------------------------------------------------------------

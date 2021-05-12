@@ -128,12 +128,12 @@ async function getAllNodeIPs1(){
     return AllNodeIPs;
 }
 
-/** test */
-async function testP(){
-    let a = await getAllNodeIPs1()
-    exportDataJSON(a, "test1")
+// /** test */
+// async function testP(){
+//     let a = await getAllNodeIPs1()
+//     exportDataJSON(a, "test1")
     
-}
-testP()
+// }
+// testP()
 
 module.exports.getAllNodeIPs1 = getAllNodeIPs1;

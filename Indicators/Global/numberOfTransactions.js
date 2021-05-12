@@ -31,7 +31,7 @@ let main = async (duree, numPage, typeOfTransaction) => {
   
   
   
-  async function RetrieveTransaction(duree, typeOfTransaction=0){
+  async function number_of_transaction(duree, typeOfTransaction=0){
     let result_final = {
       name : "Retrieve Transaction",
       result : null
@@ -67,4 +67,4 @@ let main = async (duree, numPage, typeOfTransaction) => {
 // } 
 // testTransaction()
 
-module.exports.RetrieveTransaction = RetrieveTransaction;
+module.exports.number_of_transaction = number_of_transaction;
