@@ -1,6 +1,6 @@
 {
   "name": "ark-monitor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A CLI to monitor the Ark blockchain.",
   "homepage": "https://github.com/Emile-v/Ark-Monitor-Ptrans",
   "license": "MIT",
@@ -18,16 +18,16 @@
     "cli-highlight": "^2.1.11",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
-    "http-server": "^0.12.3",
     "inquirer": "^8.0.0",
     "ip2location-nodejs": "^8.4.0",
     "js-yaml": "^4.0.0",
+    "live-server": "^1.2.1",
     "node-fetch": "^2.6.1",
     "pad": "^3.2.0",
     "sequelize": "^6.6.2",
     "sigma": "^2.0.0-beta4"
   },
   "scripts": {
-    "start": "http-server sigma/"
+    "start": "live-server sigma/"
   }
 }
