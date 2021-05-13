@@ -23,7 +23,8 @@
     "js-yaml": "^4.0.0",
     "node-fetch": "^2.6.1",
     "pad": "^3.2.0",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.6.2",
+    "sigma": "^2.0.0-beta4"
   },
   "scripts": {
     "postinstall": "cd sigma && npm install"
