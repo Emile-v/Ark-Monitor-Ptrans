@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const {context, categoriesEnum, nonParametricIndicators} = require('../Indicator.js');
 const getParams = require('../utils/getParams');
 const {exportDataJSON, exportDataYAML, exportDataXML} = require("../utils/export")
+const yaml = require('js-yaml');
+const highlight = require('cli-highlight').highlight
 
 
 async function interact() {
@@ -155,7 +157,8 @@ async function exportData(indicator, arguments, directory,exportType){
                 resultData = await group(indicator);
             }
             else{
-                resultData = await indicator(...arguments)
+                let unformatedRes = await indicator(...arguments);
+                resultData = format(unformatedRes, indicator);
             }
             console.log(resultData);
             switch(exportType){
@@ -176,25 +179,42 @@ async function exportData(indicator, arguments, directory,exportType){
 async function group(indicatorArray){
     let resGroup = [];
     for (const indicatorFunction of indicatorArray){
-        console.log(indicatorFunction);
+        //console.log(indicatorFunction);
         let res = await indicatorFunction();
-        resGroup.push(res);
+        let formatedRes = format(res, indicatorFunction);
+        resGroup.push(formatedRes);
     }
-
     return resGroup;
 }
 
 async function showResult(indicator, arguments){
     let resultData;
     if (Array.isArray(indicator)){   
-        console.log(indicator);
+        //console.log(indicator);
         resultData = await group(indicator);
-        
+
     }
     else{
-        resultData = await indicator(...arguments)
+        let unformatedRes = await indicator(...arguments)
+        resultData = format(unformatedRes, indicator);
     }
-    console.log(resultData);
+    display_enhanced(resultData);
 }
+
+function format(resultData, indicatorFunction){
+    let format = {
+        name : indicatorFunction.name,
+        result : resultData
+    }
+    return format;
+}
+
+function display_enhanced(data){
+    let yamlStr = yaml.dump(data);
+    console.log("-------------------------------------------------\n")
+    console.log(highlight(yamlStr, {language: 'yaml', ignoreIllegals: true}))
+    console.log("-------------------------------------------------\n")
+}
+
 
 module.exports = interact;

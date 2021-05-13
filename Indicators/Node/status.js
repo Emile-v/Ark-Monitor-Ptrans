@@ -22,25 +22,30 @@ async function fetchAsync (url) {
         }
       }
       for(const elem of delegates){
-        if(elem.ports['@arkecosystem/core-api']==4003){
-          let add='http://'+elem.ip+":4003"+'/api/node/status'
-          let pair = await fetchAsync(add)
-          if(pair.data.synced === true){
-            result.activatedAPI.synced.push(elem.ip)
+        try{
+          if(elem.ports['@arkecosystem/core-api']==4003){
+            let add='http://'+elem.ip+":4003"+'/api/node/status'
+            let pair = await fetchAsync(add)
+            if(pair.data.synced === true){
+              result.activatedAPI.synced.push(elem.ip)
+            }
+            else{
+              result.activatedAPI.notSynced.push(elem.ip)
+            }
           }
           else{
-            result.activatedAPI.notSynced.push(elem.ip)
+            result.desactivatedAPI.push(elem.ip)
           }
         }
-        else{
-          result.desactivatedAPI.push(elem.ip)
+        catch(e){
+          //the fetch request ip is not accessible
         }
       };
 
       return result
   }
 
-/** test function */
+// /** test function */
 // async function test(){
 //   let a = await getStatusPeers()
 //   console.log(a)

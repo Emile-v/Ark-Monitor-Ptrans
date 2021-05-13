@@ -17,12 +17,6 @@ async function LaunchGraph(){
       child.stderr.on('data', (data) => {
         console.error(`Error : ${data}`);
       });
-
-   
-
 }
-
-
-
 
 module.exports.launch_graph = LaunchGraph;

@@ -1,8 +1,6 @@
 const yaml = require('js-yaml');
 
 const highlight = require('cli-highlight').highlight
-const Sequelize = require('sequelize')
-
 
 function display_enhanced(data){
     let yamlStr = yaml.dump(data.result);
