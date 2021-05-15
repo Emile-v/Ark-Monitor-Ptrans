@@ -10,8 +10,8 @@ async function fetchAsync (url) {
     return data;
   }
   catch(e){
-    console.log("Fetch error : fetch request failed")
-    process.exit(1);
+    //console.log("Fetch error : fetch request failed")
+    //process.exit(1);
   }
 }
 

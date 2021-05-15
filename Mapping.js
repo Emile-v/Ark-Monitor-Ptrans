@@ -241,7 +241,11 @@ class Graph {
     /** ------------------------ Cartography of all Network --------------------------------------- */
     async graphInit_All_Network(){
         let tab_Of_couple_Initialised = []
-        let IPs = require('../test1.json')
+        let listOfNodes = require('./listOfNodes.json')
+        let IPs = [];
+        listOfNodes.forEach(element =>{
+            IPs.push(element.ip);
+        })
         IPs.forEach(async (element) => {
             let node = new Node(element, element)
             this.nodes.push(node)
