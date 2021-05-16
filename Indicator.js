@@ -75,9 +75,9 @@ class Indicator {
         .command(comRequire)
         .alias(this.alias)
         .description(this.description)
-        .option(`-exJSON, --exportJSON <file>`, 'description')
-        .option(`-exYML, --exportYAML <file>`, 'description')
-        .option(`-exXML, --exportXML <file>`, 'description')
+        .option(`-exJSON, --exportJSON <file>`, 'export the data in JSON')
+        .option(`-exYML, --exportYAML <file>`, 'export the data in YAML')
+        .option(`-exXML, --exportXML <file>`, 'export the data in XML')
         .action(async(... option)=>{
             
             // List of arguments that user gives in the CLI
