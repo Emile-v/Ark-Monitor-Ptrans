@@ -523,7 +523,7 @@ let get_sync_status=  new Indicator(
     get_sync_status.CLI()
 
 /** ----------------------------------------
-        refresh commande
+        refresh command
 //------------------------------------------ */
 
 let refresh = new Indicator(
@@ -538,13 +538,13 @@ let refresh = new Indicator(
 
 
 /** ----------------------------------------
-        cartographie commande
+        mapping commands
 //------------------------------------------ */
 let cartographieAllNetwork = new Indicator(
     "map_All_Network",
     cartographie_All_Network,
     [["Ip_roots"], []],
-    "can",
+    "man",
     "Tries to scan the full network")
 cartographieAllNetwork.CLI()
 
@@ -552,7 +552,7 @@ let cartographieWithIteration = new Indicator(
     "map_With_Iteration",
     cartographie_With_Iteration,
     [["Ip_roots"], ["nb_Iteration"]],
-    "cwi",
+    "mwi",
     "Scan the network with the help of max number of iteration")
 cartographieWithIteration.CLI()
 
@@ -560,7 +560,7 @@ let cartographieWithIterationMaxPeer = new Indicator(
     "map_With_Iteration_Max_Peer",
     cartographie_With_Iteration_Max_Peer,
     [["Ip_roots"], ["nb_Iteration", "nb_maxPeers"]],
-    "cwimp",
+    "mwimp",
     "Scan the network with the help of max number of iteration and Peers")
 cartographieWithIterationMaxPeer.CLI()
 

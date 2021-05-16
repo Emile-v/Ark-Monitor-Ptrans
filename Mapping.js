@@ -1,9 +1,8 @@
 const { list_All_Peers_Specific_Node,list_All_IP, list_All_Peers_Specific_Node_Max_Peer, open_Port } 
 = require('./Indicators/Basic/Peers');
 
+const path = require('path')
 const {exportDataJSON, exportDataYAML} = require('./utils/export')
-
-
 const fs = require('fs')
 
 
@@ -274,7 +273,7 @@ class Graph {
 /** refreshes Mapping for use in sigma */
 
 async function refresh_Data_Vis(data){
-  let Name_File = "./sigma/data/visualisation.json"
+  let Name_File = path.join(__dirname, './sigma/data/visualisation.json')
   let datas = JSON.stringify(data)
   fs.writeFileSync(Name_File, datas, function(erreur){
       if(erreur){
