@@ -543,7 +543,7 @@ let refresh = new Indicator(
 let cartographieAllNetwork = new Indicator(
     "map_All_Network",
     cartographie_All_Network,
-    [["Ip_roots"], []],
+    [[], []],
     "man",
     "Tries to scan the full network")
 cartographieAllNetwork.CLI()

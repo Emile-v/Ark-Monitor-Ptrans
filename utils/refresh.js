@@ -13,7 +13,7 @@ async function refreshData(){
             console.log(erreur)
         }
     })
-    console.log("data refreshed")
+    console.log("list of nodes data refreshed")
 }
 
 module.exports.refreshData = refreshData;

@@ -4,7 +4,7 @@ const { list_All_Peers_Specific_Node,list_All_IP, list_All_Peers_Specific_Node_M
 const path = require('path')
 const {exportDataJSON, exportDataYAML} = require('./utils/export')
 const fs = require('fs')
-
+const {refreshData} = require('./utils/refresh')
 
 
 class Edge{
@@ -240,12 +240,14 @@ class Graph {
     /** ------------------------ Cartography of all Network --------------------------------------- */
     async graphInit_All_Network(){
         let tab_Of_couple_Initialised = []
+        await refreshData();
+        console.log('Constructing the network graph...')
         let listOfNodes = require('./listOfNodes.json')
         let IPs = [];
         listOfNodes.forEach(element =>{
             IPs.push(element.ip);
         })
-        IPs.forEach(async (element) => {
+        for (const element of IPs){
             let node = new Node(element, element)
             this.nodes.push(node)
 
@@ -257,13 +259,13 @@ class Graph {
 
                     if(tab_Of_couple_Initialised.includes(combined_key) == false && tab_Of_couple_Initialised.includes(inverse_combined_key) == false){
                         tab_Of_couple_Initialised.push(combined_key)
-                        let edge = new Edge(combined_key, "n"+element, "n"+elem.ip)
+                        let edge = new Edge(combined_key, node.id, "n"+elem.ip)
                         this.edges.push(edge)
                     }
                                     
                 })
             }
-        });
+        };
 
     }
 }
@@ -284,6 +286,7 @@ async function refresh_Data_Vis(data){
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 async function cartographie_With_Iteration(Ip_Roots, nbIteration=2){
+  console.log('Note that this function can take several minutes to execute');
   let g = new Graph();
   await g.graphInit_1(Ip_Roots, nbIteration)
   refresh_Data_Vis(g)
@@ -302,6 +305,7 @@ module.exports.cartographie_With_Iteration = cartographie_With_Iteration;
 /**--------------------------------------------------- */
 
 async function cartographie_With_Iteration_Max_Peer(Ip_Roots, nbIteration=2, max_Peer=2){
+  console.log('Note that this function can take several minutes to execute');
   let g = new Graph();
   await g.graphInit_2(Ip_Roots, nbIteration, max_Peer)
   refresh_Data_Vis(g)
@@ -319,11 +323,12 @@ module.exports.cartographie_With_Iteration_Max_Peer = cartographie_With_Iteratio
 
 /**--------------------------------------------------- */
 
-async function cartographie_All_Network(Ip_Roots){
+async function cartographie_All_Network(){
+  console.log('Note that this function can take several minutes to execute');
   let g = new Graph();
-  await g.graphInit_All_Network(Ip_Roots)
-  refresh_Data_Vis(g)
-  return g
+  await g.graphInit_All_Network();
+  refresh_Data_Vis(g);
+  return g;
 }
 module.exports.cartographie_All_Network = cartographie_All_Network;
 
