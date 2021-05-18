@@ -41,7 +41,6 @@ class Indicator {
       this.parameter = parameter;
       this.alias = alias;
       this.description = description;
-      this.name_parameter = parameter;
       this.category = category
 
       this.format = {
