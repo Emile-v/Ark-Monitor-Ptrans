@@ -18,8 +18,7 @@ const os = require('os');
     let netinf=os.networkInterfaces();
 
     // transforming the object to display it fully
-    for (const [key, value] of Object.entries(netinf)) {
-      console.log(`${key}: ${value}`);      
+    for (const [key, value] of Object.entries(netinf)) {   
       value.forEach(valelem => {
         data.netinf.push({
         name: key,

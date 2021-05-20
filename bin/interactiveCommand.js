@@ -59,7 +59,6 @@ async function oneIndicatorChoice(type){
     .then((answer) => {
         let fct = context[type][answer.oneIndicatorChoice];
         let params = getParams(fct);
-        console.log(params);
         if (params.length===0){
             printOrExport(fct,[])
         }
@@ -128,7 +127,7 @@ async function exportingDirectory(indicator, arguments){
         {
         type: 'input',
         name: 'exportingDirectory',
-        message: `Enter the name of the file to export (you can also specify a directory):`,
+        message: `Enter the name of the file to export (you can also specify a relative path):`,
         },
     ])
     .then((answer) => {
@@ -160,7 +159,7 @@ async function exportData(indicator, arguments, directory,exportType){
                 let unformatedRes = await indicator(...arguments);
                 resultData = format(unformatedRes, indicator);
             }
-            console.log(resultData);
+            display_enhanced(resultData);
             switch(exportType){
                 case 'json':
                     exportDataJSON(resultData,directory)
@@ -179,7 +178,6 @@ async function exportData(indicator, arguments, directory,exportType){
 async function group(indicatorArray){
     let resGroup = [];
     for (const indicatorFunction of indicatorArray){
-        //console.log(indicatorFunction);
         let res = await indicatorFunction();
         let formatedRes = format(res, indicatorFunction);
         resGroup.push(formatedRes);
@@ -190,7 +188,6 @@ async function group(indicatorArray){
 async function showResult(indicator, arguments){
     let resultData;
     if (Array.isArray(indicator)){   
-        //console.log(indicator);
         resultData = await group(indicator);
 
     }
